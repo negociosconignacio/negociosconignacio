@@ -175,12 +175,12 @@
           </div>
 
           <div class="flex items-end gap-2 flex-wrap">
-  <button class="btn cb-atajo" data-meses="12">12</button>
-  <button class="btn cb-atajo" data-meses="18">18</button>
-  <button class="btn cb-atajo" data-meses="24">24</button>
-  <button class="btn cb-atajo" data-meses="36">36</button>
-  <button class="btn cb-atajo" data-meses="48">48</button>
-</div>
+            <button class="btn cb-atajo" data-meses="12">12</button>
+            <button class="btn cb-atajo" data-meses="18">18</button>
+            <button class="btn cb-atajo" data-meses="24">24</button>
+            <button class="btn cb-atajo" data-meses="36">36</button>
+            <button class="btn cb-atajo" data-meses="48">48</button>
+          </div>
         </div>
 
         <div class="mt-4 text-sm opacity-80" id="cb-monto">Monto a financiar: -</div>
@@ -355,8 +355,8 @@
     }
 
     document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("wa-hero").href  = waBase + "?text=" + encodeURIComponent(waDefault);
-    document.getElementById("wa-float").href = waBase + "?text=" + encodeURIComponent(waDefault);
+    document.getElementById("wa-hero").href  = "https://wa.me/543512004885?text=" + encodeURIComponent(waDefault);
+    document.getElementById("wa-float").href = "https://wa.me/543512004885?text=" + encodeURIComponent(waDefault);
     ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).addEventListener("input", applyFilters));
     document.getElementById("clear").addEventListener("click", ()=>{ ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value=""); applyFilters(); });
 
