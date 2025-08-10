@@ -4,22 +4,31 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Negocios con Ignacio – Catálogo</title>
-  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, comparador, galería, favoritos y WhatsApp." />
+  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, comparador, galería y WhatsApp." />
   <link rel="icon" href="/images/logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { --gold:#C5A047; --dark:#0B0B0B; }
     body { background: var(--dark); color: #EEE; }
     .gold { color: var(--gold); }
-    .btn { border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:10px 14px; display:inline-flex; align-items:center; gap:8px; min-height:44px; }
+    .btn { border:1px solid rgba(255,255,255,.18); border-radius:14px; padding:10px 14px; display:inline-flex; align-items:center; gap:8px; min-height:44px; }
     .btn:hover { box-shadow:0 8px 28px rgba(0,0,0,.35); }
-    .card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:18px; }
+    .card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius:18px; }
     .tag { font-size:12px; padding:2px 8px; border-radius:9999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
-    .input, select { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#EEE; border-radius:12px; padding:8px 12px; height:40px; }
+    .input, select {
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.28);
+      color:#fff;
+      border-radius:12px;
+      padding:8px 12px;
+      height:40px;
+    }
+    /* mejor contraste en los menús nativos */
+    select, option { color:#fff; background:#111; }
+    ::placeholder { color: #cfcfcf; opacity:.9; }
     .fixed-wa { position:fixed; right:16px; bottom:16px; z-index:50; }
     .grid-auto-fill { display:grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap:20px; }
-    .iconbtn { border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); height:38px; padding:0 10px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; font-size:13px; }
-    .iconbtn.active { border-color: var(--gold); background: rgba(197,160,71,.18); }
+    .iconbtn { border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); height:38px; padding:0 10px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; font-size:13px; }
     a { color: inherit; }
   </style>
 </head>
@@ -27,8 +36,8 @@
   <!-- Header -->
   <header class="sticky top-0 z-20 border-b border-white/10 bg-black/70 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
-      <img src="/images/logo.png" alt="Negocios con Ignacio" class="h-10 w-auto rounded-lg" onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
-      <div class="text-sm opacity-80 hidden sm:block">Motos nuevas y usadas</div>
+      <img src="/images/logo.png" alt="Negocios con Ignacio" class="h-14 w-auto rounded-lg" onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
+      <span class="uppercase font-extrabold tracking-wide gold text-lg md:text-2xl">NEGOCIOS CON IGNACIO</span>
       <nav class="ml-auto hidden md:flex items-center gap-4 text-sm opacity-90">
         <a href="#catalogo" class="hover:opacity-100">Catálogo</a>
         <a href="#comparador" class="hover:opacity-100">Comparador</a>
@@ -42,7 +51,7 @@
   <section class="mx-auto max-w-7xl px-4 py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
     <div>
       <h1 class="text-3xl md:text-5xl font-extrabold leading-tight"><span class="gold">Elegí tu próxima moto</span> con asesoramiento real</h1>
-      <p class="mt-3 text-zinc-300">Filtros, cuotas, comparador, galería, favoritos y compartir por WhatsApp.</p>
+      <p class="mt-3 text-zinc-300">Filtros, cuotas, comparador, galería y compartir por WhatsApp.</p>
       <div class="mt-5 flex flex-wrap items-center gap-3">
         <a href="#catalogo" class="btn">🛒 Ver catálogo</a>
         <a id="wa-hero" target="_blank" class="btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
@@ -88,11 +97,6 @@
             <option value="year-desc">Año ↓</option>
             <option value="year-asc">Año ↑</option>
           </select>
-        </label>
-
-        <label class="text-sm md:col-span-2 flex items-center gap-2">
-          <input id="onlyFavs" type="checkbox" class="h-4 w-4">
-          <span>⭐ Solo favoritos</span>
         </label>
 
         <div class="text-sm md:col-span-2"><button id="clear" class="btn w-full">🧹 Limpiar</button></div>
@@ -247,17 +251,12 @@
     const waDefault = "Hola Nacho, quiero info y *Opciones disponibles*";
     const $ = s => document.querySelector(s);
 
-    // ====== STATE (filtros + orden + paginación + favoritos) ======
+    // ====== STATE (filtros + orden + paginación) ======
     let STATE = {
       q:"", brand:"", minPrice:0, maxPrice:0,
       sort:"none",
-      onlyFavs:false,
       page:1, pageSize:10
     };
-    const FAV_KEY = "negocios_favs_v1";
-    const FAVS = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
-
-    function saveFavs(){ localStorage.setItem(FAV_KEY, JSON.stringify([...FAVS])); }
 
     // ====== RENDER TARJETAS ======
     function makeCard(p){
@@ -273,7 +272,6 @@
               <div class="mt-1 text-xs opacity-70">${p.brand} ${p.year>0 ? "• "+p.year : ""} ${p.km ? "• "+p.km.toLocaleString("es-AR")+" km" : ""}</div>
             </div>
             <div class="flex gap-2">
-              <button class="iconbtn btn-fav ${FAVS.has(p.id) ? "active":""}" title="Favorito">⭐</button>
               <button class="iconbtn btn-share" title="Compartir">↗</button>
             </div>
           </div>
@@ -289,19 +287,12 @@
       // Listeners
       card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
       card.querySelector(".btn-open-calc").addEventListener("click",(e)=>{ e.preventDefault(); openCalc(p); });
-      card.querySelector(".btn-fav").addEventListener("click", (e)=>{
-        if(FAVS.has(p.id)) FAVS.delete(p.id); else FAVS.add(p.id);
-        saveFavs();
-        e.currentTarget.classList.toggle("active");
-        if(STATE.onlyFavs) applyFilters(); // si filtra favoritos, actualiza lista
-      });
       card.querySelector(".btn-share").addEventListener("click", ()=>{
         const url = location.origin + location.pathname + "#"+p.id;
         const text = `Mirá esta moto: ${p.title} – ${currency(p.price)}\n${url}\n¿La vemos?`;
         if (navigator.share) {
           navigator.share({ title: p.title, text, url }).catch(()=>{});
         } else {
-          // Fallback a WhatsApp
           window.open(`https://wa.me/543512004885?text=${encodeURIComponent(text)}`,"_blank");
         }
       });
@@ -315,8 +306,6 @@
       document.getElementById("count").textContent =
         `${paged.total} resultados · página ${paged.page} de ${paged.pages}`;
     }
-
-    // ====== FAVORITOS/SHARE ya incluida en makeCard ======
 
     // ====== LIGHTBOX (GALERÍA) ======
     let LB = { list:[], idx:0 };
@@ -444,18 +433,14 @@
 
     // ====== ORDEN + PAGINACIÓN ======
     function applyFilters(){
-      // leer UI
       STATE.q        = document.getElementById("q").value.toLowerCase();
       STATE.brand    = document.getElementById("brand").value;
       STATE.minPrice = parseFloat(document.getElementById("minPrice").value || "0");
       STATE.maxPrice = parseFloat(document.getElementById("maxPrice").value || "0");
       STATE.sort     = document.getElementById("sort").value;
-      STATE.onlyFavs = document.getElementById("onlyFavs").checked;
       STATE.pageSize = parseInt(document.getElementById("pageSize").value || "10",10);
 
-      // filtrar
       let list = PRODUCTS.filter(p=>{
-        if(STATE.onlyFavs && !FAVS.has(p.id)) return false;
         const s = [p.title, p.brand, String(p.cc||""), String(p.year||"")].join(" ").toLowerCase();
         const okQ = STATE.q ? s.includes(STATE.q) : true;
         const okB = STATE.brand ? p.brand === STATE.brand : true;
@@ -464,26 +449,19 @@
         return okQ && okB && okMin && okMax;
       });
 
-      // ordenar
-      const keyers = {
-        "price": p=> p.price||0,
-        "cc": p=> p.cc||0,
-        "year": p=> p.year||0
-      };
+      const keyers = { "price": p=> p.price||0, "cc": p=> p.cc||0, "year": p=> p.year||0 };
       if(STATE.sort !== "none"){
         const [k,dir] = STATE.sort.split("-");
         const key = keyers[k] || (()=>0);
         list = list.slice().sort((a,b)=> (key(a)-key(b)) * (dir==="asc"?1:-1));
       }
 
-      // paginar
       const total = list.length;
       const pages = Math.max(1, Math.ceil(total / STATE.pageSize));
       if (STATE.page > pages) STATE.page = pages;
       const start = (STATE.page-1) * STATE.pageSize;
       const items = list.slice(start, start + STATE.pageSize);
 
-      // render
       renderGrid({items, total, page:STATE.page, pages});
       renderPager({total, page:STATE.page, pages});
     }
@@ -516,20 +494,18 @@
     document.getElementById("wa-hero").href  = "https://wa.me/543512004885?text=" + encodeURIComponent(waDefault);
     document.getElementById("wa-float").href = "https://wa.me/543512004885?text=" + encodeURIComponent(waDefault);
 
-    // listeners filtros/orden/paginación
-    ["q","brand","minPrice","maxPrice","sort","onlyFavs","pageSize"].forEach(id=>{
+    ["q","brand","minPrice","maxPrice","sort","pageSize"].forEach(id=>{
       document.getElementById(id).addEventListener("input", ()=>{ STATE.page=1; applyFilters(); });
       document.getElementById(id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
     });
     document.getElementById("clear").addEventListener("click", ()=>{
       ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value="");
       document.getElementById("sort").value="none";
-      document.getElementById("onlyFavs").checked=false;
       STATE.page=1;
       applyFilters();
     });
 
-    applyFilters(); // render inicial
+    applyFilters();
   </script>
 </body>
 </html>
