@@ -165,8 +165,8 @@
             <input id="cb-meses" type="number" class="input w-full mt-1" value="12" min="1" max="72">
           </label>
 
-          <label class="text-sm block">TNA (%)
-            <input id="cb-tna" type="number" class="input w-full mt-1" value="60" min="0" max="500" step="0.1">
+          <label class="text-sm block">Tipo de plan
+            <select id="cb-plan" class="input w-full mt-1"></select>
           </label>
 
           <div class="text-sm flex flex-col justify-end">
@@ -174,16 +174,11 @@
             <div id="cb-cuota" class="text-2xl font-semibold gold">-</div>
           </div>
 
-          <div class="flex items-end gap-2 flex-wrap">
-            <button class="btn cb-atajo" data-meses="12">12</button>
-            <button class="btn cb-atajo" data-meses="18">18</button>
-            <button class="btn cb-atajo" data-meses="24">24</button>
-            <button class="btn cb-atajo" data-meses="36">36</button>
-            <button class="btn cb-atajo" data-meses="48">48</button>
-          </div>
+          <div id="cb-atajos" class="flex items-end gap-2 flex-wrap"></div>
         </div>
 
-        <div class="mt-4 text-sm opacity-80" id="cb-monto">Monto a financiar: -</div>
+        <div class="mt-2 text-xs opacity-70">TNA estimada: <span id="cb-tna-view">-</span></div>
+        <div class="mt-3 text-sm opacity-80" id="cb-monto">Monto a financiar: -</div>
 
         <div class="mt-5 flex flex-col md:flex-row gap-3">
           <a id="cb-wa" target="_blank" class="btn w-full md:w-auto" style="background: rgba(197,160,71,.18);">📞 Enviar por WhatsApp</a>
@@ -194,14 +189,23 @@
   </div>
 
   <script>
+    // ====== CONFIG REGLAS ======
+    // Regla automática: < 249 cc => solo FIJA (89%)
+    const RULE_SMALL_CC = (cc)=> cc!=null && cc < 249;
+
+    // Defaults cuando NO aplica la regla
+    const DEFAULT_PLANS  = ["FIJA","UVA"];
+    const DEFAULT_TNA    = { FIJA:54, UVA:20 };
+    const DEFAULT_MONTHS = [12,18,24,36,48];
+
     // ====== DATOS ======
     const PRODUCTS = [
       { id:"trk251-2022-gris", title:"Benelli TRK 251 (Usada) 2022 – 5.000 km – Gris", price:5000000, brand:"Usadas", cc:249, year:2022, km:5000, cover:"/images/trk251.jpg", gallery:["/images/trk251.jpg"], tags:["Usada","Oportunidad"] },
-      { id:"benelli-302s", title:"Benelli 302S", price:10000000, brand:"Benelli", cc:300, year:0, km:0, cover:"/images/302s.jpg", gallery:["/images/302s.jpg"], tags:["En stock"] },
-      { id:"benelli-251s", title:"Benelli 251S", price:5000000, brand:"Benelli", cc:249, year:0, km:0, cover:"/images/251s.jpg", gallery:["/images/251s.jpg"], tags:["En stock"] },
-      { id:"leoncino-500", title:"Benelli Leoncino 500", price:20000000, brand:"Benelli", cc:500, year:0, km:0, cover:"/images/leoncino500.jpg", gallery:["/images/leoncino500.jpg"], tags:["En stock"] },
-      { id:"benelli-180s", title:"Benelli 180S", price:3000000, brand:"Benelli", cc:180, year:0, km:0, cover:"/images/180s.jpg", gallery:["/images/180s.jpg"], tags:["En stock"] },
-      { id:"benelli-tnt15", title:"Benelli TNT 15", price:0, brand:"Benelli", cc:148, year:0, km:0, cover:"/images/tnt15-1.jpg", gallery:["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"], tags:["En stock"] }
+      { id:"benelli-302s",     title:"Benelli 302S",       price:10000000, brand:"Benelli", cc:300, year:0, km:0, cover:"/images/302s.jpg",      gallery:["/images/302s.jpg"],      tags:["En stock"] },
+      { id:"benelli-251s",     title:"Benelli 251S",       price:5000000,  brand:"Benelli", cc:249, year:0, km:0, cover:"/images/251s.jpg",      gallery:["/images/251s.jpg"],      tags:["En stock"] },
+      { id:"leoncino-500",     title:"Benelli Leoncino 500", price:20000000, brand:"Benelli", cc:500, year:0, km:0, cover:"/images/leoncino500.jpg", gallery:["/images/leoncino500.jpg"], tags:["En stock"] },
+      { id:"benelli-180s",     title:"Benelli 180S",       price:3000000,  brand:"Benelli", cc:180, year:0, km:0, cover:"/images/180s.jpg",      gallery:["/images/180s.jpg"],      tags:["En stock"] },
+      { id:"benelli-tnt15",    title:"Benelli TNT 15",     price:0,        brand:"Benelli", cc:148, year:0, km:0, cover:"/images/tnt15-1.jpg",  gallery:["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"], tags:["En stock"] }
     ];
 
     // ====== UTIL ======
@@ -236,12 +240,9 @@
           </div>`;
         grid.appendChild(card);
 
-        // Abrir galería
         card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
-        // Abrir calculadora (modal)
         card.querySelector(".btn-open-calc").addEventListener("click",(e)=>{ e.preventDefault(); openCalc(p); });
       });
-
       document.getElementById("count").textContent = products.length + " resultados";
     }
 
@@ -273,6 +274,26 @@
     document.getElementById("lb-prev").onclick = lbPrev;
     document.getElementById("lightbox").addEventListener("click",(e)=>{ if(e.target.id==="lightbox") document.getElementById("lightbox").classList.add("hidden"); });
 
+    // ====== FINANCIACIÓN AUTO POR CC ======
+    function getFinanceFor(p){
+      if (RULE_SMALL_CC(p.cc)) {
+        // Menor a 249cc => solo FIJA 89%
+        return {
+          plans: ["FIJA"],
+          tna: { FIJA: 89 },
+          months: DEFAULT_MONTHS,
+          defaultPlan: "FIJA"
+        };
+      }
+      // Resto => defaults
+      return {
+        plans: DEFAULT_PLANS,
+        tna: DEFAULT_TNA,
+        months: DEFAULT_MONTHS,
+        defaultPlan: "FIJA"
+      };
+    }
+
     // ====== CALCULADORA (MODAL) ======
     let CALC_PRODUCT = null;
 
@@ -286,11 +307,41 @@
 
     function openCalc(p){
       CALC_PRODUCT = p;
+      const f = getFinanceFor(p);
+
+      // título y precio
       document.getElementById("cb-title").textContent = "Calculadora de cuotas – " + p.title;
       document.getElementById("cb-price").textContent = "Precio: " + currency(p.price);
+
+      // iniciales
       document.getElementById("cb-entrega").value = 0;
-      document.getElementById("cb-meses").value = 12;
-      document.getElementById("cb-tna").value = 60;
+      document.getElementById("cb-meses").value = f.months[0] || 12;
+
+      // planes disponibles
+      const planSel = document.getElementById("cb-plan");
+      planSel.innerHTML = "";
+      f.plans.forEach(pl=>{
+        const opt = document.createElement("option");
+        opt.value = pl; opt.textContent = pl;
+        planSel.appendChild(opt);
+      });
+      planSel.value = f.defaultPlan || f.plans[0];
+
+      // atajos meses
+      const atajos = document.getElementById("cb-atajos");
+      atajos.innerHTML = "";
+      f.months.forEach(m=>{
+        const b = document.createElement("button");
+        b.className = "btn cb-atajo";
+        b.dataset.meses = m;
+        b.textContent = m;
+        b.addEventListener("click", ()=>{
+          document.getElementById("cb-meses").value = m;
+          updateCalc();
+        });
+        atajos.appendChild(b);
+      });
+
       updateCalc();
       document.getElementById("calcbox").classList.remove("hidden");
     }
@@ -299,9 +350,14 @@
 
     function updateCalc(){
       if(!CALC_PRODUCT) return;
+      const f = getFinanceFor(CALC_PRODUCT);
       const entrega = Math.max(parseFloat(document.getElementById("cb-entrega").value||"0"),0);
-      const months  = Math.max(parseInt(document.getElementById("cb-meses").value||"12"),1);
-      const rate    = Math.max(parseFloat(document.getElementById("cb-tna").value||"60"),0);
+      const months  = Math.max(parseInt(document.getElementById("cb-meses").value||String(f.months[0]||12)),1);
+      const plan    = document.getElementById("cb-plan").value || f.defaultPlan;
+      const rate    = (f.tna && f.tna[plan] != null) ? f.tna[plan] : 54;
+
+      document.getElementById("cb-tna-view").textContent = rate + "%";
+
       const monto   = Math.max(CALC_PRODUCT.price - entrega, 0);
       const cuota   = Math.round(frenchInstallment(monto, months, rate));
       document.getElementById("cb-cuota").textContent = currency(cuota);
@@ -314,27 +370,21 @@
         "• Precio: "+currency(CALC_PRODUCT.price),
         "• Entrega: "+currency(entrega),
         "• A financiar: "+currency(monto),
-        "• Plan: "+months+" cuotas (TNA "+rate+"% aprox.)",
+        "• Plan: "+months+" cuotas ("+plan+", TNA "+rate+"% aprox.)",
         "• Estimación de cuota: "+currency(cuota),
         "",
         "¿La podemos ver?"
       ].join("\n");
-      document.getElementById("cb-wa").href = waBase + "?text=" + encodeURIComponent(msg);
+      document.getElementById("cb-wa").href = "https://wa.me/543512004885?text=" + encodeURIComponent(msg);
     }
 
     // Eventos del modal
     document.getElementById("cb-close").onclick  = closeCalc;
     document.getElementById("cb-cerrar").onclick = closeCalc;
     document.getElementById("calcbox").addEventListener("click",(e)=>{ if(e.target.id==="calcbox") closeCalc(); });
-    ["cb-entrega","cb-meses","cb-tna"].forEach(id=>{
+    ["cb-entrega","cb-meses","cb-plan"].forEach(id=>{
       document.getElementById(id).addEventListener("input", updateCalc);
-    });
-    document.querySelectorAll(".cb-atajo").forEach(btn=>{
-      btn.addEventListener("click", (e)=>{
-        const m = e.currentTarget.dataset.meses;
-        document.getElementById("cb-meses").value = m;
-        updateCalc();
-      });
+      document.getElementById(id).addEventListener("change", updateCalc);
     });
 
     // ====== FILTROS / INIT ======
