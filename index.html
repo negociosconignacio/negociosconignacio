@@ -134,7 +134,7 @@
   <!-- WhatsApp flotante -->
   <a id="wa-float" target="_blank" class="fixed-wa btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
 
-  <!-- Lightbox modal -->
+  <!-- Lightbox (galería) -->
   <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
     <div class="absolute inset-0 flex items-center justify-center p-4">
       <div class="relative w-full max-w-4xl card p-3 bg-black">
@@ -143,6 +143,50 @@
         <div id="lb-thumbs" class="mt-3 grid grid-cols-6 gap-2"></div>
         <button id="lb-prev" class="absolute left-2 top-1/2 -translate-y-1/2 btn">◀</button>
         <button id="lb-next" class="absolute right-2 top-1/2 -translate-y-1/2 btn">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calculadora (modal pantalla completa) -->
+  <div id="calcbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="relative w-full max-w-3xl card p-4 md:p-6 bg-black">
+        <button id="cb-close" class="absolute -top-3 -right-3 btn bg-black">✖</button>
+
+        <h3 id="cb-title" class="text-xl md:text-2xl font-bold gold">Calculadora de cuotas</h3>
+        <div id="cb-price" class="mt-1 text-zinc-300"></div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+          <label class="text-sm block">Entrega
+            <input id="cb-entrega" type="number" class="input w-full mt-1" value="0" step="10000" min="0">
+          </label>
+
+          <label class="text-sm block">Meses
+            <input id="cb-meses" type="number" class="input w-full mt-1" value="12" min="1" max="72">
+          </label>
+
+          <label class="text-sm block">TNA (%)
+            <input id="cb-tna" type="number" class="input w-full mt-1" value="60" min="0" max="500" step="0.1">
+          </label>
+
+          <div class="text-sm flex flex-col justify-end">
+            <div class="text-xs opacity-70">Cuota estimada</div>
+            <div id="cb-cuota" class="text-2xl font-semibold gold">-</div>
+          </div>
+
+          <div class="flex items-end gap-2">
+            <button class="btn cb-atajo" data-meses="3">3</button>
+            <button class="btn cb-atajo" data-meses="6">6</button>
+            <button class="btn cb-atajo" data-meses="12">12</button>
+          </div>
+        </div>
+
+        <div class="mt-4 text-sm opacity-80" id="cb-monto">Monto a financiar: -</div>
+
+        <div class="mt-5 flex flex-col md:flex-row gap-3">
+          <a id="cb-wa" target="_blank" class="btn w-full md:w-auto" style="background: rgba(197,160,71,.18);">📞 Enviar por WhatsApp</a>
+          <button id="cb-cerrar" class="btn w-full md:w-auto">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -164,7 +208,7 @@
     const waDefault = "Hola Nacho, quiero info y *Opciones disponibles*";
     const $ = s => document.querySelector(s);
 
-    // ====== RENDER ======
+    // ====== RENDER TARJETAS ======
     function render(products){
       const grid = $("#grid");
       grid.innerHTML = "";
@@ -182,123 +226,24 @@
             <div class="mt-1 text-xs opacity-70">${p.brand} ${p.year>0 ? "• "+p.year : ""} ${p.km ? "• "+p.km.toLocaleString("es-AR")+" km" : ""}</div>
             <div class="mt-2 flex flex-wrap gap-2">${(p.tags||[]).map(t=>'<span class="tag">'+t+'</span>').join('')}</div>
 
-            <!-- Botones responsive -->
             <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2">
-              <a href="#" class="btn btn-calc w-full">🧮 Cuotas</a>
+              <a href="#" class="btn w-full btn-open-calc">🧮 Cuotas</a>
               <a target="_blank" href="${waBase}?text=${encodeURIComponent('Hola Nacho, me interesa *'+p.title+'*. ¿Opciones disponibles?')}" class="btn w-full" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
-              <a href="#" class="btn btn-gallery w-full md:col-span-1 col-span-2">🖼️ Ver fotos</a>
-            </div>
-
-            <!-- Calculadora responsive -->
-            <div class="calc hidden mt-4 card p-4">
-              <div class="text-sm font-semibold mb-3 gold">Calculadora de cuotas</div>
-
-              <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                <label class="text-sm block">Entrega
-                  <input type="number" class="ent input w-full mt-1" value="0" step="10000" min="0">
-                </label>
-
-                <label class="text-sm block">Meses
-                  <input type="number" class="meses input w-full mt-1" value="12" min="1" max="72">
-                </label>
-
-                <label class="text-sm block">TNA (%)
-                  <input type="number" class="tna input w-full mt-1" value="60" min="0" max="500" step="0.1">
-                </label>
-
-                <div class="text-sm flex flex-col justify-end">
-                  <div class="text-xs opacity-70">Cuota</div>
-                  <div class="cuota text-lg font-semibold">-</div>
-                </div>
-
-                <div class="flex items-end gap-2 col-span-2 md:col-span-1">
-                  <button class="btn atajo" data-meses="3">3</button>
-                  <button class="btn atajo" data-meses="6">6</button>
-                  <button class="btn atajo" data-meses="12">12</button>
-                </div>
-              </div>
-
-              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mt-4">
-                <div class="monto text-xs opacity-70">Monto a financiar: -</div>
-                <a target="_blank" class="wa btn w-full md:w-auto" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
-              </div>
+              <a href="#" class="btn w-full md:col-span-1 col-span-2 btn-gallery">🖼️ Ver fotos</a>
             </div>
           </div>`;
         grid.appendChild(card);
 
-        // Galería
+        // Abrir galería
         card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
-
-        // Cuotas
-        const calc = card.querySelector(".calc");
-        const ent = card.querySelector(".ent");
-        const meses = card.querySelector(".meses");
-        const tna = card.querySelector(".tna");
-        const cuotaEl = card.querySelector(".cuota");
-        const montoEl = card.querySelector(".monto");
-        const waBtn = card.querySelector(".wa");
-        const btnCalc = card.querySelector(".btn-calc");
-        const atajos = card.querySelectorAll(".atajo");
-
-        function frenchInstallment(amount, months, tna){
-          const i = (tna/12)/100;
-          if(months<=0 || amount<=0) return 0;
-          if(i===0) return amount/months;
-          const f = Math.pow(1+i, months);
-          return amount * ((i*f)/(f-1));
-        }
-        function update(){
-          const entrega = Math.max(parseFloat(ent.value||"0"),0);
-          const months = Math.max(parseInt(meses.value||"12"),1);
-          const rate = Math.max(parseFloat(tna.value||"60"),0);
-          const monto = Math.max(p.price - entrega, 0);
-          const cuota = Math.round(frenchInstallment(monto, months, rate));
-          cuotaEl.textContent = currency(cuota);
-          montoEl.textContent = "Monto a financiar: " + currency(monto);
-          const msg = [
-            "Hola Nacho, me interesa *"+p.title+"*.",
-            "",
-            "Opciones disponibles:",
-            "• Precio: "+currency(p.price),
-            "• Entrega: "+currency(entrega),
-            "• A financiar: "+currency(monto),
-            "• Plan: "+months+" cuotas (TNA "+rate+"% aprox.)",
-            "• Estimación de cuota: "+currency(cuota),
-            "",
-            "¿La podemos ver?"
-          ].join("\n");
-          waBtn.href = waBase + "?text=" + encodeURIComponent(msg);
-        }
-        [ent, meses, tna].forEach(i=> i.addEventListener("input", update));
-        atajos.forEach(b=> b.addEventListener("click",(e)=>{ e.preventDefault(); meses.value=b.dataset.meses; update(); }));
-        btnCalc.addEventListener("click",(e)=>{ e.preventDefault(); calc.classList.toggle("hidden"); update(); });
+        // Abrir calculadora (modal)
+        card.querySelector(".btn-open-calc").addEventListener("click",(e)=>{ e.preventDefault(); openCalc(p); });
       });
 
       document.getElementById("count").textContent = products.length + " resultados";
     }
 
-    // Comparador (placeholder)
-    const compare = new Map();
-    function renderCompare(){
-      const body = document.getElementById("compareBody");
-      const list = document.getElementById("compareList");
-      body.innerHTML = "";
-      const arr = Array.from(compare.values());
-      list.textContent = arr.length? "Modelos seleccionados: " + arr.map(a=>a.title).join(" • ") : "Elegí hasta 3 modelos desde el catálogo (botón “Comparar”).";
-      arr.forEach(p=>{
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="p-2">${p.title}</td>
-          <td class="p-2">${p.brand}</td>
-          <td class="p-2">${p.cc}</td>
-          <td class="p-2">${p.year || "-"}</td>
-          <td class="p-2">${p.km ? p.km.toLocaleString("es-AR") : "-"}</td>
-          <td class="p-2 gold">${currency(p.price)}</td>`;
-        body.appendChild(tr);
-      });
-    }
-
-    // Lightbox
+    // ====== LIGHTBOX (GALERÍA) ======
     let LB = { list:[], idx:0 };
     function openGallery(p){
       LB.list = (p.gallery && p.gallery.length ? p.gallery : [p.cover]);
@@ -326,16 +271,80 @@
     document.getElementById("lb-prev").onclick = lbPrev;
     document.getElementById("lightbox").addEventListener("click",(e)=>{ if(e.target.id==="lightbox") document.getElementById("lightbox").classList.add("hidden"); });
 
-    // Filtros / Init
+    // ====== CALCULADORA (MODAL) ======
+    let CALC_PRODUCT = null;
+
+    function frenchInstallment(amount, months, tna){
+      const i = (tna/12)/100;
+      if(months<=0 || amount<=0) return 0;
+      if(i===0) return amount/months;
+      const f = Math.pow(1+i, months);
+      return amount * ((i*f)/(f-1));
+    }
+
+    function openCalc(p){
+      CALC_PRODUCT = p;
+      document.getElementById("cb-title").textContent = "Calculadora de cuotas – " + p.title;
+      document.getElementById("cb-price").textContent = "Precio: " + currency(p.price);
+      document.getElementById("cb-entrega").value = 0;
+      document.getElementById("cb-meses").value = 12;
+      document.getElementById("cb-tna").value = 60;
+      updateCalc();
+      document.getElementById("calcbox").classList.remove("hidden");
+    }
+
+    function closeCalc(){ document.getElementById("calcbox").classList.add("hidden"); }
+
+    function updateCalc(){
+      if(!CALC_PRODUCT) return;
+      const entrega = Math.max(parseFloat(document.getElementById("cb-entrega").value||"0"),0);
+      const months  = Math.max(parseInt(document.getElementById("cb-meses").value||"12"),1);
+      const rate    = Math.max(parseFloat(document.getElementById("cb-tna").value||"60"),0);
+      const monto   = Math.max(CALC_PRODUCT.price - entrega, 0);
+      const cuota   = Math.round(frenchInstallment(monto, months, rate));
+      document.getElementById("cb-cuota").textContent = currency(cuota);
+      document.getElementById("cb-monto").textContent = "Monto a financiar: " + currency(monto);
+
+      const msg = [
+        "Hola Nacho, me interesa *"+CALC_PRODUCT.title+"*.",
+        "",
+        "Opciones calculadas:",
+        "• Precio: "+currency(CALC_PRODUCT.price),
+        "• Entrega: "+currency(entrega),
+        "• A financiar: "+currency(monto),
+        "• Plan: "+months+" cuotas (TNA "+rate+"% aprox.)",
+        "• Estimación de cuota: "+currency(cuota),
+        "",
+        "¿La podemos ver?"
+      ].join("\n");
+      document.getElementById("cb-wa").href = waBase + "?text=" + encodeURIComponent(msg);
+    }
+
+    // Eventos del modal
+    document.getElementById("cb-close").onclick  = closeCalc;
+    document.getElementById("cb-cerrar").onclick = closeCalc;
+    document.getElementById("calcbox").addEventListener("click",(e)=>{ if(e.target.id==="calcbox") closeCalc(); });
+    ["cb-entrega","cb-meses","cb-tna"].forEach(id=>{
+      document.getElementById(id).addEventListener("input", updateCalc);
+    });
+    document.querySelectorAll(".cb-atajo").forEach(btn=>{
+      btn.addEventListener("click", (e)=>{
+        const m = e.currentTarget.dataset.meses;
+        document.getElementById("cb-meses").value = m;
+        updateCalc();
+      });
+    });
+
+    // ====== FILTROS / INIT ======
     function applyFilters(){
-      const q = (document.getElementById("q").value || "").toLowerCase();
-      const brand = document.getElementById("brand").value;
+      const q    = (document.getElementById("q").value || "").toLowerCase();
+      const b    = document.getElementById("brand").value;
       const minP = parseFloat(document.getElementById("minPrice").value || "0");
       const maxP = parseFloat(document.getElementById("maxPrice").value || "0");
       const out = PRODUCTS.filter(p=>{
         const s = [p.title, p.brand, String(p.cc||""), String(p.year||"")].join(" ").toLowerCase();
         const okQ = q ? s.includes(q) : true;
-        const okB = brand ? p.brand===brand : true;
+        const okB = b ? p.brand===b : true;
         const okMin = minP ? p.price >= minP : true;
         const okMax = maxP ? p.price <= maxP : true;
         return okQ && okB && okMin && okMax;
@@ -344,10 +353,11 @@
     }
 
     document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("wa-hero").href = waBase + "?text=" + encodeURIComponent(waDefault);
+    document.getElementById("wa-hero").href  = waBase + "?text=" + encodeURIComponent(waDefault);
     document.getElementById("wa-float").href = waBase + "?text=" + encodeURIComponent(waDefault);
     ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).addEventListener("input", applyFilters));
     document.getElementById("clear").addEventListener("click", ()=>{ ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value=""); applyFilters(); });
+
     render(PRODUCTS);
     applyFilters();
   </script>
