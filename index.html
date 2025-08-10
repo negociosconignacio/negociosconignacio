@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Negocios con Ignacio – Catálogo</title>
-  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, comparador, galería y WhatsApp." />
+  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, comparador, galería, favoritos y WhatsApp." />
   <link rel="icon" href="/images/logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -18,6 +18,8 @@
     .input, select { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#EEE; border-radius:12px; padding:8px 12px; height:40px; }
     .fixed-wa { position:fixed; right:16px; bottom:16px; z-index:50; }
     .grid-auto-fill { display:grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap:20px; }
+    .iconbtn { border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); height:38px; padding:0 10px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; font-size:13px; }
+    .iconbtn.active { border-color: var(--gold); background: rgba(197,160,71,.18); }
     a { color: inherit; }
   </style>
 </head>
@@ -40,7 +42,7 @@
   <section class="mx-auto max-w-7xl px-4 py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
     <div>
       <h1 class="text-3xl md:text-5xl font-extrabold leading-tight"><span class="gold">Elegí tu próxima moto</span> con asesoramiento real</h1>
-      <p class="mt-3 text-zinc-300">Filtros por marca y precio, calculadora de cuotas, comparador y galería. Contacto directo por WhatsApp.</p>
+      <p class="mt-3 text-zinc-300">Filtros, cuotas, comparador, galería, favoritos y compartir por WhatsApp.</p>
       <div class="mt-5 flex flex-wrap items-center gap-3">
         <a href="#catalogo" class="btn">🛒 Ver catálogo</a>
         <a id="wa-hero" target="_blank" class="btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
@@ -51,37 +53,71 @@
 
   <!-- Catálogo -->
   <section id="catalogo" class="mx-auto max-w-7xl px-4 pb-10">
-    <div class="flex items-center justify-between gap-3 mb-4">
+    <div class="flex items-center justify-between gap-3 mb-3">
       <h2 class="text-2xl font-bold gold">Catálogo</h2>
       <div id="count" class="text-sm opacity-80"></div>
     </div>
 
+    <!-- Filtros + orden -->
     <div class="card p-4 md:p-5 mb-6">
-      <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
-        <label class="text-sm col-span-2 md:col-span-2">Búsqueda
+      <div class="grid grid-cols-2 md:grid-cols-12 gap-3 items-end">
+        <label class="text-sm col-span-2 md:col-span-4">Búsqueda
           <input id="q" placeholder="Modelo, marca, cc…" class="input w-full mt-1" />
         </label>
-        <label class="text-sm">Marca
+        <label class="text-sm md:col-span-2">Marca
           <select id="brand" class="w-full mt-1">
             <option value="">Todas</option>
             <option>Benelli</option>
             <option>Usadas</option>
           </select>
         </label>
-        <label class="text-sm">Min
+        <label class="text-sm md:col-span-2">Min
           <input id="minPrice" type="number" class="input w-full mt-1" />
         </label>
-        <label class="text-sm">Max
+        <label class="text-sm md:col-span-2">Max
           <input id="maxPrice" type="number" class="input w-full mt-1" />
         </label>
-        <div class="text-sm flex items-end"><button id="clear" class="btn">🧹 Limpiar</button></div>
+
+        <label class="text-sm md:col-span-2">Orden
+          <select id="sort" class="w-full mt-1">
+            <option value="none">—</option>
+            <option value="price-asc">Precio ↑</option>
+            <option value="price-desc">Precio ↓</option>
+            <option value="cc-asc">Cilindrada ↑</option>
+            <option value="cc-desc">Cilindrada ↓</option>
+            <option value="year-desc">Año ↓</option>
+            <option value="year-asc">Año ↑</option>
+          </select>
+        </label>
+
+        <label class="text-sm md:col-span-2 flex items-center gap-2">
+          <input id="onlyFavs" type="checkbox" class="h-4 w-4">
+          <span>⭐ Solo favoritos</span>
+        </label>
+
+        <div class="text-sm md:col-span-2"><button id="clear" class="btn w-full">🧹 Limpiar</button></div>
+      </div>
+
+      <!-- Paginación arriba -->
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="text-sm opacity-80">
+          <label>Por página
+            <select id="pageSize" class="input ml-2" style="height:36px;">
+              <option>6</option><option selected>10</option><option>12</option><option>16</option>
+            </select>
+          </label>
+        </div>
+        <div class="flex items-center gap-2" id="pagerTop"></div>
       </div>
     </div>
 
     <div id="grid" class="grid-auto-fill"></div>
+
+    <!-- Paginación abajo -->
+    <div class="mt-6 flex items-center justify-end gap-2" id="pagerBottom"></div>
   </section>
 
-  <!-- Comparador -->
+  <!-- Comparador (placeholder visual) -->
   <section id="comparador" class="mx-auto max-w-7xl px-4 pb-12">
     <h3 class="text-xl font-bold gold mb-3">Comparador</h3>
     <div class="card p-4">
@@ -190,10 +226,7 @@
 
   <script>
     // ====== CONFIG REGLAS ======
-    // Regla automática: < 249 cc => solo FIJA (89%)
-    const RULE_SMALL_CC = (cc)=> cc!=null && cc < 249;
-
-    // Defaults cuando NO aplica la regla
+    const RULE_SMALL_CC = (cc)=> cc!=null && cc < 249; // <249cc => solo FIJA 89%
     const DEFAULT_PLANS  = ["FIJA","UVA"];
     const DEFAULT_TNA    = { FIJA:54, UVA:20 };
     const DEFAULT_MONTHS = [12,18,24,36,48];
@@ -214,37 +247,76 @@
     const waDefault = "Hola Nacho, quiero info y *Opciones disponibles*";
     const $ = s => document.querySelector(s);
 
+    // ====== STATE (filtros + orden + paginación + favoritos) ======
+    let STATE = {
+      q:"", brand:"", minPrice:0, maxPrice:0,
+      sort:"none",
+      onlyFavs:false,
+      page:1, pageSize:10
+    };
+    const FAV_KEY = "negocios_favs_v1";
+    const FAVS = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+
+    function saveFavs(){ localStorage.setItem(FAV_KEY, JSON.stringify([...FAVS])); }
+
     // ====== RENDER TARJETAS ======
-    function render(products){
+    function makeCard(p){
+      const card = document.createElement("div");
+      card.className = "card overflow-hidden";
+      card.id = p.id;
+      card.innerHTML = `
+        <div class="aspect-video bg-cover bg-center" style="background-image:url('${p.cover}'), linear-gradient(120deg,#111,#222)" loading="lazy"></div>
+        <div class="p-4">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h3 class="font-semibold leading-tight">${p.title}</h3>
+              <div class="mt-1 text-xs opacity-70">${p.brand} ${p.year>0 ? "• "+p.year : ""} ${p.km ? "• "+p.km.toLocaleString("es-AR")+" km" : ""}</div>
+            </div>
+            <div class="flex gap-2">
+              <button class="iconbtn btn-fav ${FAVS.has(p.id) ? "active":""}" title="Favorito">⭐</button>
+              <button class="iconbtn btn-share" title="Compartir">↗</button>
+            </div>
+          </div>
+          <div class="mt-1 text-xl font-bold gold">${currency(p.price)}</div>
+          <div class="mt-2 flex flex-wrap gap-2">${(p.tags||[]).map(t=>'<span class="tag">'+t+'</span>').join('')}</div>
+
+          <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2">
+            <a href="#" class="btn w-full btn-open-calc">🧮 Cuotas</a>
+            <a target="_blank" href="${waBase}?text=${encodeURIComponent('Hola Nacho, me interesa *'+p.title+'*. ¿Opciones disponibles?')}" class="btn w-full" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
+            <a href="#" class="btn w-full md:col-span-1 col-span-2 btn-gallery">🖼️ Ver fotos</a>
+          </div>
+        </div>`;
+      // Listeners
+      card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
+      card.querySelector(".btn-open-calc").addEventListener("click",(e)=>{ e.preventDefault(); openCalc(p); });
+      card.querySelector(".btn-fav").addEventListener("click", (e)=>{
+        if(FAVS.has(p.id)) FAVS.delete(p.id); else FAVS.add(p.id);
+        saveFavs();
+        e.currentTarget.classList.toggle("active");
+        if(STATE.onlyFavs) applyFilters(); // si filtra favoritos, actualiza lista
+      });
+      card.querySelector(".btn-share").addEventListener("click", ()=>{
+        const url = location.origin + location.pathname + "#"+p.id;
+        const text = `Mirá esta moto: ${p.title} – ${currency(p.price)}\n${url}\n¿La vemos?`;
+        if (navigator.share) {
+          navigator.share({ title: p.title, text, url }).catch(()=>{});
+        } else {
+          // Fallback a WhatsApp
+          window.open(`https://wa.me/543512004885?text=${encodeURIComponent(text)}`,"_blank");
+        }
+      });
+      return card;
+    }
+
+    function renderGrid(paged){
       const grid = $("#grid");
       grid.innerHTML = "";
-      products.forEach(p=>{
-        const card = document.createElement("div");
-        card.className = "card overflow-hidden";
-        card.innerHTML = `
-          <div class="aspect-video bg-cover bg-center" style="background-image:url('${p.cover}'), linear-gradient(120deg,#111,#222)"></div>
-          <div class="p-4">
-            <div class="flex items-center justify-between gap-3">
-              <h3 class="font-semibold leading-tight">${p.title}</h3>
-              <span class="text-sm opacity-80">🏍️ ${p.cc || "-" } cc</span>
-            </div>
-            <div class="mt-1 text-xl font-bold gold">${currency(p.price)}</div>
-            <div class="mt-1 text-xs opacity-70">${p.brand} ${p.year>0 ? "• "+p.year : ""} ${p.km ? "• "+p.km.toLocaleString("es-AR")+" km" : ""}</div>
-            <div class="mt-2 flex flex-wrap gap-2">${(p.tags||[]).map(t=>'<span class="tag">'+t+'</span>').join('')}</div>
-
-            <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2">
-              <a href="#" class="btn w-full btn-open-calc">🧮 Cuotas</a>
-              <a target="_blank" href="${waBase}?text=${encodeURIComponent('Hola Nacho, me interesa *'+p.title+'*. ¿Opciones disponibles?')}" class="btn w-full" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
-              <a href="#" class="btn w-full md:col-span-1 col-span-2 btn-gallery">🖼️ Ver fotos</a>
-            </div>
-          </div>`;
-        grid.appendChild(card);
-
-        card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
-        card.querySelector(".btn-open-calc").addEventListener("click",(e)=>{ e.preventDefault(); openCalc(p); });
-      });
-      document.getElementById("count").textContent = products.length + " resultados";
+      paged.items.forEach(p=> grid.appendChild(makeCard(p)));
+      document.getElementById("count").textContent =
+        `${paged.total} resultados · página ${paged.page} de ${paged.pages}`;
     }
+
+    // ====== FAVORITOS/SHARE ya incluida en makeCard ======
 
     // ====== LIGHTBOX (GALERÍA) ======
     let LB = { list:[], idx:0 };
@@ -277,21 +349,9 @@
     // ====== FINANCIACIÓN AUTO POR CC ======
     function getFinanceFor(p){
       if (RULE_SMALL_CC(p.cc)) {
-        // Menor a 249cc => solo FIJA 89%
-        return {
-          plans: ["FIJA"],
-          tna: { FIJA: 89 },
-          months: DEFAULT_MONTHS,
-          defaultPlan: "FIJA"
-        };
+        return { plans:["FIJA"], tna:{FIJA:89}, months: DEFAULT_MONTHS, defaultPlan:"FIJA" };
       }
-      // Resto => defaults
-      return {
-        plans: DEFAULT_PLANS,
-        tna: DEFAULT_TNA,
-        months: DEFAULT_MONTHS,
-        defaultPlan: "FIJA"
-      };
+      return { plans: DEFAULT_PLANS, tna: DEFAULT_TNA, months: DEFAULT_MONTHS, defaultPlan:"FIJA" };
     }
 
     // ====== CALCULADORA (MODAL) ======
@@ -309,15 +369,12 @@
       CALC_PRODUCT = p;
       const f = getFinanceFor(p);
 
-      // título y precio
       document.getElementById("cb-title").textContent = "Calculadora de cuotas – " + p.title;
       document.getElementById("cb-price").textContent = "Precio: " + currency(p.price);
 
-      // iniciales
       document.getElementById("cb-entrega").value = 0;
       document.getElementById("cb-meses").value = f.months[0] || 12;
 
-      // planes disponibles
       const planSel = document.getElementById("cb-plan");
       planSel.innerHTML = "";
       f.plans.forEach(pl=>{
@@ -327,7 +384,6 @@
       });
       planSel.value = f.defaultPlan || f.plans[0];
 
-      // atajos meses
       const atajos = document.getElementById("cb-atajos");
       atajos.innerHTML = "";
       f.months.forEach(m=>{
@@ -378,7 +434,6 @@
       document.getElementById("cb-wa").href = "https://wa.me/543512004885?text=" + encodeURIComponent(msg);
     }
 
-    // Eventos del modal
     document.getElementById("cb-close").onclick  = closeCalc;
     document.getElementById("cb-cerrar").onclick = closeCalc;
     document.getElementById("calcbox").addEventListener("click",(e)=>{ if(e.target.id==="calcbox") closeCalc(); });
@@ -387,31 +442,94 @@
       document.getElementById(id).addEventListener("change", updateCalc);
     });
 
-    // ====== FILTROS / INIT ======
+    // ====== ORDEN + PAGINACIÓN ======
     function applyFilters(){
-      const q    = (document.getElementById("q").value || "").toLowerCase();
-      const b    = document.getElementById("brand").value;
-      const minP = parseFloat(document.getElementById("minPrice").value || "0");
-      const maxP = parseFloat(document.getElementById("maxPrice").value || "0");
-      const out = PRODUCTS.filter(p=>{
+      // leer UI
+      STATE.q        = document.getElementById("q").value.toLowerCase();
+      STATE.brand    = document.getElementById("brand").value;
+      STATE.minPrice = parseFloat(document.getElementById("minPrice").value || "0");
+      STATE.maxPrice = parseFloat(document.getElementById("maxPrice").value || "0");
+      STATE.sort     = document.getElementById("sort").value;
+      STATE.onlyFavs = document.getElementById("onlyFavs").checked;
+      STATE.pageSize = parseInt(document.getElementById("pageSize").value || "10",10);
+
+      // filtrar
+      let list = PRODUCTS.filter(p=>{
+        if(STATE.onlyFavs && !FAVS.has(p.id)) return false;
         const s = [p.title, p.brand, String(p.cc||""), String(p.year||"")].join(" ").toLowerCase();
-        const okQ = q ? s.includes(q) : true;
-        const okB = b ? p.brand===b : true;
-        const okMin = minP ? p.price >= minP : true;
-        const okMax = maxP ? p.price <= maxP : true;
+        const okQ = STATE.q ? s.includes(STATE.q) : true;
+        const okB = STATE.brand ? p.brand === STATE.brand : true;
+        const okMin = STATE.minPrice ? p.price >= STATE.minPrice : true;
+        const okMax = STATE.maxPrice ? p.price <= STATE.maxPrice : true;
         return okQ && okB && okMin && okMax;
       });
-      render(out);
+
+      // ordenar
+      const keyers = {
+        "price": p=> p.price||0,
+        "cc": p=> p.cc||0,
+        "year": p=> p.year||0
+      };
+      if(STATE.sort !== "none"){
+        const [k,dir] = STATE.sort.split("-");
+        const key = keyers[k] || (()=>0);
+        list = list.slice().sort((a,b)=> (key(a)-key(b)) * (dir==="asc"?1:-1));
+      }
+
+      // paginar
+      const total = list.length;
+      const pages = Math.max(1, Math.ceil(total / STATE.pageSize));
+      if (STATE.page > pages) STATE.page = pages;
+      const start = (STATE.page-1) * STATE.pageSize;
+      const items = list.slice(start, start + STATE.pageSize);
+
+      // render
+      renderGrid({items, total, page:STATE.page, pages});
+      renderPager({total, page:STATE.page, pages});
     }
 
+    function renderPager({total, page, pages}){
+      const mk = (where)=>{
+        const host = document.getElementById(where);
+        host.innerHTML = "";
+        const prev = document.createElement("button");
+        prev.className = "iconbtn";
+        prev.textContent = "◀ Anterior";
+        prev.disabled = page<=1;
+        prev.onclick = ()=>{ STATE.page=Math.max(1,STATE.page-1); applyFilters(); };
+        const next = document.createElement("button");
+        next.className = "iconbtn";
+        next.textContent = "Siguiente ▶";
+        next.disabled = page>=pages;
+        next.onclick = ()=>{ STATE.page=Math.min(pages,STATE.page+1); applyFilters(); };
+        const label = document.createElement("div");
+        label.className = "text-sm opacity-80";
+        label.textContent = `Página ${page} de ${pages}`;
+        host.appendChild(prev); host.appendChild(label); host.appendChild(next);
+      };
+      mk("pagerTop");
+      mk("pagerBottom");
+    }
+
+    // ====== INIT ======
     document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("wa-hero").href  = "https://wa.me/543512004885?text=" + encodeURIComponent(waDefault);
     document.getElementById("wa-float").href = "https://wa.me/543512004885?text=" + encodeURIComponent(waDefault);
-    ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).addEventListener("input", applyFilters));
-    document.getElementById("clear").addEventListener("click", ()=>{ ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value=""); applyFilters(); });
 
-    render(PRODUCTS);
-    applyFilters();
+    // listeners filtros/orden/paginación
+    ["q","brand","minPrice","maxPrice","sort","onlyFavs","pageSize"].forEach(id=>{
+      document.getElementById(id).addEventListener("input", ()=>{ STATE.page=1; applyFilters(); });
+      document.getElementById(id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
+    });
+    document.getElementById("clear").addEventListener("click", ()=>{
+      ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value="");
+      document.getElementById("sort").value="none";
+      document.getElementById("onlyFavs").checked=false;
+      STATE.page=1;
+      applyFilters();
+    });
+
+    applyFilters(); // render inicial
   </script>
 </body>
 </html>
