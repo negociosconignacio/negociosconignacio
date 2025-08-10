@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Negocios con Ignacio – Catálogo</title>
-  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas y contacto por WhatsApp." />
+  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, comparador, galería y WhatsApp." />
   <meta property="og:title" content="Negocios con Ignacio – Catálogo" />
-  <meta property="og:description" content="Elegí tu próxima moto. Filtros, calculadora de cuotas, comparador y WhatsApp." />
+  <meta property="og:description" content="Elegí tu próxima moto. Filtros, calculadora de cuotas, comparador, galería y WhatsApp." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="images/logo.png" />
-  <link rel="icon" href="images/logo.png" />
+  <meta property="og:image" content="/images/logo.png" />
+  <link rel="icon" href="/images/logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { --gold: #C5A047; --dark: #0B0B0B; }
@@ -29,7 +29,7 @@
   <!-- Header -->
   <header class="sticky top-0 z-20 border-b border-white/10 bg-black/70 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
-      <img src="images/logo.png" alt="Negocios con Ignacio" class="h-10 w-auto rounded-lg" onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
+      <img src="/images/logo.png" alt="Negocios con Ignacio" class="h-10 w-auto rounded-lg" onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
       <div class="text-sm opacity-80 hidden sm:block">Motos nuevas y usadas</div>
       <nav class="ml-auto hidden md:flex items-center gap-4 text-sm opacity-90">
         <a href="#catalogo" class="hover:opacity-100">Catálogo</a>
@@ -44,7 +44,7 @@
   <section class="mx-auto max-w-7xl px-4 py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
     <div>
       <h1 class="text-3xl md:text-5xl font-extrabold leading-tight"><span class="gold">Elegí tu próxima moto</span> con asesoramiento real</h1>
-      <p class="mt-3 text-zinc-300">Filtros por marca y precio, calculadora de cuotas y contacto directo por WhatsApp.</p>
+      <p class="mt-3 text-zinc-300">Filtros por marca y precio, calculadora de cuotas, comparador y galería. Contacto directo por WhatsApp.</p>
       <div class="mt-5 flex flex-wrap items-center gap-3">
         <a href="#catalogo" class="btn">🛒 Ver catálogo</a>
         <a id="wa-hero" target="_blank" class="btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
@@ -138,6 +138,19 @@
   <!-- WhatsApp flotante -->
   <a id="wa-float" target="_blank" class="fixed-wa btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
 
+  <!-- Lightbox modal -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="relative w-full max-w-4xl card p-3 bg-black">
+        <button id="lb-close" class="absolute -top-3 -right-3 btn bg-black">✖</button>
+        <img id="lb-main" src="" alt="" class="w-full max-h-[70vh] object-contain rounded-xl">
+        <div id="lb-thumbs" class="mt-3 grid grid-cols-6 gap-2"></div>
+        <button id="lb-prev" class="absolute left-2 top-1/2 -translate-y-1/2 btn">◀</button>
+        <button id="lb-next" class="absolute right-2 top-1/2 -translate-y-1/2 btn">▶</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const PRODUCTS = [
       {
@@ -147,6 +160,7 @@
         brand: "Usadas",
         cc: 249, year: 2022, km: 5000,
         cover: "/images/trk251.jpg",
+        gallery: ["/images/trk251.jpg"],
         tags: ["Usada","Oportunidad"]
       },
       {
@@ -156,6 +170,7 @@
         brand: "Benelli",
         cc: 300, year: 0, km: 0,
         cover: "/images/302s.jpg",
+        gallery: ["/images/302s.jpg"],
         tags: ["En stock"]
       },
       {
@@ -165,7 +180,7 @@
         brand: "Benelli",
         cc: 249, year: 0, km: 0,
         cover: "/images/251s.jpg",
-        gallery:["/images/251s-1.jpg","/images/251s-2.jpg","/images/251s-3.jpg"]
+        gallery: ["/images/251s.jpg"],
         tags: ["En stock"]
       },
       {
@@ -174,7 +189,8 @@
         price: 20000000,
         brand: "Benelli",
         cc: 500, year: 0, km: 0,
-        cover: "images/leoncino500.jpg",
+        cover: "/images/leoncino500.jpg",
+        gallery: ["/images/leoncino500.jpg"],
         tags: ["En stock"]
       },
       {
@@ -184,6 +200,17 @@
         brand: "Benelli",
         cc: 180, year: 0, km: 0,
         cover: "/images/180s.jpg",
+        gallery: ["/images/180s.jpg"],
+        tags: ["En stock"]
+      },
+      {
+        id: "benelli-tnt15",
+        title: "Benelli TNT 15",
+        price: 0, /* poné el precio real si querés */
+        brand: "Benelli",
+        cc: 148, year: 0, km: 0,
+        cover: "/images/tnt15-1.jpg",
+        gallery: ["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"],
         tags: ["En stock"]
       }
     ];
@@ -247,7 +274,7 @@
             <div class="mt-4 grid grid-cols-3 gap-2">
               <a href="#" class="btn btn-calc">🧮 Cuotas</a>
               <a target="_blank" href="${waBase}?text=${encodeURIComponent('Hola Nacho, me interesa *'+p.title+'*. ¿Opciones disponibles?')}" class="btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
-              <a href="#" class="btn btn-compare">⚖️ Comparar</a>
+              <a href="#" class="btn btn-gallery">🖼️ Ver fotos</a>
             </div>
             <div class="calc hidden mt-4 card p-4">
               <div class="text-sm font-semibold mb-2 gold">Calculadora de cuotas</div>
@@ -279,6 +306,10 @@
           </div>`;
         grid.appendChild(card);
 
+        // Galería
+        card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
+
+        // Cuotas
         const btnCalc = card.querySelector(".btn-calc");
         const calc = card.querySelector(".calc");
         const ent = card.querySelector(".ent");
@@ -308,8 +339,8 @@
             "• Estimación de cuota: "+currency(cuota),
             "",
             "¿La podemos ver?"
-          ].join("\\n");
-          waBtn.href = waBase + "?text=" + encodeURIComponent(msg);
+          ].join("\n");
+          waBtn.href = "https://wa.me/543512004885?text=" + encodeURIComponent(msg);
         }
 
         [ent, meses, tna].forEach(i=> i.addEventListener("input", update));
@@ -317,7 +348,12 @@
         btnCalc.addEventListener("click", (e)=>{ e.preventDefault(); calc.classList.toggle("hidden"); update(); });
 
         // Comparador
-        card.querySelector(".btn-compare").addEventListener("click", (e)=>{
+        const compareBtn = document.createElement("a");
+        compareBtn.href="#";
+        compareBtn.className="btn mt-2 inline-block";
+        compareBtn.textContent="⚖️ Comparar";
+        card.querySelector(".p-4").appendChild(compareBtn);
+        compareBtn.addEventListener("click",(e)=>{
           e.preventDefault();
           if(compare.has(p.id)){ compare.delete(p.id); }
           else{
@@ -349,6 +385,42 @@
       });
     }
 
+    // Lightbox
+    let LB = { list:[], idx:0 };
+    function openGallery(p){
+      LB.list = (p.gallery && p.gallery.length ? p.gallery : [p.cover]);
+      LB.idx = 0;
+      renderLB();
+      document.getElementById("lightbox").classList.remove("hidden");
+    }
+    function renderLB(){
+      const main = document.getElementById("lb-main");
+      const thumbs = document.getElementById("lb-thumbs");
+      main.src = LB.list[LB.idx];
+      thumbs.innerHTML = "";
+      LB.list.forEach((src,i)=>{
+        const t = document.createElement("img");
+        t.src = src;
+        t.className = "h-16 w-full object-cover rounded-md border " + (i===LB.idx ? "border-[var(--gold)]" : "border-white/10");
+        t.addEventListener("click", ()=>{ LB.idx=i; renderLB(); });
+        thumbs.appendChild(t);
+      });
+    }
+    function lbNext(){ LB.idx = (LB.idx+1) % LB.list.length; renderLB(); }
+    function lbPrev(){ LB.idx = (LB.idx-1+LB.list.length) % LB.list.length; renderLB(); }
+    document.getElementById("lb-close").onclick = ()=> document.getElementById("lightbox").classList.add("hidden");
+    document.getElementById("lb-next").onclick = lbNext;
+    document.getElementById("lb-prev").onclick = lbPrev;
+    document.getElementById("lightbox").addEventListener("click", (e)=>{
+      if(e.target.id==="lightbox") document.getElementById("lightbox").classList.add("hidden");
+    });
+    document.addEventListener("keydown",(e)=>{
+      if(document.getElementById("lightbox").classList.contains("hidden")) return;
+      if(e.key==="Escape") document.getElementById("lightbox").classList.add("hidden");
+      if(e.key==="ArrowRight") lbNext();
+      if(e.key==="ArrowLeft") lbPrev();
+    });
+
     // Filtros
     function applyFilters(){
       const q = (document.getElementById("q").value || "").toLowerCase();
@@ -357,21 +429,4 @@
       const maxP = parseFloat(document.getElementById("maxPrice").value || "0");
       const out = PRODUCTS.filter(p=>{
         const s = [p.title, p.brand, String(p.cc||""), String(p.year||"")].join(" ").toLowerCase();
-        const okQ = q ? s.includes(q) : true;
-        const okB = brand ? p.brand===brand : true;
-        const okMin = minP ? p.price >= minP : true;
-        const okMax = maxP ? p.price <= maxP : true;
-        return okQ && okB && okMin && okMax;
-      });
-      render(out);
-    }
-
-    ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).addEventListener("input", applyFilters));
-    document.getElementById("clear").addEventListener("click", ()=>{ ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value=""); applyFilters(); });
-
-    // Init
-    render(PRODUCTS);
-    applyFilters();
-  </script>
-</body>
-</html>
+        const okQ = q ? s.in
