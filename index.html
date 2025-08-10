@@ -5,22 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Negocios con Ignacio – Catálogo</title>
   <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, comparador, galería y WhatsApp." />
-  <meta property="og:title" content="Negocios con Ignacio – Catálogo" />
-  <meta property="og:description" content="Elegí tu próxima moto. Filtros, calculadora de cuotas, comparador, galería y WhatsApp." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="/images/logo.png" />
   <link rel="icon" href="/images/logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root { --gold: #C5A047; --dark: #0B0B0B; }
+    :root { --gold:#C5A047; --dark:#0B0B0B; }
     body { background: var(--dark); color: #EEE; }
     .gold { color: var(--gold); }
-    .btn { border:1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 10px 14px; display:inline-flex; align-items:center; gap:8px; }
-    .btn:hover { box-shadow: 0 8px 28px rgba(0,0,0,.35); }
-    .card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; backdrop-filter: blur(6px); }
-    .tag { font-size: 12px; padding: 2px 8px; border-radius: 9999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
-    .input, select { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); color: #EEE; border-radius: 12px; padding: 8px 12px; }
-    .fixed-wa { position: fixed; right: 16px; bottom: 16px; z-index: 50; }
+    .btn { border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:10px 14px; display:inline-flex; align-items:center; gap:8px; }
+    .btn:hover { box-shadow:0 8px 28px rgba(0,0,0,.35); }
+    .card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:18px; }
+    .tag { font-size:12px; padding:2px 8px; border-radius:9999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
+    .input, select { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#EEE; border-radius:12px; padding:8px 12px; }
+    .fixed-wa { position:fixed; right:16px; bottom:16px; z-index:50; }
     .grid-auto-fill { display:grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap:20px; }
     a { color: inherit; }
   </style>
@@ -152,111 +148,25 @@
   </div>
 
   <script>
+    // ====== DATOS ======
     const PRODUCTS = [
-      {
-        id: "trk251-2022-gris",
-        title: "Benelli TRK 251 (Usada) 2022 – 5.000 km – Gris",
-        price: 5000000,
-        brand: "Usadas",
-        cc: 249, year: 2022, km: 5000,
-        cover: "/images/trk251.jpg",
-        gallery: ["/images/trk251.jpg"],
-        tags: ["Usada","Oportunidad"]
-      },
-      {
-        id: "benelli-302s",
-        title: "Benelli 302S",
-        price: 10000000,
-        brand: "Benelli",
-        cc: 300, year: 0, km: 0,
-        cover: "/images/302s.jpg",
-        gallery: ["/images/302s.jpg"],
-        tags: ["En stock"]
-      },
-      {
-        id: "benelli-251s",
-        title: "Benelli 251S",
-        price: 5000000,
-        brand: "Benelli",
-        cc: 249, year: 0, km: 0,
-        cover: "/images/251s.jpg",
-        gallery: ["/images/251s.jpg"],
-        tags: ["En stock"]
-      },
-      {
-        id: "leoncino-500",
-        title: "Benelli Leoncino 500",
-        price: 20000000,
-        brand: "Benelli",
-        cc: 500, year: 0, km: 0,
-        cover: "/images/leoncino500.jpg",
-        gallery: ["/images/leoncino500.jpg"],
-        tags: ["En stock"]
-      },
-      {
-        id: "benelli-180s",
-        title: "Benelli 180S",
-        price: 3000000,
-        brand: "Benelli",
-        cc: 180, year: 0, km: 0,
-        cover: "/images/180s.jpg",
-        gallery: ["/images/180s.jpg"],
-        tags: ["En stock"]
-      },
-      {
-        id: "benelli-tnt15",
-        title: "Benelli TNT 15",
-        price: 0, /* poné el precio real si querés */
-        brand: "Benelli",
-        cc: 148, year: 0, km: 0,
-        cover: "/images/tnt15-1.jpg",
-        gallery: ["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"],
-        tags: ["En stock"]
-      }
+      { id:"trk251-2022-gris", title:"Benelli TRK 251 (Usada) 2022 – 5.000 km – Gris", price:5000000, brand:"Usadas", cc:249, year:2022, km:5000, cover:"/images/trk251.jpg", gallery:["/images/trk251.jpg"], tags:["Usada","Oportunidad"] },
+      { id:"benelli-302s", title:"Benelli 302S", price:10000000, brand:"Benelli", cc:300, year:0, km:0, cover:"/images/302s.jpg", gallery:["/images/302s.jpg"], tags:["En stock"] },
+      { id:"benelli-251s", title:"Benelli 251S", price:5000000, brand:"Benelli", cc:249, year:0, km:0, cover:"/images/251s.jpg", gallery:["/images/251s.jpg"], tags:["En stock"] },
+      { id:"leoncino-500", title:"Benelli Leoncino 500", price:20000000, brand:"Benelli", cc:500, year:0, km:0, cover:"/images/leoncino500.jpg", gallery:["/images/leoncino500.jpg"], tags:["En stock"] },
+      { id:"benelli-180s", title:"Benelli 180S", price:3000000, brand:"Benelli", cc:180, year:0, km:0, cover:"/images/180s.jpg", gallery:["/images/180s.jpg"], tags:["En stock"] },
+      { id:"benelli-tnt15", title:"Benelli TNT 15", price:0, brand:"Benelli", cc:148, year:0, km:0, cover:"/images/tnt15-1.jpg", gallery:["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"], tags:["En stock"] }
     ];
 
-    // JSON-LD
-    const ld = {
-      "@context":"https://schema.org",
-      "@type":"ItemList",
-      "itemListElement": PRODUCTS.map((p,i)=>({
-        "@type":"Product",
-        "name": p.title,
-        "brand": p.brand,
-        "image": p.cover,
-        "sku": p.id,
-        "position": i+1,
-        "offers": {
-          "@type":"Offer",
-          "priceCurrency":"ARS",
-          "price": p.price,
-          "availability":"https://schema.org/InStock"
-        }
-      }))
-    };
-    const s = document.createElement('script'); s.type='application/ld+json'; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
-
-    const currency = (n)=> new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(n);
+    // ====== UTIL ======
+    const currency = n => new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(n);
     const waBase = "https://wa.me/543512004885";
     const waDefault = "Hola Nacho, quiero info y *Opciones disponibles*";
+    const $ = s => document.querySelector(s);
 
-    document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("wa-hero").href = waBase + "?text=" + encodeURIComponent(waDefault);
-    document.getElementById("wa-float").href = waBase + "?text=" + encodeURIComponent(waDefault);
-
-    const grid = document.getElementById("grid");
-    const count = document.getElementById("count");
-    const compare = new Map(); // id -> product
-
-    function frenchInstallment(amount, months, tna){
-      const i = (tna/12)/100;
-      if(months<=0 || amount<=0) return 0;
-      if(i===0) return amount/months;
-      const f = Math.pow(1+i, months);
-      return amount * ((i*f)/(f-1));
-    }
-
+    // ====== RENDER ======
     function render(products){
+      const grid = $("#grid");
       grid.innerHTML = "";
       products.forEach(p=>{
         const card = document.createElement("div");
@@ -266,11 +176,11 @@
           <div class="p-4">
             <div class="flex items-center justify-between gap-3">
               <h3 class="font-semibold leading-tight">${p.title}</h3>
-              <span class="text-sm opacity-80">🏍️ ${p.cc ?? "-"} cc</span>
+              <span class="text-sm opacity-80">🏍️ ${p.cc || "-" } cc</span>
             </div>
             <div class="mt-1 text-xl font-bold gold">${currency(p.price)}</div>
-            <div class="mt-1 text-xs opacity-70">${p.brand} ${p.year && p.year>0 ? "• "+p.year : ""} ${p.km ? "• "+p.km.toLocaleString("es-AR")+" km" : ""}</div>
-            ${p.tags?('<div class="mt-2 flex flex-wrap gap-2">'+p.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div>'):''}
+            <div class="mt-1 text-xs opacity-70">${p.brand} ${p.year>0 ? "• "+p.year : ""} ${p.km ? "• "+p.km.toLocaleString("es-AR")+" km" : ""}</div>
+            <div class="mt-2 flex flex-wrap gap-2">${(p.tags||[]).map(t=>'<span class="tag">'+t+'</span>').join('')}</div>
             <div class="mt-4 grid grid-cols-3 gap-2">
               <a href="#" class="btn btn-calc">🧮 Cuotas</a>
               <a target="_blank" href="${waBase}?text=${encodeURIComponent('Hola Nacho, me interesa *'+p.title+'*. ¿Opciones disponibles?')}" class="btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
@@ -310,7 +220,6 @@
         card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
 
         // Cuotas
-        const btnCalc = card.querySelector(".btn-calc");
         const calc = card.querySelector(".calc");
         const ent = card.querySelector(".ent");
         const meses = card.querySelector(".meses");
@@ -318,8 +227,16 @@
         const cuotaEl = card.querySelector(".cuota");
         const montoEl = card.querySelector(".monto");
         const waBtn = card.querySelector(".wa");
+        const btnCalc = card.querySelector(".btn-calc");
         const atajos = card.querySelectorAll(".atajo");
 
+        function frenchInstallment(amount, months, tna){
+          const i = (tna/12)/100;
+          if(months<=0 || amount<=0) return 0;
+          if(i===0) return amount/months;
+          const f = Math.pow(1+i, months);
+          return amount * ((i*f)/(f-1));
+        }
         function update(){
           const entrega = Math.max(parseFloat(ent.value||"0"),0);
           const months = Math.max(parseInt(meses.value||"12"),1);
@@ -340,32 +257,18 @@
             "",
             "¿La podemos ver?"
           ].join("\n");
-          waBtn.href = "https://wa.me/543512004885?text=" + encodeURIComponent(msg);
+          waBtn.href = waBase + "?text=" + encodeURIComponent(msg);
         }
-
         [ent, meses, tna].forEach(i=> i.addEventListener("input", update));
-        atajos.forEach(b=> b.addEventListener("click", (e)=>{ e.preventDefault(); meses.value = b.dataset.meses; update(); }));
-        btnCalc.addEventListener("click", (e)=>{ e.preventDefault(); calc.classList.toggle("hidden"); update(); });
-
-        // Comparador
-        const compareBtn = document.createElement("a");
-        compareBtn.href="#";
-        compareBtn.className="btn mt-2 inline-block";
-        compareBtn.textContent="⚖️ Comparar";
-        card.querySelector(".p-4").appendChild(compareBtn);
-        compareBtn.addEventListener("click",(e)=>{
-          e.preventDefault();
-          if(compare.has(p.id)){ compare.delete(p.id); }
-          else{
-            if(compare.size>=3){ alert("Máximo 3 modelos en el comparador."); return; }
-            compare.set(p.id, p);
-          }
-          renderCompare();
-        });
+        atajos.forEach(b=> b.addEventListener("click",(e)=>{ e.preventDefault(); meses.value=b.dataset.meses; update(); }));
+        btnCalc.addEventListener("click",(e)=>{ e.preventDefault(); calc.classList.toggle("hidden"); update(); });
       });
-      count.textContent = products.length + " resultados";
+
+      document.getElementById("count").textContent = products.length + " resultados";
     }
 
+    // Comparador (simple)
+    const compare = new Map();
     function renderCompare(){
       const body = document.getElementById("compareBody");
       const list = document.getElementById("compareList");
@@ -411,15 +314,7 @@
     document.getElementById("lb-close").onclick = ()=> document.getElementById("lightbox").classList.add("hidden");
     document.getElementById("lb-next").onclick = lbNext;
     document.getElementById("lb-prev").onclick = lbPrev;
-    document.getElementById("lightbox").addEventListener("click", (e)=>{
-      if(e.target.id==="lightbox") document.getElementById("lightbox").classList.add("hidden");
-    });
-    document.addEventListener("keydown",(e)=>{
-      if(document.getElementById("lightbox").classList.contains("hidden")) return;
-      if(e.key==="Escape") document.getElementById("lightbox").classList.add("hidden");
-      if(e.key==="ArrowRight") lbNext();
-      if(e.key==="ArrowLeft") lbPrev();
-    });
+    document.getElementById("lightbox").addEventListener("click",(e)=>{ if(e.target.id==="lightbox") document.getElementById("lightbox").classList.add("hidden"); });
 
     // Filtros
     function applyFilters(){
@@ -429,4 +324,23 @@
       const maxP = parseFloat(document.getElementById("maxPrice").value || "0");
       const out = PRODUCTS.filter(p=>{
         const s = [p.title, p.brand, String(p.cc||""), String(p.year||"")].join(" ").toLowerCase();
-        const okQ = q ? s.in
+        const okQ = q ? s.includes(q) : true;
+        const okB = brand ? p.brand===brand : true;
+        const okMin = minP ? p.price >= minP : true;
+        const okMax = maxP ? p.price <= maxP : true;
+        return okQ && okB && okMin && okMax;
+      });
+      render(out);
+    }
+
+    // Init
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("wa-hero").href = waBase + "?text=" + encodeURIComponent(waDefault);
+    document.getElementById("wa-float").href = waBase + "?text=" + encodeURIComponent(waDefault);
+    ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).addEventListener("input", applyFilters));
+    document.getElementById("clear").addEventListener("click", ()=>{ ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value=""); applyFilters(); });
+    render(PRODUCTS);
+    applyFilters();
+  </script>
+</body>
+</html>
