@@ -18,10 +18,7 @@
     .input, select {
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.28);
-      color:#fff;
-      border-radius:12px;
-      padding:8px 12px;
-      height:40px;
+      color:#fff; border-radius:12px; padding:8px 12px; height:40px;
     }
     select, option { color:#fff; background:#111; }
     ::placeholder { color:#cfcfcf; opacity:.9; }
@@ -29,18 +26,18 @@
     .grid-auto-fill { display:grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap:20px; }
     .iconbtn { border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); height:38px; padding:0 10px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; font-size:13px; }
     a { color: inherit; }
+    .chip { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:999px; font-size:12px; padding:4px 10px; }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header class="sticky top-0 z-20 border-b border-white/10 bg-black/70 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
-      <!-- Logo más grande en móviles -->
       <img src="/images/logo.png" alt="Negocios con Ignacio" class="h-20 md:h-14 w-auto rounded-lg" onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
       <span class="uppercase font-extrabold tracking-wide gold text-lg md:text-2xl">NEGOCIOS CON IGNACIO</span>
       <nav class="ml-auto hidden md:flex items-center gap-4 text-sm opacity-90">
         <a href="#catalogo" class="hover:opacity-100">Catálogo</a>
-        <a href="#agenda" class="hover:opacity-100">Eventos & Test Drive</a>
+        <a href="#agenda" class="hover:opacity-100">Eventos</a>
         <a href="#comparador" class="hover:opacity-100">Comparador</a>
         <a href="#contacto" class="hover:opacity-100">Contacto</a>
       </nav>
@@ -52,7 +49,7 @@
   <section class="mx-auto max-w-7xl px-4 py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
     <div>
       <h1 class="text-3xl md:text-5xl font-extrabold leading-tight"><span class="gold">Elegí tu próxima moto</span> con asesoramiento real</h1>
-      <p class="mt-3 text-zinc-300">Filtros, cuotas, galería, compartir por WhatsApp, <span class="gold font-semibold">eventos</span> y <span class="gold font-semibold">test drive</span>.</p>
+      <p class="mt-3 text-zinc-300">Filtros, cuotas, galería, compartir por WhatsApp y <span class="gold font-semibold">eventos</span>. El test drive se agenda desde cada moto.</p>
       <div class="mt-5 flex flex-wrap items-center gap-3">
         <a href="#catalogo" class="btn">🛒 Ver catálogo</a>
         <a href="#agenda" class="btn">🗓️ Eventos</a>
@@ -69,7 +66,6 @@
       <div id="count" class="text-sm opacity-80"></div>
     </div>
 
-    <!-- Filtros + orden -->
     <div class="card p-4 md:p-5 mb-6">
       <div class="grid grid-cols-2 md:grid-cols-12 gap-3 items-end">
         <label class="text-sm col-span-2 md:col-span-4">Búsqueda
@@ -88,7 +84,6 @@
         <label class="text-sm md:col-span-2">Max
           <input id="maxPrice" type="number" class="input w-full mt-1" />
         </label>
-
         <label class="text-sm md:col-span-2">Orden
           <select id="sort" class="w-full mt-1">
             <option value="none">—</option>
@@ -100,11 +95,9 @@
             <option value="year-asc">Año ↑</option>
           </select>
         </label>
-
         <div class="text-sm md:col-span-2"><button id="clear" class="btn w-full">🧹 Limpiar</button></div>
       </div>
 
-      <!-- Paginación arriba -->
       <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
         <div class="text-sm opacity-80">
           <label>Por página
@@ -118,61 +111,60 @@
     </div>
 
     <div id="grid" class="grid-auto-fill"></div>
-
-    <!-- Paginación abajo -->
     <div class="mt-6 flex items-center justify-end gap-2" id="pagerBottom"></div>
   </section>
 
-  <!-- Eventos & Test Drive -->
-  <section id="agenda" class="mx-auto max-w-7xl px-4 pb-12">
-    <h3 class="text-xl font-bold gold mb-3">Eventos & Test Drive</h3>
+  <!-- Eventos -->
+  <section id="agenda" class="mx-auto max-w-7xl px-4 pb-14">
+    <h3 class="text-xl font-bold gold mb-3">Eventos</h3>
 
-    <!-- Próximo evento con contador -->
-    <div id="nextEventWrap" class="card p-4 md:p-5 mb-5 hidden">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <div class="text-xs uppercase tracking-wide opacity-70">Próximo evento</div>
-          <div id="nextEventTitle" class="text-lg font-semibold"></div>
-          <div id="nextEventMeta" class="text-sm opacity-80"></div>
-          <div id="nextEventDesc" class="text-sm opacity-80 mt-1"></div>
+    <!-- Banner destacado con contador -->
+    <div id="nextEventHero" class="relative overflow-hidden rounded-2xl border border-white/10 mb-5" style="min-height:180px;">
+      <div class="absolute inset-0 bg-cover bg-center opacity-40" id="nextEventBg"></div>
+      <div class="relative z-10 p-4 md:p-6 grid md:grid-cols-3 gap-4 items-center">
+        <div class="md:col-span-2">
+          <div class="text-xs uppercase tracking-wide opacity-80">Próximo evento</div>
+          <div class="text-lg md:text-2xl font-semibold" id="heroTitle">—</div>
+          <div class="text-sm opacity-85" id="heroMeta"></div>
+          <div class="text-sm opacity-80 mt-1" id="heroDesc"></div>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <span class="chip" id="heroCapacity" style="display:none;"></span>
+            <span class="chip">Solidario</span>
+          </div>
         </div>
         <div class="text-center">
           <div class="text-xs opacity-70 mb-1">Comienza en</div>
-          <div id="countdown" class="text-2xl font-bold gold tabular-nums">—</div>
+          <div id="heroCountdown" class="text-2xl font-bold gold tabular-nums">—</div>
           <div class="mt-3 flex flex-wrap justify-center gap-2">
-            <button id="nextEvAgenda" class="btn" style="background: rgba(197,160,71,.18);">📲 Agendar por WhatsApp</button>
-            <button id="nextEvICS" class="btn">➕ Agregar al calendario</button>
+            <button id="heroWA" class="btn" style="background: rgba(197,160,71,.18);">📲 Agendar</button>
+            <button id="heroICS" class="btn">➕ Calendario</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="card p-4 md:p-5">
-      <div class="text-sm opacity-80 mb-4">Elegí un evento próximo o pedí un turno de test drive.</div>
-      <div id="eventsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-
-      <div class="mt-6 border-t border-white/10 pt-5">
-        <h4 class="font-semibold mb-2">Agendar Test Drive directo</h4>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <label class="text-sm">Modelo
-            <select id="td-model" class="input w-full mt-1">
-              <option value="">Elegí un modelo…</option>
-            </select>
-          </label>
-          <label class="text-sm">Fecha y hora
-            <input id="td-dt" type="datetime-local" class="input w-full mt-1">
-          </label>
-          <label class="text-sm">Nombre
-            <input id="td-name" class="input w-full mt-1" placeholder="Tu nombre">
-          </label>
-          <label class="text-sm">Teléfono
-            <input id="td-phone" class="input w-full mt-1" placeholder="Tu teléfono">
-          </label>
+    <!-- Calendario + tarjetas -->
+    <div class="grid lg:grid-cols-3 gap-5">
+      <!-- Mini calendario -->
+      <div class="card p-4 h-max">
+        <div class="flex items-center justify-between">
+          <button id="calPrev" class="iconbtn">◀</button>
+          <div class="font-semibold" id="calLabel">—</div>
+          <button id="calNext" class="iconbtn">▶</button>
         </div>
+        <div class="grid grid-cols-7 text-center text-xs opacity-70 mt-3">
+          <div>Lu</div><div>Ma</div><div>Mi</div><div>Ju</div><div>Vi</div><div>Sa</div><div>Do</div>
+        </div>
+        <div id="calGrid" class="grid grid-cols-7 gap-1 mt-2"></div>
         <div class="mt-3 flex flex-wrap gap-2">
-          <button id="td-wa" class="btn" style="background: rgba(197,160,71,.18);">📲 Reservar por WhatsApp</button>
-          <button id="td-ics" class="btn">➕ Agregar a mi calendario (.ics)</button>
+          <button id="calClear" class="btn w-full">Ver todos</button>
         </div>
+      </div>
+
+      <!-- Listado de eventos -->
+      <div class="lg:col-span-2 card p-4 md:p-5">
+        <div class="text-sm opacity-80 mb-4">Elegí un evento próximo y agendate.</div>
+        <div id="eventsList" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
       </div>
     </div>
   </section>
@@ -230,7 +222,7 @@
   <!-- WhatsApp flotante -->
   <a id="wa-float" target="_blank" class="fixed-wa btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
 
-  <!-- Lightbox (galería) -->
+  <!-- Lightbox -->
   <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
     <div class="absolute inset-0 flex items-center justify-center p-4">
       <div class="relative w-full max-w-4xl card p-3 bg-black">
@@ -243,7 +235,7 @@
     </div>
   </div>
 
-  <!-- Calculadora (modal pantalla completa) -->
+  <!-- Calculadora -->
   <div id="calcbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
     <div class="absolute inset-0 flex items-center justify-center p-4">
       <div class="relative w-full max-w-3xl card p-4 md:p-6 bg-black">
@@ -256,20 +248,16 @@
           <label class="text-sm block">Entrega
             <input id="cb-entrega" type="number" class="input w-full mt-1" value="0" step="10000" min="0">
           </label>
-
           <label class="text-sm block">Meses
             <input id="cb-meses" type="number" class="input w-full mt-1" value="12" min="1" max="72">
           </label>
-
           <label class="text-sm block">Tipo de plan
             <select id="cb-plan" class="input w-full mt-1"></select>
           </label>
-
           <div class="text-sm flex flex-col justify-end">
             <div class="text-xs opacity-70">Cuota estimada</div>
             <div id="cb-cuota" class="text-2xl font-semibold gold">-</div>
           </div>
-
           <div id="cb-atajos" class="flex items-end gap-2 flex-wrap"></div>
         </div>
 
@@ -284,7 +272,7 @@
     </div>
   </div>
 
-  <!-- Modal Agenda -->
+  <!-- Modal Agenda de Evento -->
   <div id="agendabox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
     <div class="absolute inset-0 flex items-center justify-center p-4">
       <div class="relative w-full max-w-2xl card p-4 md:p-6 bg-black">
@@ -316,14 +304,55 @@
     </div>
   </div>
 
+  <!-- Modal Test Drive -->
+  <div id="tdbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="relative w-full max-w-2xl card p-4 md:p-6 bg-black">
+        <button id="td-close" class="absolute -top-3 -right-3 btn bg-black">✖</button>
+        <h3 class="text-xl md:text-2xl font-bold gold">Agendar Test Drive</h3>
+        <div id="td-model-view" class="mt-1 text-zinc-300"></div>
+
+        <div class="mt-4 rounded-xl border border-red-500/40 bg-red-500/10 p-3">
+          <div class="font-semibold text-red-400">⚠ IMPORTANTE</div>
+          <div class="text-sm mt-1">
+            Tu turno es <span class="gold font-semibold">exclusivo</span> y la moto quedará reservada para tu prueba.
+            Si no podés asistir, <span class="gold font-semibold">avisá con 24 hs de anticipación</span> para liberar el lugar.
+            Así aseguramos que todos puedan vivir la experiencia.
+          </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <label class="text-sm block">Fecha y hora
+            <input id="td-dt" type="datetime-local" class="input w-full mt-1">
+          </label>
+          <label class="text-sm block">Nombre
+            <input id="td-name" class="input w-full mt-1" placeholder="Tu nombre">
+          </label>
+          <label class="text-sm block">Teléfono
+            <input id="td-phone" class="input w-full mt-1" placeholder="Tu teléfono">
+          </label>
+          <label class="text-sm block">Notas
+            <input id="td-notes" class="input w-full mt-1" placeholder="Ej: tengo casco propio">
+          </label>
+        </div>
+
+        <div class="mt-5 flex flex-wrap gap-2">
+          <a id="td-wa" target="_blank" class="btn" style="background: rgba(197,160,71,.18);">📲 Confirmar por WhatsApp</a>
+          <button id="td-ics" class="btn">➕ Agregar a mi calendario (.ics)</button>
+          <button id="td-cerrar" class="btn">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ====== CONFIG REGLAS FINANCIACIÓN ======
-    const RULE_SMALL_CC = (cc)=> cc!=null && cc < 249; // <249cc => solo FIJA 89%
+    // ====== CONFIG FINANCIACIÓN ======
+    const RULE_SMALL_CC = (cc)=> cc!=null && cc < 249;
     const DEFAULT_PLANS  = ["FIJA","UVA"];
     const DEFAULT_TNA    = { FIJA:54, UVA:20 };
     const DEFAULT_MONTHS = [12,18,24,36,48];
 
-    // ====== DATOS CATÁLOGO ======
+    // ====== DATA CATÁLOGO ======
     const PRODUCTS = [
       { id:"trk251-2022-gris", title:"Benelli TRK 251 (Usada) 2022 – 5.000 km – Gris", price:5000000, brand:"Usadas", cc:249, year:2022, km:5000, cover:"/images/trk251.jpg", gallery:["/images/trk251.jpg"], tags:["Usada","Oportunidad"] },
       { id:"benelli-302s",     title:"Benelli 302S",       price:10000000, brand:"Benelli", cc:300, year:0, km:0, cover:"/images/302s.jpg",      gallery:["/images/302s.jpg"],      tags:["En stock"] },
@@ -333,13 +362,19 @@
       { id:"benelli-tnt15",    title:"Benelli TNT 15",     price:0,        brand:"Benelli", cc:148, year:0, km:0, cover:"/images/tnt15-1.jpg",  gallery:["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"], tags:["En stock"] }
     ];
 
-    // ====== EVENTOS (solo futuros; editar acá) ======
-    // Próximo evento solicitado:
-    // 18 de agosto de 2025, Parque del Kempes – solidario por el Día del Niño.
+    // ====== EVENTOS ======
     const EVENTS = [
-      { id:"dia-nino-kempes-2025", title:"Día del Niño – Parque del Kempes", when:"2025-08-18T15:00", durationMin:180, place:"Parque del Kempes, Córdoba", description:"Festejo del Día del Niño y convocatoria solidaria para ayudar a los necesitados.", capacity:200 },
-      // Podés sumar más eventos a futuro:
-      { id:"open-house",   title:"Open House Benelli", when:"2025-09-05T11:00", durationMin:120, place:"Showroom - Córdoba", description:"Lanzamientos, charlas y café.", capacity:50 }
+      {
+        id:"dia-nino-kempes-2025",
+        title:"Día del Niño – Parque del Kempes",
+        when:"2025-08-18T15:00",
+        durationMin:180,
+        place:"Parque del Kempes, Córdoba",
+        description:"Festejo del Día del Niño y convocatoria solidaria para ayudar a los necesitados.",
+        capacity:200,
+        cover:"/images/events/kempes.jpg"
+      },
+      { id:"open-house", title:"Open House Benelli", when:"2025-09-05T11:00", durationMin:120, place:"Showroom - Córdoba", description:"Lanzamientos, charlas y café.", capacity:50, cover:"" }
     ];
 
     // ====== UTIL ======
@@ -347,6 +382,32 @@
     const waBase = "https://wa.me/543512004885";
     const waDefault = "Hola Nacho, quiero info y *Opciones disponibles*";
     const $ = s => document.querySelector(s);
+    const pad = n => String(n).padStart(2,"0");
+
+    function toICSDate(dt){
+      const d = new Date(dt);
+      const y=d.getFullYear(), m=pad(d.getMonth()+1), da=pad(d.getDate()), h=pad(d.getHours()), mi=pad(d.getMinutes());
+      return `${y}${m}${da}T${h}${mi}00`;
+    }
+    function downloadICS({title, desc, start, end, location, filename}){
+      const ics = [
+        "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Negocios con Ignacio//Agenda//ES",
+        "BEGIN:VEVENT",
+        "UID:"+ (crypto?.randomUUID ? crypto.randomUUID() : (Date.now()+"@negociosconignacio")),
+        "DTSTAMP:"+toICSDate(new Date()),
+        "DTSTART:"+toICSDate(start),
+        "DTEND:"+toICSDate(end),
+        "SUMMARY:"+title,
+        "DESCRIPTION:"+String(desc||"").replace(/\n/g,"\\n"),
+        "LOCATION:"+String(location||"Córdoba"),
+        "END:VEVENT","END:VCALENDAR"
+      ].join("\r\n");
+      const blob = new Blob([ics], {type:"text/calendar;charset=utf-8"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = (filename||"evento") + ".ics";
+      document.body.appendChild(a); a.click(); a.remove();
+    }
 
     // ====== STATE (filtros + orden + paginación) ======
     let STATE = { q:"", brand:"", minPrice:0, maxPrice:0, sort:"none", page:1, pageSize:10 };
@@ -378,7 +439,6 @@
             <a href="#" class="btn w-full md:col-span-1 col-span-2 btn-testdrive">🚗 Test drive</a>
           </div>
         </div>`;
-      // Listeners
       card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
       card.querySelector(".btn-open-calc").addEventListener("click",(e)=>{ e.preventDefault(); openCalc(p); });
       card.querySelector(".btn-share").addEventListener("click", ()=>{
@@ -387,7 +447,7 @@
         if (navigator.share) { navigator.share({ title: p.title, text, url }).catch(()=>{}); }
         else { window.open(`https://wa.me/543512004885?text=${encodeURIComponent(text)}`,"_blank"); }
       });
-      card.querySelector(".btn-testdrive").addEventListener("click",(e)=>{ e.preventDefault(); openAgenda({ type:"testdrive", title:p.title }); });
+      card.querySelector(".btn-testdrive").addEventListener("click",(e)=>{ e.preventDefault(); openTestDrive(p); });
       return card;
     }
 
@@ -395,11 +455,10 @@
       const grid = $("#grid");
       grid.innerHTML = "";
       paged.items.forEach(p=> grid.appendChild(makeCard(p)));
-      document.getElementById("count").textContent =
-        `${paged.total} resultados · página ${paged.page} de ${paged.pages}`;
+      document.getElementById("count").textContent = `${paged.total} resultados · página ${paged.page} de ${paged.pages}`;
     }
 
-    // ====== GALERÍA ======
+    // ====== LIGHTBOX GALERÍA ======
     let LB = { list:[], idx:0 };
     function openGallery(p){ LB.list = (p.gallery && p.gallery.length ? p.gallery : [p.cover]); LB.idx = 0; renderLB(); document.getElementById("lightbox").classList.remove("hidden"); }
     function renderLB(){
@@ -415,14 +474,12 @@
         thumbs.appendChild(t);
       });
     }
-    function lbNext(){ LB.idx = (LB.idx+1) % LB.list.length; renderLB(); }
-    function lbPrev(){ LB.idx = (LB.idx-1+LB.list.length) % LB.list.length; renderLB(); }
     document.getElementById("lb-close").onclick = ()=> document.getElementById("lightbox").classList.add("hidden");
-    document.getElementById("lb-next").onclick = lbNext;
-    document.getElementById("lb-prev").onclick = lbPrev;
+    document.getElementById("lb-next").onclick = ()=>{ LB.idx=(LB.idx+1)%LB.list.length; renderLB(); };
+    document.getElementById("lb-prev").onclick = ()=>{ LB.idx=(LB.idx-1+LB.list.length)%LB.list.length; renderLB(); };
     document.getElementById("lightbox").addEventListener("click",(e)=>{ if(e.target.id==="lightbox") document.getElementById("lightbox").classList.add("hidden"); });
 
-    // ====== FINANCIACIÓN ======
+    // ====== FINANCIACIÓN / CALC ======
     function getFinanceFor(p){ return (RULE_SMALL_CC(p.cc)) ? { plans:["FIJA"], tna:{FIJA:89}, months: DEFAULT_MONTHS, defaultPlan:"FIJA" } : { plans: DEFAULT_PLANS, tna: DEFAULT_TNA, months: DEFAULT_MONTHS, defaultPlan:"FIJA" }; }
     let CALC_PRODUCT = null;
     function frenchInstallment(amount, months, tna){ const i=(tna/12)/100; if(months<=0||amount<=0) return 0; if(i===0) return amount/months; const f=Math.pow(1+i,months); return amount*((i*f)/(f-1)); }
@@ -468,7 +525,7 @@
     document.getElementById("calcbox").addEventListener("click",(e)=>{ if(e.target.id==="calcbox") closeCalc(); });
     ["cb-entrega","cb-meses","cb-plan"].forEach(id=>{ document.getElementById(id).addEventListener("input", updateCalc); document.getElementById(id).addEventListener("change", updateCalc); });
 
-    // ====== ORDEN + PAGINACIÓN ======
+    // ====== FILTROS + PAGER ======
     function applyFilters(){
       STATE.q        = document.getElementById("q").value.toLowerCase();
       STATE.brand    = document.getElementById("brand").value;
@@ -502,178 +559,198 @@
       renderGrid({items, total, page:STATE.page, pages});
       renderPager({total, page:STATE.page, pages});
     }
-
     function renderPager({total, page, pages}){
       const mk = (where)=>{
         const host = document.getElementById(where);
         host.innerHTML = "";
         const prev = document.createElement("button");
-        prev.className = "iconbtn";
-        prev.textContent = "◀ Anterior";
-        prev.disabled = page<=1;
-        prev.onclick = ()=>{ STATE.page=Math.max(1,STATE.page-1); applyFilters(); };
+        prev.className = "iconbtn"; prev.textContent = "◀ Anterior";
+        prev.disabled = page<=1; prev.onclick = ()=>{ STATE.page=Math.max(1,STATE.page-1); applyFilters(); };
         const next = document.createElement("button");
-        next.className = "iconbtn";
-        next.textContent = "Siguiente ▶";
-        next.disabled = page>=pages;
-        next.onclick = ()=>{ STATE.page=Math.min(pages,STATE.page+1); applyFilters(); };
+        next.className = "iconbtn"; next.textContent = "Siguiente ▶";
+        next.disabled = page>=pages; next.onclick = ()=>{ STATE.page=Math.min(pages,STATE.page+1); applyFilters(); };
         const label = document.createElement("div");
-        label.className = "text-sm opacity-80";
-        label.textContent = `Página ${page} de ${pages}`;
+        label.className = "text-sm opacity-80"; label.textContent = `Página ${page} de ${pages}`;
         host.appendChild(prev); host.appendChild(label); host.appendChild(next);
       };
       mk("pagerTop"); mk("pagerBottom");
     }
 
-    // ====== AGENDA/EVENTOS ======
-    function pad(n){ return String(n).padStart(2,"0"); }
-    function toICSDate(dt){
-      const d = new Date(dt);
-      const y=d.getFullYear(), m=pad(d.getMonth()+1), da=pad(d.getDate()), h=pad(d.getHours()), mi=pad(d.getMinutes());
-      return `${y}${m}${da}T${h}${mi}00`;
-    }
-    function downloadICS({title, desc, start, end, location, filename}){
-      const ics = [
-        "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Negocios con Ignacio//Agenda//ES",
-        "BEGIN:VEVENT",
-        "UID:"+ (crypto?.randomUUID ? crypto.randomUUID() : (Date.now()+"@negociosconignacio")),
-        "DTSTAMP:"+toICSDate(new Date()),
-        "DTSTART:"+toICSDate(start),
-        "DTEND:"+toICSDate(end),
-        "SUMMARY:"+title,
-        "DESCRIPTION:"+desc.replace(/\n/g,"\\n"),
-        "LOCATION:"+location,
-        "END:VEVENT","END:VCALENDAR"
-      ].join("\r\n");
-      const blob = new Blob([ics], {type:"text/calendar;charset=utf-8"});
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = (filename||"evento") + ".ics";
-      document.body.appendChild(a); a.click(); a.remove();
-    }
-
+    // ====== EVENTOS: helper ======
     function futureEvents(source){
       const now = new Date();
       return source
         .map(e=> ({...e, _start: new Date(e.when)}))
-        .filter(e=> e._start.getTime() >= now.getTime()) // ocultar pasados
+        .filter(e=> e._start.getTime() >= now.getTime())
         .sort((a,b)=> a._start - b._start);
     }
+    function pad2(n){ return String(n).padStart(2,"0"); }
 
-    // Contador regresivo
-    let COUNTDOWN_TIMER = null;
-    function startCountdown(nextEv){
-      const wrap = document.getElementById("nextEventWrap");
-      const title = document.getElementById("nextEventTitle");
-      const meta  = document.getElementById("nextEventMeta");
-      const desc  = document.getElementById("nextEventDesc");
-      const cd    = document.getElementById("countdown");
+    // ====== HERO próximo evento ======
+    let HERO_TIMER = null;
+    function setupHero(nextEv){
+      const wrapBg = document.getElementById("nextEventBg");
+      const title = document.getElementById("heroTitle");
+      const meta  = document.getElementById("heroMeta");
+      const desc  = document.getElementById("heroDesc");
+      const cap   = document.getElementById("heroCapacity");
+      const cd    = document.getElementById("heroCountdown");
+      const btnWA = document.getElementById("heroWA");
+      const btnICS= document.getElementById("heroICS");
 
       if(!nextEv){
-        wrap.classList.add("hidden");
-        if(COUNTDOWN_TIMER){ clearInterval(COUNTDOWN_TIMER); COUNTDOWN_TIMER=null; }
+        title.textContent = "Sin eventos próximos";
+        meta.textContent = "";
+        desc.textContent = "";
+        cd.textContent = "—";
         return;
       }
-
-      wrap.classList.remove("hidden");
+      if(nextEv.cover){
+        wrapBg.style.backgroundImage = `url('${nextEv.cover}')`;
+      } else {
+        wrapBg.style.backgroundImage = "linear-gradient(120deg,#111,#222)";
+      }
       title.textContent = nextEv.title;
-      meta.textContent  = nextEv._start.toLocaleString("es-AR", { weekday:"long", day:"2-digit", month:"long", hour:"2-digit", minute:"2-digit" }) + " • " + (nextEv.place||"Córdoba");
+      meta.textContent  = `${nextEv._start.toLocaleDateString("es-AR",{weekday:"long", day:"2-digit", month:"long"})} • ${nextEv._start.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})} hs • ${nextEv.place||"Córdoba"}`;
       desc.textContent  = nextEv.description || "";
+      if(nextEv.capacity){ cap.style.display="inline-block"; cap.textContent = `Cupo: ${nextEv.capacity}`; } else { cap.style.display="none"; }
 
-      // Botones acción
-      document.getElementById("nextEvAgenda").onclick = ()=>{
-        const msg = [
-          "Hola Nacho, quiero *anotarme*:",
-          "• " + nextEv.title,
-          "• " + nextEv._start.toLocaleString("es-AR"),
-          "• Lugar: " + (nextEv.place||"Córdoba")
-        ].join("\n");
-        window.open("https://wa.me/543512004885?text="+encodeURIComponent(msg), "_blank");
+      btnWA.onclick = ()=>{
+        const msg = `Hola Nacho, quiero *anotarme*: 
+• ${nextEv.title}
+• ${nextEv._start.toLocaleString("es-AR")}
+• Lugar: ${nextEv.place||"Córdoba"}`;
+        window.open(`${waBase}?text=${encodeURIComponent(msg)}`,"_blank");
       };
-      document.getElementById("nextEvICS").onclick = ()=>{
+      btnICS.onclick = ()=>{
         const end = new Date(nextEv._start.getTime() + (nextEv.durationMin||60)*60000);
         downloadICS({ title: nextEv.title, desc: nextEv.description||"", start: nextEv._start, end, location: nextEv.place||"Córdoba", filename: nextEv.id||"evento" });
       };
 
-      if(COUNTDOWN_TIMER){ clearInterval(COUNTDOWN_TIMER); }
+      if(HERO_TIMER) clearInterval(HERO_TIMER);
       function tick(){
-        const now = new Date().getTime();
-        const target = nextEv._start.getTime();
+        const now = Date.now(), target = nextEv._start.getTime();
         const diff = target - now;
-        if(diff <= 0){
-          cd.textContent = "¡Es ahora!";
-          clearInterval(COUNTDOWN_TIMER);
-          // Re-render para pasar a siguiente evento si existe
-          renderEvents();
-          return;
-        }
-        const d = Math.floor(diff/86400000);
-        const h = Math.floor((diff%86400000)/3600000);
-        const m = Math.floor((diff%3600000)/60000);
-        const s = Math.floor((diff%60000)/1000);
-        cd.textContent = `${pad(d)}d ${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+        if(diff<=0){ cd.textContent="¡Es ahora!"; clearInterval(HERO_TIMER); renderEvents(); return; }
+        const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+        cd.textContent = `${pad2(d)}d ${pad2(h)}h ${pad2(m)}m ${pad2(s)}s`;
       }
-      tick();
-      COUNTDOWN_TIMER = setInterval(tick, 1000);
+      tick(); HERO_TIMER=setInterval(tick,1000);
     }
 
+    // ====== Mini Calendario ======
+    let calRef = new Date(); // mes visible
+    let dateFilter = null;   // yyyy-mm-dd seleccionado
+    function ymd(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+
+    function setCalLabel(){ document.getElementById("calLabel").textContent = calRef.toLocaleDateString("es-AR",{month:"long", year:"numeric"}); }
+    function renderCalendar(){
+      setCalLabel();
+      const first = new Date(calRef.getFullYear(), calRef.getMonth(), 1);
+      const startCol = (first.getDay()+6)%7; // Lunes=0
+      const daysInMonth = new Date(calRef.getFullYear(), calRef.getMonth()+1, 0).getDate();
+      const grid = document.getElementById("calGrid");
+      grid.innerHTML = "";
+
+      // map de eventos por día visible
+      const evs = futureEvents(EVENTS);
+      const dots = {};
+      evs.forEach(ev=>{
+        const d = ev._start;
+        if(d.getMonth()===calRef.getMonth() && d.getFullYear()===calRef.getFullYear()){
+          const key = ymd(d);
+          dots[key] = dots[key] || 0;
+          dots[key]++;
+        }
+      });
+
+      // relleno inicial
+      for(let i=0;i<startCol;i++){
+        const cell = document.createElement("div");
+        cell.className = "h-10 rounded-lg";
+        grid.appendChild(cell);
+      }
+
+      // días
+      for(let day=1; day<=daysInMonth; day++){
+        const cell = document.createElement("button");
+        cell.className = "h-10 rounded-lg relative hover:bg-white/5 border border-white/10";
+        const key = `${calRef.getFullYear()}-${pad(calRef.getMonth()+1)}-${pad(day)}`;
+        const isSel = dateFilter === key;
+        cell.style.outline = isSel ? "2px solid var(--gold)" : "none";
+        cell.innerHTML = `<div class="absolute top-1 left-2 text-xs opacity-80">${day}</div>` + (dots[key]? `<div class="absolute bottom-1 left-2 right-2 flex gap-1 justify-start">${"● ".repeat(Math.min(3,dots[key]))}</div>`:"");
+        cell.addEventListener("click", ()=>{ dateFilter = (dateFilter===key? null : key); renderCalendar(); renderEvents(); });
+        grid.appendChild(cell);
+      }
+    }
+
+    document.getElementById("calPrev").onclick = ()=>{ calRef = new Date(calRef.getFullYear(), calRef.getMonth()-1, 1); renderCalendar(); };
+    document.getElementById("calNext").onclick = ()=>{ calRef = new Date(calRef.getFullYear(), calRef.getMonth()+1, 1); renderCalendar(); };
+    document.getElementById("calClear").onclick= ()=>{ dateFilter=null; renderCalendar(); renderEvents(); };
+
+    // ====== Render tarjetas de eventos ======
     function renderEvents(){
       const list = futureEvents(EVENTS);
-      // Próximo evento
-      startCountdown(list[0]);
+      setupHero(list[0]);
 
-      // Listado
       const wrap = document.getElementById("eventsList");
       wrap.innerHTML = "";
-      list.forEach(ev=>{
+
+      const filtered = list.filter(ev=>{
+        if(!dateFilter) return true;
+        const k = ymd(ev._start);
+        return k === dateFilter;
+      });
+
+      filtered.forEach(ev=>{
         const start = ev._start;
         const end   = new Date(start.getTime() + (ev.durationMin||60)*60000);
+        const cover = ev.cover ? `url('${ev.cover}')` : "linear-gradient(120deg,#111,#222)";
         const card = document.createElement("div");
-        card.className = "card p-4";
+        card.className = "card overflow-hidden";
         card.innerHTML = `
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <div class="text-sm opacity-70">${start.toLocaleDateString("es-AR",{weekday:"long", day:"2-digit", month:"long"})} • ${start.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})} hs</div>
-              <h4 class="font-semibold leading-tight">${ev.title}</h4>
-              <div class="text-sm opacity-80">${ev.place||"A confirmar"}</div>
-              <p class="text-sm opacity-70 mt-1">${ev.description||""}</p>
-              ${ev.capacity? `<div class="text-xs opacity-60 mt-1">Cupo: ${ev.capacity} personas</div>`:""}
+          <div class="aspect-[16/9] bg-center bg-cover" style="background-image:${cover}"></div>
+          <div class="p-4">
+            <div class="text-xs opacity-70">${start.toLocaleDateString("es-AR",{weekday:"long", day:"2-digit", month:"long"})} • ${start.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})} hs</div>
+            <h4 class="font-semibold leading-tight mt-1">${ev.title}</h4>
+            <div class="text-sm opacity-80">${ev.place||"A confirmar"}</div>
+            <p class="text-sm opacity-70 mt-1">${ev.description||""}</p>
+            ${ev.capacity? `<div class="text-xs opacity-60 mt-2">Cupo: ${ev.capacity} personas</div>`:""}
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button class="btn btn-ev-wa" style="background: rgba(197,160,71,.18);">📲 Agendar</button>
+              <button class="btn btn-ev-ics">➕ Calendario</button>
+              ${ev.place? `<a class="btn" target="_blank" href="https://www.google.com/maps/search/${encodeURIComponent(ev.place)}">📍 Mapa</a>`:""}
             </div>
-          </div>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <button class="btn btn-ev-agendar">🗓️ Agendar</button>
-            <button class="btn btn-ev-ics">➕ Agregar a mi calendario</button>
           </div>`;
-        // listeners por tarjeta
-        card.querySelector(".btn-ev-agendar").addEventListener("click", ()=> openAgenda({
-          type:"evento", event:ev, title:ev.title, when:start
-        }));
+        card.querySelector(".btn-ev-wa").addEventListener("click", ()=>{
+          const msg = `Hola Nacho, quiero *anotarme*:
+• ${ev.title}
+• ${start.toLocaleString("es-AR")}
+• Lugar: ${ev.place||"Córdoba"}`;
+          window.open(`${waBase}?text=${encodeURIComponent(msg)}`,"_blank");
+        });
         card.querySelector(".btn-ev-ics").addEventListener("click", ()=>{
-          downloadICS({
-            title: ev.title,
-            desc: ev.description||"Evento Negocios con Ignacio",
-            start, end, location: ev.place||"Córdoba",
-            filename: ev.id || "evento"
-          });
+          downloadICS({ title: ev.title, desc: ev.description||"Evento Negocios con Ignacio", start, end, location: ev.place||"Córdoba", filename: ev.id||"evento" });
         });
         wrap.appendChild(card);
       });
 
-      // llenar combo de test drive modelos
-      const sel = document.getElementById("td-model");
-      sel.innerHTML = `<option value="">Elegí un modelo…</option>`;
-      PRODUCTS.forEach(p=>{ const o=document.createElement("option"); o.value=p.title; o.textContent=p.title; sel.appendChild(o); });
+      if(filtered.length===0){
+        const empty = document.createElement("div");
+        empty.className = "text-sm opacity-70";
+        empty.textContent = "No hay eventos ese día. Probá otras fechas o “Ver todos”.";
+        wrap.appendChild(empty);
+      }
     }
 
-    // Modal Agenda
+    // ====== MODAL AGENDA EVENTO ======
     let AGENDA_CONTEXT = { type:"evento", title:"", when:null, event:null };
     function openAgenda(ctx){
       AGENDA_CONTEXT = ctx || {type:"evento"};
-      document.getElementById("ab-title").textContent = (ctx.type==="testdrive"?"Agendar test drive":"Agendar asistencia");
+      document.getElementById("ab-title").textContent = "Agendar asistencia";
       document.getElementById("ab-subtitle").textContent = ctx.title ? ctx.title : "";
       const dt = document.getElementById("ab-dt");
-      if(ctx.when){ dt.value = new Date(ctx.when).toISOString().slice(0,16); }
-      else { dt.value = ""; }
+      if(ctx.when){ dt.value = new Date(ctx.when).toISOString().slice(0,16); } else { dt.value = ""; }
       document.getElementById("ab-name").value = "";
       document.getElementById("ab-phone").value = "";
       document.getElementById("ab-notes").value = "";
@@ -681,7 +758,6 @@
       updateAgendaLinks();
     }
     function closeAgenda(){ document.getElementById("agendabox").classList.add("hidden"); }
-
     function updateAgendaLinks(){
       const name = document.getElementById("ab-name").value.trim();
       const phone= document.getElementById("ab-phone").value.trim();
@@ -689,68 +765,72 @@
       const dtVal= document.getElementById("ab-dt").value;
       const start = dtVal ? new Date(dtVal) : new Date();
       const end   = new Date(start.getTime() + 60*60000);
-
-      const title = (AGENDA_CONTEXT.type==="testdrive" ? ("Test drive – "+(AGENDA_CONTEXT.title||"Modelo a confirmar")) : (AGENDA_CONTEXT.title||"Asistencia a evento"));
-      const place = (AGENDA_CONTEXT.type==="testdrive" ? "Showroom Negocios con Ignacio" : (AGENDA_CONTEXT.event?.place || "Córdoba"));
-      const desc  = (AGENDA_CONTEXT.type==="testdrive" ? "Turno de prueba de manejo." : (AGENDA_CONTEXT.event?.description || "Evento Negocios con Ignacio"));
-
-      const lines = [
-        "Hola Nacho, quiero *agendar*:",
-        "• "+title,
-        "• Fecha/hora: "+ start.toLocaleString("es-AR"),
-        name? "• Nombre: "+name : "",
-        phone? "• Tel: "+phone : "",
-        notes? "• Notas: "+notes : "",
-      ].filter(Boolean);
-
-      document.getElementById("ab-wa").href = "https://wa.me/543512004885?text=" + encodeURIComponent(lines.join("\n"));
-      document.getElementById("ab-ics").onclick = ()=> downloadICS({
-        title, desc, start, end, location: place, filename: (AGENDA_CONTEXT.type==="testdrive"?"test-drive":"evento")
-      });
+      const title = AGENDA_CONTEXT.title || "Asistencia a evento";
+      const place = AGENDA_CONTEXT.event?.place || "Córdoba";
+      const desc  = AGENDA_CONTEXT.event?.description || "Evento Negocios con Ignacio";
+      const lines = ["Hola Nacho, quiero *agendar*:", "• "+title, "• Fecha/hora: "+ start.toLocaleString("es-AR"), "• Lugar: " + place, name? "• Nombre: "+name : "", phone? "• Tel: "+phone : "", notes? "• Notas: "+notes : ""].filter(Boolean);
+      document.getElementById("ab-wa").href = `${waBase}?text=${encodeURIComponent(lines.join("\n"))}`;
+      document.getElementById("ab-ics").onclick = ()=> downloadICS({ title, desc, start, end, location: place, filename: "evento" });
     }
-
-    // Test Drive rápido (sección agenda)
-    document.getElementById("td-wa").addEventListener("click", ()=>{
-      const model = document.getElementById("td-model").value;
-      const dtVal = document.getElementById("td-dt").value;
-      const name  = document.getElementById("td-name").value.trim();
-      const phone = document.getElementById("td-phone").value.trim();
-      if(!model){ alert("Elegí un modelo."); return; }
-      if(!dtVal){ alert("Elegí fecha y hora."); return; }
-      const when = new Date(dtVal);
-      const msg = [
-        "Hola Nacho, quiero *agendar un test drive*:",
-        "• Modelo: "+model,
-        "• Fecha/hora: "+ when.toLocaleString("es-AR"),
-        name? "• Nombre: "+name : "",
-        phone? "• Tel: "+phone : ""
-      ].filter(Boolean).join("\n");
-      window.open("https://wa.me/543512004885?text="+encodeURIComponent(msg), "_blank");
-    });
-    document.getElementById("td-ics").addEventListener("click", ()=>{
-      const model = document.getElementById("td-model").value;
-      const dtVal = document.getElementById("td-dt").value;
-      if(!model || !dtVal){ alert("Elegí modelo, fecha y hora."); return; }
-      const start = new Date(dtVal);
-      const end   = new Date(start.getTime()+60*60000);
-      downloadICS({ title:"Test drive – "+model, desc:"Turno de prueba de manejo", start, end, location:"Showroom Negocios con Ignacio", filename:"test-drive-"+model.replace(/\s+/g,"-").toLowerCase() });
-    });
-
-    // Eventos del modal agenda
     document.getElementById("ab-close").onclick  = closeAgenda;
     document.getElementById("ab-cerrar").onclick = closeAgenda;
     document.getElementById("agendabox").addEventListener("click",(e)=>{ if(e.target.id==="agendabox") closeAgenda(); });
-    ["ab-name","ab-phone","ab-notes","ab-dt"].forEach(id=>{
-      document.getElementById(id).addEventListener("input", updateAgendaLinks);
-      document.getElementById(id).addEventListener("change", updateAgendaLinks);
-    });
+    ["ab-name","ab-phone","ab-notes","ab-dt"].forEach(id=>{ document.getElementById(id).addEventListener("input", updateAgendaLinks); document.getElementById(id).addEventListener("change", updateAgendaLinks); });
+
+    // ====== MODAL TEST DRIVE ======
+    let TD_CONTEXT = { model:"" };
+    function nextSaturdayAt11(){
+      const now = new Date();
+      const day = now.getDay(); // 0 Dom ... 6 Sáb
+      const delta = (6 - day + 7) % 7 || 7; // si hoy es sábado, ir al próximo sábado
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate()+delta, 11, 0, 0, 0);
+      return d;
+    }
+    function toLocalInputValue(d){
+      const y=d.getFullYear(), m=pad(d.getMonth()+1), da=pad(d.getDate()), h=pad(d.getHours()), mi=pad(d.getMinutes());
+      return `${y}-${m}-${da}T${h}:${mi}`;
+    }
+    function openTestDrive(p){
+      TD_CONTEXT = { model: p.title || "Modelo a confirmar" };
+      document.getElementById("td-model-view").textContent = TD_CONTEXT.model;
+      document.getElementById("td-dt").value = toLocalInputValue(nextSaturdayAt11());
+      document.getElementById("td-name").value = "";
+      document.getElementById("td-phone").value = "";
+      document.getElementById("td-notes").value = "";
+      document.getElementById("tdbox").classList.remove("hidden");
+      updateTDLinks();
+    }
+    function closeTestDrive(){ document.getElementById("tdbox").classList.add("hidden"); }
+    function updateTDLinks(){
+      const dtVal = document.getElementById("td-dt").value;
+      const name  = document.getElementById("td-name").value.trim();
+      const phone = document.getElementById("td-phone").value.trim();
+      const notes = document.getElementById("td-notes").value.trim();
+      const start = dtVal ? new Date(dtVal) : nextSaturdayAt11();
+      const end   = new Date(start.getTime()+60*60000);
+      const msg = [
+        "Hola Nacho, quiero *agendar un test drive*:",
+        "• Modelo: " + TD_CONTEXT.model,
+        "• Fecha/hora: " + start.toLocaleString("es-AR"),
+        name? "• Nombre: "+name : "",
+        phone? "• Tel: "+phone : "",
+        notes? "• Notas: "+notes : "",
+        "",
+        "⚠ Confirmo asistencia. Si no puedo ir, aviso con 24 hs de anticipación."
+      ].filter(Boolean).join("\n");
+      document.getElementById("td-wa").href = `${waBase}?text=${encodeURIComponent(msg)}`;
+      document.getElementById("td-ics").onclick = ()=> downloadICS({ title:"Test drive – " + TD_CONTEXT.model, desc:"Turno de prueba de manejo", start, end, location:"Showroom Negocios con Ignacio", filename:"test-drive-"+TD_CONTEXT.model.replace(/\s+/g,"-").toLowerCase() });
+    }
+    document.getElementById("td-close").onclick  = closeTestDrive;
+    document.getElementById("td-cerrar").onclick = closeTestDrive;
+    document.getElementById("tdbox").addEventListener("click",(e)=>{ if(e.target.id==="tdbox") closeTestDrive(); });
+    ["td-dt","td-name","td-phone","td-notes"].forEach(id=>{ document.getElementById(id).addEventListener("input", updateTDLinks); document.getElementById(id).addEventListener("change", updateTDLinks); });
 
     // ====== INIT ======
     document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("wa-hero").href  = "https://wa.me/543512004885?text=" + encodeURIComponent(waDefault);
-    document.getElementById("wa-float").href = "https://wa.me/543512004885?text=" + encodeURIComponent(waDefault);
+    document.getElementById("wa-hero").href  = `${waBase}?text=${encodeURIComponent(waDefault)}`;
+    document.getElementById("wa-float").href = `${waBase}?text=${encodeURIComponent(waDefault)}`;
 
-    // Listeners filtros/orden/paginación
     ["q","brand","minPrice","maxPrice","sort","pageSize"].forEach(id=>{
       document.getElementById(id).addEventListener("input", ()=>{ STATE.page=1; applyFilters(); });
       document.getElementById(id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
@@ -758,12 +838,11 @@
     document.getElementById("clear").addEventListener("click", ()=>{
       ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value="");
       document.getElementById("sort").value="none";
-      STATE.page=1;
-      applyFilters();
+      STATE.page=1; applyFilters();
     });
 
-    // Render inicial
     applyFilters();
+    renderCalendar();
     renderEvents();
   </script>
 </body>
