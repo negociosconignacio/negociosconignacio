@@ -114,7 +114,7 @@
     <div class="mt-6 flex items-center justify-end gap-2" id="pagerBottom"></div>
   </section>
 
-  <!-- Eventos (solo bloque de próximo evento con cuenta regresiva) -->
+  <!-- Eventos -->
   <section id="agenda" class="mx-auto max-w-7xl px-4 pb-14">
     <h3 class="text-xl font-bold gold mb-3">Eventos</h3>
 
@@ -305,8 +305,7 @@
 
     // ====== DATA CATÁLOGO ======
     const PRODUCTS = [
-      /* TRK 251 usada: eliminada */
-      { id:"benelli-302s",     title:"Benelli 302S",       price:10290000, brand:"Benelli", cc:300, year:0, km:0,
+      { id:"benelli-302s", title:"Benelli 302S", price:10290000, brand:"Benelli", cc:300, year:0, km:0,
         cover:"/images/APC_5929-1600x1200-2.jpg",
         gallery:[
           "/images/APC_5929-1600x1200-2.jpg",
@@ -315,24 +314,18 @@
           "/images/APC_5928-1600x1200-1.jpg"
         ],
         tags:["En stock"] },
-      { id:"benelli-251s",     title:"Benelli 251S",       price:5000000,  brand:"Benelli", cc:249, year:0, km:0, cover:"/images/251s.jpg",      gallery:["/images/251s.jpg"],      tags:["En stock"] },
-      { id:"leoncino-500",     title:"Benelli Leoncino 500", price:20000000, brand:"Benelli", cc:500, year:0, km:0, cover:"/images/leoncino500.jpg", gallery:["/images/leoncino500.jpg"], tags:["En stock"] },
-      { id:"benelli-180s",     title:"Benelli 180S",       price:3000000,  brand:"Benelli", cc:180, year:0, km:0, cover:"/images/180s.jpg",      gallery:["/images/180s.jpg"],      tags:["En stock"] },
-      { id:"benelli-tnt15",    title:"Benelli TNT 15",     price:0,        brand:"Benelli", cc:148, year:0, km:0, cover:"/images/tnt15-1.jpg",  gallery:["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"], tags:["En stock"] }
+      { id:"benelli-251s", title:"Benelli 251S", price:5000000, brand:"Benelli", cc:249, year:0, km:0, cover:"/images/251s.jpg", gallery:["/images/251s.jpg"], tags:["En stock"] },
+      { id:"leoncino-500", title:"Benelli Leoncino 500", price:20000000, brand:"Benelli", cc:500, year:0, km:0, cover:"/images/leoncino500.jpg", gallery:["/images/leoncino500.jpg"], tags:["En stock"] },
+      { id:"benelli-180s", title:"Benelli 180S", price:3000000, brand:"Benelli", cc:180, year:0, km:0, cover:"/images/180s.jpg", gallery:["/images/180s.jpg"], tags:["En stock"] },
+      { id:"benelli-tnt15", title:"Benelli TNT 15", price:0, brand:"Benelli", cc:148, year:0, km:0, cover:"/images/tnt15-1.jpg", gallery:["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"], tags:["En stock"] }
     ];
 
     // ====== EVENTO PRINCIPAL ======
     const EVENTS = [
-      {
-        id:"dia-nino-kempes-2025",
-        title:"Día del Niño – Parque del Kempes",
-        when:"2025-08-18T15:00",
-        durationMin:180,
-        place:"Parque del Kempes, Córdoba",
+      { id:"dia-nino-kempes-2025", title:"Día del Niño – Parque del Kempes", when:"2025-08-18T15:00",
+        durationMin:180, place:"Parque del Kempes, Córdoba",
         description:"Festejo del Día del Niño y convocatoria solidaria para ayudar a los necesitados.",
-        capacity:200,
-        cover:"/images/events/kempes.jpg"
-      }
+        capacity:200, cover:"/images/events/kempes.jpg" }
     ];
 
     // ====== UTIL ======
@@ -362,7 +355,7 @@
     // ====== ESTADO FILTROS ======
     let STATE = { q:"", brand:"", minPrice:0, maxPrice:0, sort:"none", page:1, pageSize:10 };
 
-    // ====== TARJETAS CATÁLOGO ======
+    // ====== TARJETAS ======
     function makeCard(p){
       const card = document.createElement("div");
       card.className = "card overflow-hidden";
@@ -408,7 +401,7 @@
       document.getElementById("count").textContent = `${paged.total} resultados · página ${paged.page} de ${paged.pages}`;
     }
 
-    // ====== LIGHTBOX GALERÍA ======
+    // ====== LIGHTBOX ======
     let LB = { list:[], idx:0 };
     function openGallery(p){ LB.list = (p.gallery && p.gallery.length ? p.gallery : [p.cover]); LB.idx = 0; renderLB(); document.getElementById("lightbox").classList.remove("hidden"); }
     function renderLB(){
@@ -429,7 +422,7 @@
     document.getElementById("lb-prev").onclick = ()=>{ LB.idx=(LB.idx-1+LB.list.length)%LB.list.length; renderLB(); };
     document.getElementById("lightbox").addEventListener("click",(e)=>{ if(e.target.id==="lightbox") document.getElementById("lightbox").classList.add("hidden"); });
 
-    // ====== FINANCIACIÓN / CALC ======
+    // ====== FINANCIACIÓN ======
     function getFinanceFor(p){ return (RULE_SMALL_CC(p.cc)) ? { plans:["FIJA"], tna:{FIJA:89}, months: DEFAULT_MONTHS, defaultPlan:"FIJA" } : { plans: DEFAULT_PLANS, tna: DEFAULT_TNA, months: DEFAULT_MONTHS, defaultPlan:"FIJA" }; }
     let CALC_PRODUCT = null;
     function frenchInstallment(amount, months, tna){ const i=(tna/12)/100; if(months<=0||amount<=0) return 0; if(i===0) return amount/months; const f=Math.pow(1+i,months); return amount*((i*f)/(f-1)); }
@@ -441,9 +434,12 @@
       document.getElementById("cb-entrega").value = 0;
       document.getElementById("cb-meses").value = f.months[0] || 12;
       const planSel = document.getElementById("cb-plan");
-      planSel.innerHTML = ""; f.plans.forEach(pl=>{ const opt=document.createElement("option"); opt.value=pl; opt.textContent=pl; planSel.appendChild(opt); });
+      planSel.innerHTML = "";
+      f.plans.forEach(pl=>{ const opt=document.createElement("option"); opt.value=pl; opt.textContent=pl; planSel.appendChild(opt); });
       planSel.value = f.defaultPlan || f.plans[0];
-      const atajos = document.getElementById("cb-atajos"); atajos.innerHTML=""; f.months.forEach(m=>{ const b=document.createElement("button"); b.className="btn cb-atajo"; b.dataset.meses=m; b.textContent=m; b.addEventListener("click", ()=>{ document.getElementById("cb-meses").value=m; updateCalc(); }); atajos.appendChild(b); });
+      const atajos = document.getElementById("cb-atajos");
+      atajos.innerHTML="";
+      f.months.forEach(m=>{ const b=document.createElement("button"); b.className="btn cb-atajo"; b.dataset.meses=m; b.textContent=m; b.addEventListener("click", ()=>{ document.getElementById("cb-meses").value=m; updateCalc(); }); atajos.appendChild(b); });
       updateCalc(); document.getElementById("calcbox").classList.remove("hidden");
     }
     function closeCalc(){ document.getElementById("calcbox").classList.add("hidden"); }
@@ -509,6 +505,7 @@
       renderGrid({items, total, page:STATE.page, pages});
       renderPager({total, page:STATE.page, pages});
     }
+
     function renderPager({total, page, pages}){
       const mk = (where)=>{
         const host = document.getElementById(where);
@@ -526,7 +523,7 @@
       mk("pagerTop"); mk("pagerBottom");
     }
 
-    // ====== AGENDA EVENTO (modal) ======
+    // ====== AGENDA EVENTO ======
     let AGENDA_CONTEXT = { type:"evento", title:"", when:null, event:null };
     function openAgenda(ctx){
       AGENDA_CONTEXT = ctx || {type:"evento"};
@@ -560,11 +557,11 @@
     document.getElementById("agendabox").addEventListener("click",(e)=>{ if(e.target.id==="agendabox") closeAgenda(); });
     ["ab-name","ab-phone","ab-notes","ab-dt"].forEach(id=>{ document.getElementById(id).addEventListener("input", updateAgendaLinks); document.getElementById(id).addEventListener("change", updateAgendaLinks); });
 
-    // ====== TEST DRIVE (modal) ======
+    // ====== TEST DRIVE ======
     let TD_CONTEXT = { model:"" };
     function nextSaturdayAt11(){
       const now = new Date();
-      const day = now.getDay(); // 0 Dom ... 6 Sáb
+      const day = now.getDay();
       const delta = (6 - day + 7) % 7 || 7;
       const d = new Date(now.getFullYear(), now.getMonth(), now.getDate()+delta, 11, 0, 0, 0);
       return d;
@@ -606,21 +603,23 @@
     document.getElementById("tdbox").addEventListener("click",(e)=>{ if(e.target.id==="tdbox") closeTestDrive(); });
     ["td-dt","td-name","td-phone","td-notes"].forEach(id=>{ document.getElementById(id).addEventListener("input", updateTDLinks); document.getElementById(id).addEventListener("change", updateTDLinks); });
 
-    // ====== RENDER CATÁLOGO ======
+    // ====== INIT FILTROS + RENDER ======
     function applyFiltersInit(){
       ["q","brand","minPrice","maxPrice","sort","pageSize"].forEach(id=>{
         document.getElementById(id).addEventListener("input", ()=>{ STATE.page=1; applyFilters(); });
         document.getElementById(id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
       });
+      // 🔧 FIX: faltaba cerrar el paréntesis en la función del botón "Limpiar"
       document.getElementById("clear").addEventListener("click", ()=>{
-        ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value="";
+        ["q","brand","minPrice","maxPrice"].forEach(id => document.getElementById(id).value = "");
         document.getElementById("sort").value="none";
-        STATE.page=1; applyFilters();
+        STATE.page=1;
+        applyFilters();
       });
       applyFilters();
     }
 
-    // ====== PRÓXIMO EVENTO (hero) ======
+    // ====== PRÓXIMO EVENTO ======
     function setupHero(nextEv){
       const wrapBg = document.getElementById("nextEventBg");
       const title = document.getElementById("heroTitle");
@@ -658,11 +657,7 @@
         cd.textContent = `${pad2(d)}d ${pad2(h)}h ${pad2(m)}m ${pad2(s)}s`;
       },1000);
     }
-
-    function initEventsUI(){
-      const ev = {...EVENTS[0], _start: new Date(EVENTS[0].when)};
-      setupHero(ev);
-    }
+    function initEventsUI(){ const ev = {...EVENTS[0], _start: new Date(EVENTS[0].when)}; setupHero(ev); }
 
     // ====== INIT ======
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -673,4 +668,4 @@
     initEventsUI();
   </script>
 </body>
-                                                                                         </html>
+</html>
