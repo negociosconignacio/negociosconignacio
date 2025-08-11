@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Negocios con Ignacio – Catálogo</title>
-  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, comparador, galería, WhatsApp, eventos y test drive." />
+  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, galería, WhatsApp y eventos." />
   <link rel="icon" href="/images/logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -26,19 +26,18 @@
     .grid-auto-fill { display:grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap:20px; }
     .iconbtn { border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); height:38px; padding:0 10px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; font-size:13px; }
     a { color: inherit; }
-    .chip { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:999px; font-size:12px; padding:4px 10px; }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header class="sticky top-0 z-20 border-b border-white/10 bg-black/70 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
+      <!-- Logo más grande en celulares -->
       <img src="/images/logo.png" alt="Negocios con Ignacio" class="h-20 md:h-14 w-auto rounded-lg" onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
       <span class="uppercase font-extrabold tracking-wide gold text-lg md:text-2xl">NEGOCIOS CON IGNACIO</span>
       <nav class="ml-auto hidden md:flex items-center gap-4 text-sm opacity-90">
         <a href="#catalogo" class="hover:opacity-100">Catálogo</a>
         <a href="#agenda" class="hover:opacity-100">Eventos</a>
-        <a href="#comparador" class="hover:opacity-100">Comparador</a>
         <a href="#contacto" class="hover:opacity-100">Contacto</a>
       </nav>
       <a href="#catalogo" class="btn">🔎 Buscar</a>
@@ -118,8 +117,26 @@
   <section id="agenda" class="mx-auto max-w-7xl px-4 pb-14">
     <h3 class="text-xl font-bold gold mb-3">Eventos</h3>
 
-    <!-- Banner destacado con contador -->
-    <div id="nextEventHero" class="relative overflow-hidden rounded-2xl border border-white/10 mb-5" style="min-height:180px;">
+    <!-- Banner destacado del Día del Niño -->
+    <div class="relative overflow-hidden rounded-2xl border border-white/10 mb-5">
+      <div class="aspect-[21/9] bg-center bg-cover"
+           style="background-image:url('/images/events/dia-nino-banner.jpg'), linear-gradient(120deg,#0b0b0b,#1a1a1a)"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20"></div>
+      <div class="absolute inset-0 p-4 md:p-6 flex flex-col md:flex-row items-center md:items-end justify-between">
+        <div>
+          <div class="text-xs uppercase tracking-wide opacity-80">Solidario</div>
+          <div class="text-lg md:text-2xl font-semibold">Día del Niño – Parque del Kempes</div>
+          <div class="text-sm opacity-85">18 de agosto • 15:00 hs • Córdoba</div>
+        </div>
+        <div class="mt-3 md:mt-0 flex gap-2">
+          <button id="bnrWA" class="btn" style="background: rgba(197,160,71,.18);">📲 Agendar</button>
+          <button id="bnrICS" class="btn">➕ Calendario</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Próximo evento con cuenta regresiva (se conserva) -->
+    <div id="nextEventHero" class="relative overflow-hidden rounded-2xl border border-white/10" style="min-height:180px;">
       <div class="absolute inset-0 bg-cover bg-center opacity-40" id="nextEventBg"></div>
       <div class="relative z-10 p-4 md:p-6 grid md:grid-cols-3 gap-4 items-center">
         <div class="md:col-span-2">
@@ -140,54 +157,6 @@
             <button id="heroICS" class="btn">➕ Calendario</button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Calendario + tarjetas -->
-    <div class="grid lg:grid-cols-3 gap-5">
-      <!-- Mini calendario -->
-      <div class="card p-4 h-max">
-        <div class="flex items-center justify-between">
-          <button id="calPrev" class="iconbtn">◀</button>
-          <div class="font-semibold" id="calLabel">—</div>
-          <button id="calNext" class="iconbtn">▶</button>
-        </div>
-        <div class="grid grid-cols-7 text-center text-xs opacity-70 mt-3">
-          <div>Lu</div><div>Ma</div><div>Mi</div><div>Ju</div><div>Vi</div><div>Sa</div><div>Do</div>
-        </div>
-        <div id="calGrid" class="grid grid-cols-7 gap-1 mt-2"></div>
-        <div class="mt-3 flex flex-wrap gap-2">
-          <button id="calClear" class="btn w-full">Ver todos</button>
-        </div>
-      </div>
-
-      <!-- Listado de eventos -->
-      <div class="lg:col-span-2 card p-4 md:p-5">
-        <div class="text-sm opacity-80 mb-4">Elegí un evento próximo y agendate.</div>
-        <div id="eventsList" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Comparador (placeholder visual) -->
-  <section id="comparador" class="mx-auto max-w-7xl px-4 pb-12">
-    <h3 class="text-xl font-bold gold mb-3">Comparador</h3>
-    <div class="card p-4">
-      <div id="compareList" class="text-sm opacity-80 mb-3">Elegí hasta 3 modelos desde el catálogo (botón “Comparar”).</div>
-      <div class="overflow-auto">
-        <table id="compareTable" class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-white/10">
-              <th class="text-left p-2">Modelo</th>
-              <th class="text-left p-2">Marca</th>
-              <th class="text-left p-2">Cilindrada</th>
-              <th class="text-left p-2">Año</th>
-              <th class="text-left p-2">KM</th>
-              <th class="text-left p-2">Precio</th>
-            </tr>
-          </thead>
-          <tbody id="compareBody"></tbody>
-        </table>
       </div>
     </div>
   </section>
@@ -362,7 +331,7 @@
       { id:"benelli-tnt15",    title:"Benelli TNT 15",     price:0,        brand:"Benelli", cc:148, year:0, km:0, cover:"/images/tnt15-1.jpg",  gallery:["/images/tnt15-1.jpg","/images/tnt15-2.jpg","/images/tnt15-3.jpg"], tags:["En stock"] }
     ];
 
-    // ====== EVENTOS ======
+    // ====== EVENTO PRINCIPAL ======
     const EVENTS = [
       {
         id:"dia-nino-kempes-2025",
@@ -373,8 +342,7 @@
         description:"Festejo del Día del Niño y convocatoria solidaria para ayudar a los necesitados.",
         capacity:200,
         cover:"/images/events/kempes.jpg"
-      },
-      { id:"open-house", title:"Open House Benelli", when:"2025-09-05T11:00", durationMin:120, place:"Showroom - Córdoba", description:"Lanzamientos, charlas y café.", capacity:50, cover:"" }
+      }
     ];
 
     // ====== UTIL ======
@@ -383,12 +351,7 @@
     const waDefault = "Hola Nacho, quiero info y *Opciones disponibles*";
     const $ = s => document.querySelector(s);
     const pad = n => String(n).padStart(2,"0");
-
-    function toICSDate(dt){
-      const d = new Date(dt);
-      const y=d.getFullYear(), m=pad(d.getMonth()+1), da=pad(d.getDate()), h=pad(d.getHours()), mi=pad(d.getMinutes());
-      return `${y}${m}${da}T${h}${mi}00`;
-    }
+    function toICSDate(dt){ const d=new Date(dt); const y=d.getFullYear(),m=pad(d.getMonth()+1),da=pad(d.getDate()),h=pad(d.getHours()),mi=pad(d.getMinutes()); return `${y}${m}${da}T${h}${mi}00`; }
     function downloadICS({title, desc, start, end, location, filename}){
       const ics = [
         "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Negocios con Ignacio//Agenda//ES",
@@ -403,13 +366,10 @@
         "END:VEVENT","END:VCALENDAR"
       ].join("\r\n");
       const blob = new Blob([ics], {type:"text/calendar;charset=utf-8"});
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = (filename||"evento") + ".ics";
-      document.body.appendChild(a); a.click(); a.remove();
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = (filename||"evento") + ".ics"; document.body.appendChild(a); a.click(); a.remove();
     }
 
-    // ====== STATE (filtros + orden + paginación) ======
+    // ====== ESTADO FILTROS ======
     let STATE = { q:"", brand:"", minPrice:0, maxPrice:0, sort:"none", page:1, pageSize:10 };
 
     // ====== TARJETAS CATÁLOGO ======
@@ -576,174 +536,7 @@
       mk("pagerTop"); mk("pagerBottom");
     }
 
-    // ====== EVENTOS: helper ======
-    function futureEvents(source){
-      const now = new Date();
-      return source
-        .map(e=> ({...e, _start: new Date(e.when)}))
-        .filter(e=> e._start.getTime() >= now.getTime())
-        .sort((a,b)=> a._start - b._start);
-    }
-    function pad2(n){ return String(n).padStart(2,"0"); }
-
-    // ====== HERO próximo evento ======
-    let HERO_TIMER = null;
-    function setupHero(nextEv){
-      const wrapBg = document.getElementById("nextEventBg");
-      const title = document.getElementById("heroTitle");
-      const meta  = document.getElementById("heroMeta");
-      const desc  = document.getElementById("heroDesc");
-      const cap   = document.getElementById("heroCapacity");
-      const cd    = document.getElementById("heroCountdown");
-      const btnWA = document.getElementById("heroWA");
-      const btnICS= document.getElementById("heroICS");
-
-      if(!nextEv){
-        title.textContent = "Sin eventos próximos";
-        meta.textContent = "";
-        desc.textContent = "";
-        cd.textContent = "—";
-        return;
-      }
-      if(nextEv.cover){
-        wrapBg.style.backgroundImage = `url('${nextEv.cover}')`;
-      } else {
-        wrapBg.style.backgroundImage = "linear-gradient(120deg,#111,#222)";
-      }
-      title.textContent = nextEv.title;
-      meta.textContent  = `${nextEv._start.toLocaleDateString("es-AR",{weekday:"long", day:"2-digit", month:"long"})} • ${nextEv._start.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})} hs • ${nextEv.place||"Córdoba"}`;
-      desc.textContent  = nextEv.description || "";
-      if(nextEv.capacity){ cap.style.display="inline-block"; cap.textContent = `Cupo: ${nextEv.capacity}`; } else { cap.style.display="none"; }
-
-      btnWA.onclick = ()=>{
-        const msg = `Hola Nacho, quiero *anotarme*: 
-• ${nextEv.title}
-• ${nextEv._start.toLocaleString("es-AR")}
-• Lugar: ${nextEv.place||"Córdoba"}`;
-        window.open(`${waBase}?text=${encodeURIComponent(msg)}`,"_blank");
-      };
-      btnICS.onclick = ()=>{
-        const end = new Date(nextEv._start.getTime() + (nextEv.durationMin||60)*60000);
-        downloadICS({ title: nextEv.title, desc: nextEv.description||"", start: nextEv._start, end, location: nextEv.place||"Córdoba", filename: nextEv.id||"evento" });
-      };
-
-      if(HERO_TIMER) clearInterval(HERO_TIMER);
-      function tick(){
-        const now = Date.now(), target = nextEv._start.getTime();
-        const diff = target - now;
-        if(diff<=0){ cd.textContent="¡Es ahora!"; clearInterval(HERO_TIMER); renderEvents(); return; }
-        const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
-        cd.textContent = `${pad2(d)}d ${pad2(h)}h ${pad2(m)}m ${pad2(s)}s`;
-      }
-      tick(); HERO_TIMER=setInterval(tick,1000);
-    }
-
-    // ====== Mini Calendario ======
-    let calRef = new Date(); // mes visible
-    let dateFilter = null;   // yyyy-mm-dd seleccionado
-    function ymd(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
-
-    function setCalLabel(){ document.getElementById("calLabel").textContent = calRef.toLocaleDateString("es-AR",{month:"long", year:"numeric"}); }
-    function renderCalendar(){
-      setCalLabel();
-      const first = new Date(calRef.getFullYear(), calRef.getMonth(), 1);
-      const startCol = (first.getDay()+6)%7; // Lunes=0
-      const daysInMonth = new Date(calRef.getFullYear(), calRef.getMonth()+1, 0).getDate();
-      const grid = document.getElementById("calGrid");
-      grid.innerHTML = "";
-
-      // map de eventos por día visible
-      const evs = futureEvents(EVENTS);
-      const dots = {};
-      evs.forEach(ev=>{
-        const d = ev._start;
-        if(d.getMonth()===calRef.getMonth() && d.getFullYear()===calRef.getFullYear()){
-          const key = ymd(d);
-          dots[key] = dots[key] || 0;
-          dots[key]++;
-        }
-      });
-
-      // relleno inicial
-      for(let i=0;i<startCol;i++){
-        const cell = document.createElement("div");
-        cell.className = "h-10 rounded-lg";
-        grid.appendChild(cell);
-      }
-
-      // días
-      for(let day=1; day<=daysInMonth; day++){
-        const cell = document.createElement("button");
-        cell.className = "h-10 rounded-lg relative hover:bg-white/5 border border-white/10";
-        const key = `${calRef.getFullYear()}-${pad(calRef.getMonth()+1)}-${pad(day)}`;
-        const isSel = dateFilter === key;
-        cell.style.outline = isSel ? "2px solid var(--gold)" : "none";
-        cell.innerHTML = `<div class="absolute top-1 left-2 text-xs opacity-80">${day}</div>` + (dots[key]? `<div class="absolute bottom-1 left-2 right-2 flex gap-1 justify-start">${"● ".repeat(Math.min(3,dots[key]))}</div>`:"");
-        cell.addEventListener("click", ()=>{ dateFilter = (dateFilter===key? null : key); renderCalendar(); renderEvents(); });
-        grid.appendChild(cell);
-      }
-    }
-
-    document.getElementById("calPrev").onclick = ()=>{ calRef = new Date(calRef.getFullYear(), calRef.getMonth()-1, 1); renderCalendar(); };
-    document.getElementById("calNext").onclick = ()=>{ calRef = new Date(calRef.getFullYear(), calRef.getMonth()+1, 1); renderCalendar(); };
-    document.getElementById("calClear").onclick= ()=>{ dateFilter=null; renderCalendar(); renderEvents(); };
-
-    // ====== Render tarjetas de eventos ======
-    function renderEvents(){
-      const list = futureEvents(EVENTS);
-      setupHero(list[0]);
-
-      const wrap = document.getElementById("eventsList");
-      wrap.innerHTML = "";
-
-      const filtered = list.filter(ev=>{
-        if(!dateFilter) return true;
-        const k = ymd(ev._start);
-        return k === dateFilter;
-      });
-
-      filtered.forEach(ev=>{
-        const start = ev._start;
-        const end   = new Date(start.getTime() + (ev.durationMin||60)*60000);
-        const cover = ev.cover ? `url('${ev.cover}')` : "linear-gradient(120deg,#111,#222)";
-        const card = document.createElement("div");
-        card.className = "card overflow-hidden";
-        card.innerHTML = `
-          <div class="aspect-[16/9] bg-center bg-cover" style="background-image:${cover}"></div>
-          <div class="p-4">
-            <div class="text-xs opacity-70">${start.toLocaleDateString("es-AR",{weekday:"long", day:"2-digit", month:"long"})} • ${start.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})} hs</div>
-            <h4 class="font-semibold leading-tight mt-1">${ev.title}</h4>
-            <div class="text-sm opacity-80">${ev.place||"A confirmar"}</div>
-            <p class="text-sm opacity-70 mt-1">${ev.description||""}</p>
-            ${ev.capacity? `<div class="text-xs opacity-60 mt-2">Cupo: ${ev.capacity} personas</div>`:""}
-            <div class="mt-3 flex flex-wrap gap-2">
-              <button class="btn btn-ev-wa" style="background: rgba(197,160,71,.18);">📲 Agendar</button>
-              <button class="btn btn-ev-ics">➕ Calendario</button>
-              ${ev.place? `<a class="btn" target="_blank" href="https://www.google.com/maps/search/${encodeURIComponent(ev.place)}">📍 Mapa</a>`:""}
-            </div>
-          </div>`;
-        card.querySelector(".btn-ev-wa").addEventListener("click", ()=>{
-          const msg = `Hola Nacho, quiero *anotarme*:
-• ${ev.title}
-• ${start.toLocaleString("es-AR")}
-• Lugar: ${ev.place||"Córdoba"}`;
-          window.open(`${waBase}?text=${encodeURIComponent(msg)}`,"_blank");
-        });
-        card.querySelector(".btn-ev-ics").addEventListener("click", ()=>{
-          downloadICS({ title: ev.title, desc: ev.description||"Evento Negocios con Ignacio", start, end, location: ev.place||"Córdoba", filename: ev.id||"evento" });
-        });
-        wrap.appendChild(card);
-      });
-
-      if(filtered.length===0){
-        const empty = document.createElement("div");
-        empty.className = "text-sm opacity-70";
-        empty.textContent = "No hay eventos ese día. Probá otras fechas o “Ver todos”.";
-        wrap.appendChild(empty);
-      }
-    }
-
-    // ====== MODAL AGENDA EVENTO ======
+    // ====== AGENDA EVENTO (modal) ======
     let AGENDA_CONTEXT = { type:"evento", title:"", when:null, event:null };
     function openAgenda(ctx){
       AGENDA_CONTEXT = ctx || {type:"evento"};
@@ -777,19 +570,16 @@
     document.getElementById("agendabox").addEventListener("click",(e)=>{ if(e.target.id==="agendabox") closeAgenda(); });
     ["ab-name","ab-phone","ab-notes","ab-dt"].forEach(id=>{ document.getElementById(id).addEventListener("input", updateAgendaLinks); document.getElementById(id).addEventListener("change", updateAgendaLinks); });
 
-    // ====== MODAL TEST DRIVE ======
+    // ====== TEST DRIVE (modal) ======
     let TD_CONTEXT = { model:"" };
     function nextSaturdayAt11(){
       const now = new Date();
       const day = now.getDay(); // 0 Dom ... 6 Sáb
-      const delta = (6 - day + 7) % 7 || 7; // si hoy es sábado, ir al próximo sábado
+      const delta = (6 - day + 7) % 7 || 7;
       const d = new Date(now.getFullYear(), now.getMonth(), now.getDate()+delta, 11, 0, 0, 0);
       return d;
     }
-    function toLocalInputValue(d){
-      const y=d.getFullYear(), m=pad(d.getMonth()+1), da=pad(d.getDate()), h=pad(d.getHours()), mi=pad(d.getMinutes());
-      return `${y}-${m}-${da}T${h}:${mi}`;
-    }
+    function toLocalInputValue(d){ const y=d.getFullYear(),m=pad(d.getMonth()+1),da=pad(d.getDate()),h=pad(d.getHours()),mi=pad(d.getMinutes()); return `${y}-${m}-${da}T${h}:${mi}`; }
     function openTestDrive(p){
       TD_CONTEXT = { model: p.title || "Modelo a confirmar" };
       document.getElementById("td-model-view").textContent = TD_CONTEXT.model;
@@ -826,24 +616,87 @@
     document.getElementById("tdbox").addEventListener("click",(e)=>{ if(e.target.id==="tdbox") closeTestDrive(); });
     ["td-dt","td-name","td-phone","td-notes"].forEach(id=>{ document.getElementById(id).addEventListener("input", updateTDLinks); document.getElementById(id).addEventListener("change", updateTDLinks); });
 
+    // ====== RENDER CATÁLOGO ======
+    function applyFiltersInit(){
+      ["q","brand","minPrice","maxPrice","sort","pageSize"].forEach(id=>{
+        document.getElementById(id).addEventListener("input", ()=>{ STATE.page=1; applyFilters(); });
+        document.getElementById(id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
+      });
+      document.getElementById("clear").addEventListener("click", ()=>{
+        ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value="");
+        document.getElementById("sort").value="none";
+        STATE.page=1; applyFilters();
+      });
+      applyFilters();
+    }
+
+    // ====== PRÓXIMO EVENTO (hero + banner botones) ======
+    function setupHero(nextEv){
+      const wrapBg = document.getElementById("nextEventBg");
+      const title = document.getElementById("heroTitle");
+      const meta  = document.getElementById("heroMeta");
+      const desc  = document.getElementById("heroDesc");
+      const cap   = document.getElementById("heroCapacity");
+      const cd    = document.getElementById("heroCountdown");
+      const btnWA = document.getElementById("heroWA");
+      const btnICS= document.getElementById("heroICS");
+
+      if(!nextEv){ title.textContent="Sin eventos próximos"; meta.textContent=""; desc.textContent=""; cd.textContent="—"; return; }
+      wrapBg.style.backgroundImage = nextEv.cover ? `url('${nextEv.cover}')` : "linear-gradient(120deg,#111,#222)";
+      title.textContent = nextEv.title;
+      meta.textContent  = `${nextEv._start.toLocaleDateString("es-AR",{weekday:"long", day:"2-digit", month:"long"})} • ${nextEv._start.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})} hs • ${nextEv.place||"Córdoba"}`;
+      desc.textContent  = nextEv.description || "";
+      if(nextEv.capacity){ cap.style.display="inline-block"; cap.textContent = `Cupo: ${nextEv.capacity}`; } else { cap.style.display="none"; }
+
+      btnWA.onclick = ()=>{
+        const msg = `Hola Nacho, quiero *anotarme*: 
+• ${nextEv.title}
+• ${nextEv._start.toLocaleString("es-AR")}
+• Lugar: ${nextEv.place||"Córdoba"}`;
+        window.open(`${waBase}?text=${encodeURIComponent(msg)}`,"_blank");
+      };
+      btnICS.onclick = ()=>{
+        const end = new Date(nextEv._start.getTime() + (nextEv.durationMin||60)*60000);
+        downloadICS({ title: nextEv.title, desc: nextEv.description||"", start: nextEv._start, end, location: nextEv.place||"Córdoba", filename: nextEv.id||"evento" });
+      };
+
+      // cuenta regresiva
+      function pad2(n){ return String(n).padStart(2,"0"); }
+      let timer = setInterval(()=>{
+        const now = Date.now(), tgt = nextEv._start.getTime(), diff = tgt - now;
+        if(diff<=0){ cd.textContent="¡Es ahora!"; clearInterval(timer); return; }
+        const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+        cd.textContent = `${pad2(d)}d ${pad2(h)}h ${pad2(m)}m ${pad2(s)}s`;
+      },1000);
+    }
+
+    function initEventsUI(){
+      const ev = {...EVENTS[0], _start: new Date(EVENTS[0].when)};
+      // Botones del banner
+      document.getElementById("bnrWA").onclick = ()=>{
+        const msg = `Hola Nacho, quiero *anotarme*:
+• ${ev.title}
+• ${ev._start.toLocaleString("es-AR")}
+• Lugar: ${ev.place}`;
+        window.open(`${waBase}?text=${encodeURIComponent(msg)}`,"_blank");
+      };
+      document.getElementById("bnrICS").onclick = ()=>{
+        const end = new Date(ev._start.getTime() + (ev.durationMin||60)*60000);
+        downloadICS({ title: ev.title, desc: ev.description, start: ev._start, end, location: ev.place, filename: ev.id });
+      };
+      // Hero
+      setupHero(ev);
+    }
+
     // ====== INIT ======
     document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("wa-hero").href  = `${waBase}?text=${encodeURIComponent(waDefault)}`;
     document.getElementById("wa-float").href = `${waBase}?text=${encodeURIComponent(waDefault)}`;
 
-    ["q","brand","minPrice","maxPrice","sort","pageSize"].forEach(id=>{
-      document.getElementById(id).addEventListener("input", ()=>{ STATE.page=1; applyFilters(); });
-      document.getElementById(id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
-    });
-    document.getElementById("clear").addEventListener("click", ()=>{
-      ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value="");
-      document.getElementById("sort").value="none";
-      STATE.page=1; applyFilters();
-    });
-
-    applyFilters();
-    renderCalendar();
-    renderEvents();
+    applyFiltersInit();
+    initEventsUI();
   </script>
 </body>
 </html>
+```0
+
