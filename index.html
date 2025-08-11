@@ -29,7 +29,6 @@
   <!-- Header -->
   <header class="sticky top-0 z-20 border-b border-white/10 bg-black/70 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
-      <!-- Logo más grande en celulares -->
       <img src="/images/logo.png" alt="Negocios con Ignacio" class="h-20 md:h-14 w-auto rounded-lg" onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
       <span class="uppercase font-extrabold tracking-wide gold text-lg md:text-2xl">NEGOCIOS CON IGNACIO</span>
       <nav class="ml-auto hidden md:flex items-center gap-4 text-sm opacity-90">
@@ -115,7 +114,7 @@
     <div class="mt-6 flex items-center justify-end gap-2" id="pagerBottom"></div>
   </section>
 
-  <!-- Eventos (sin banner; se mantiene solo el bloque de próximo evento con cuenta regresiva) -->
+  <!-- Eventos (solo bloque de próximo evento con cuenta regresiva) -->
   <section id="agenda" class="mx-auto max-w-7xl px-4 pb-14">
     <h3 class="text-xl font-bold gold mb-3">Eventos</h3>
 
@@ -306,8 +305,16 @@
 
     // ====== DATA CATÁLOGO ======
     const PRODUCTS = [
-      { id:"trk251-2022-gris", title:"Benelli TRK 251 (Usada) 2022 – 5.000 km – Gris", price:5000000, brand:"Usadas", cc:249, year:2022, km:5000, cover:"/images/trk251.jpg", gallery:["/images/trk251.jpg"], tags:["Usada","Oportunidad"] },
-      { id:"benelli-302s",     title:"Benelli 302S",       price:10000000, brand:"Benelli", cc:300, year:0, km:0, cover:"/images/302s.jpg",      gallery:["/images/302s.jpg"],      tags:["En stock"] },
+      /* TRK 251 usada: eliminada */
+      { id:"benelli-302s",     title:"Benelli 302S",       price:10290000, brand:"Benelli", cc:300, year:0, km:0,
+        cover:"/images/APC_5929-1600x1200-2.jpg",
+        gallery:[
+          "/images/APC_5929-1600x1200-2.jpg",
+          "/images/APC_5926-1600x1200-1.jpg",
+          "/images/APC_5924-1600x1200-1.jpg",
+          "/images/APC_5928-1600x1200-1.jpg"
+        ],
+        tags:["En stock"] },
       { id:"benelli-251s",     title:"Benelli 251S",       price:5000000,  brand:"Benelli", cc:249, year:0, km:0, cover:"/images/251s.jpg",      gallery:["/images/251s.jpg"],      tags:["En stock"] },
       { id:"leoncino-500",     title:"Benelli Leoncino 500", price:20000000, brand:"Benelli", cc:500, year:0, km:0, cover:"/images/leoncino500.jpg", gallery:["/images/leoncino500.jpg"], tags:["En stock"] },
       { id:"benelli-180s",     title:"Benelli 180S",       price:3000000,  brand:"Benelli", cc:180, year:0, km:0, cover:"/images/180s.jpg",      gallery:["/images/180s.jpg"],      tags:["En stock"] },
@@ -606,7 +613,7 @@
         document.getElementById(id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
       });
       document.getElementById("clear").addEventListener("click", ()=>{
-        ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value="");
+        ["q","brand","minPrice","maxPrice"].forEach(id=> document.getElementById(id).value="";
         document.getElementById("sort").value="none";
         STATE.page=1; applyFilters();
       });
@@ -666,4 +673,4 @@
     initEventsUI();
   </script>
 </body>
-</html>
+                                                                                         </html>
