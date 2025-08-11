@@ -4,36 +4,43 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Negocios con Ignacio – Catálogo</title>
-  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, galería, WhatsApp y eventos." />
+  <meta name="description" content="Catálogo de motos – Negocios con Ignacio. Filtros, cuotas, galería y WhatsApp." />
   <link rel="icon" href="/images/logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { --gold:#C5A047; --dark:#0B0B0B; }
-    body { background: var(--dark); color: #EEE; }
+    body { background: var(--dark); color:#EEE; }
     .gold { color: var(--gold); }
     .btn { border:1px solid rgba(255,255,255,.18); border-radius:14px; padding:10px 14px; display:inline-flex; align-items:center; gap:8px; min-height:44px; }
     .btn:hover { box-shadow:0 8px 28px rgba(0,0,0,.35); }
     .card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius:18px; }
     .tag { font-size:12px; padding:2px 8px; border-radius:9999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
     .input, select { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.28); color:#fff; border-radius:12px; padding:8px 12px; height:40px; }
-    select, option { color:#fff; background:#111; }
-    ::placeholder { color:#cfcfcf; opacity:.9; }
+    select, option { color:#fff; background:#111; }  /* alto contraste */
+    ::placeholder { color:#d0d0d0; opacity:.9; }
     .fixed-wa { position:fixed; right:16px; bottom:16px; z-index:50; }
     .grid-auto-fill { display:grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap:20px; }
     .iconbtn { border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); height:38px; padding:0 10px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; font-size:13px; }
-    a { color: inherit; }
-    .chip{display:inline-block;font-size:12px;padding:2px 8px;border-radius:9999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);}
+    a { color: inherit; text-decoration:none; }
+
+    /* Logo más grande en celulares */
+    .brand-logo { height:56px; }          /* desktop/base */
+    @media (max-width: 480px){
+      .brand-logo { height:72px; }        /* más grande en móviles */
+      .brand-title { font-size: 1.15rem; }
+    }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header class="sticky top-0 z-20 border-b border-white/10 bg-black/70 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
-      <img src="/images/logo.png" alt="Negocios con Ignacio" class="h-20 md:h-14 w-auto rounded-lg" onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
-      <span class="uppercase font-extrabold tracking-wide gold text-lg md:text-2xl">NEGOCIOS CON IGNACIO</span>
+      <img src="/images/logo.png" alt="Negocios con Ignacio" class="brand-logo w-auto rounded-lg"
+           onerror="this.src='https://dummyimage.com/200x80/111/ffffff&text=Negocios+con+Ignacio'">
+      <span class="brand-title uppercase font-extrabold tracking-wide gold text-lg md:text-2xl">NEGOCIOS CON IGNACIO</span>
       <nav class="ml-auto hidden md:flex items-center gap-4 text-sm opacity-90">
         <a href="#catalogo" class="hover:opacity-100">Catálogo</a>
-        <a href="#agenda" class="hover:opacity-100">Eventos</a>
+        <a href="#eventos" class="hover:opacity-100">Eventos</a>
         <a href="#contacto" class="hover:opacity-100">Contacto</a>
       </nav>
       <a href="#catalogo" class="btn">🔎 Buscar</a>
@@ -44,19 +51,19 @@
   <section class="mx-auto max-w-7xl px-4 py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
     <div>
       <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">
-        <span class="gold">Hola</span>, gracias por entrar a mi página.
+        <span class="gold">Hola, gracias por entrar a mi página.</span>
       </h1>
       <p class="mt-3 text-zinc-300">
-        Acá vas a poder ver las motos que vendo, ver los próximos eventos y anotarte,
+        Acá vas a poder ver las motos que vendo, ver los próximos eventos y anotarte;
         también agendar test drive del modelo que querés y cumplir el sueño de tener tu moto.
       </p>
       <div class="mt-5 flex flex-wrap items-center gap-3">
         <a href="#catalogo" class="btn">🛒 Ver catálogo</a>
-        <a href="#agenda" class="btn">🗓️ Eventos</a>
         <a id="wa-hero" target="_blank" class="btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
       </div>
     </div>
-    <div class="rounded-3xl overflow-hidden aspect-video md:aspect-[4/3] bg-cover bg-center" style="background-image:url('/images/hero.jpg'), linear-gradient(120deg,#111,#222)"></div>
+    <div class="rounded-3xl overflow-hidden aspect-video md:aspect-[4/3] bg-cover bg-center"
+         style="background-image:url('/images/hero.jpg'), linear-gradient(120deg,#111,#222)"></div>
   </section>
 
   <!-- Catálogo -->
@@ -74,6 +81,9 @@
         <label class="text-sm md:col-span-2">Marca
           <select id="brand" class="w-full mt-1">
             <option value="">Todas</option>
+            <option>Benelli</option>
+            <option>Suzuki</option>
+            <option>Usadas</option>
           </select>
         </label>
         <label class="text-sm md:col-span-2">Min
@@ -82,6 +92,7 @@
         <label class="text-sm md:col-span-2">Max
           <input id="maxPrice" type="number" class="input w-full mt-1" />
         </label>
+
         <label class="text-sm md:col-span-2">Orden
           <select id="sort" class="w-full mt-1">
             <option value="none">—</option>
@@ -93,6 +104,7 @@
             <option value="year-asc">Año ↑</option>
           </select>
         </label>
+
         <div class="text-sm md:col-span-2"><button id="clear" class="btn w-full">🧹 Limpiar</button></div>
       </div>
 
@@ -113,30 +125,33 @@
   </section>
 
   <!-- Eventos -->
-  <section id="agenda" class="mx-auto max-w-7xl px-4 pb-14">
-    <h3 class="text-xl font-bold gold mb-3">Eventos</h3>
+  <section id="eventos" class="mx-auto max-w-7xl px-4 pb-12">
+    <h3 class="text-2xl font-bold gold mb-3">Eventos</h3>
 
-    <div id="nextEventHero" class="relative overflow-hidden rounded-2xl border border-white/10" style="min-height:180px;">
-      <div class="absolute inset-0 bg-cover bg-center opacity-40" id="nextEventBg"></div>
-      <div class="relative z-10 p-4 md:p-6 grid md:grid-cols-3 gap-4 items-center">
-        <div class="md:col-span-2">
-          <div class="text-xs uppercase tracking-wide opacity-80">Próximo evento</div>
-          <div class="text-lg md:text-2xl font-semibold" id="heroTitle">—</div>
-          <div class="text-sm opacity-85" id="heroMeta"></div>
-          <div class="text-sm opacity-80 mt-1" id="heroDesc"></div>
-          <div class="mt-2 flex flex-wrap gap-2">
-            <span class="chip" id="heroCapacity" style="display:none;"></span>
-            <span class="chip">Solidario</span>
-          </div>
-        </div>
-        <div class="text-center">
-          <div class="text-xs opacity-70 mb-1">Comienza en</div>
-          <div id="heroCountdown" class="text-2xl font-bold gold tabular-nums">—</div>
-          <div class="mt-3 flex flex-wrap justify-center gap-2">
-            <button id="heroWA" class="btn" style="background: rgba(197,160,71,.18);">📲 Agendar</button>
-            <button id="heroICS" class="btn">➕ Calendario</button>
-          </div>
-        </div>
+    <!-- Banner del Día del Niño -->
+    <div class="rounded-2xl overflow-hidden border border-white/10 mb-4">
+      <img src="/images/banner-dia-del-nino.jpg" alt="Día del Niño – Parque del Kempes"
+           class="w-full object-cover max-h-[380px]">
+    </div>
+
+    <!-- Tarjeta del próximo evento (sin botones de calendario) -->
+    <div class="card p-5">
+      <div class="text-xs gold font-semibold tracking-widest">PRÓXIMO EVENTO</div>
+      <div class="mt-1 text-2xl md:text-3xl font-bold">Día del Niño – Parque del Kempes</div>
+      <div class="mt-1 opacity-80">lunes, 18 de agosto · 03:00 p. m. hs · Parque del Kempes, Córdoba</div>
+      <p class="mt-3 opacity-80">
+        Festejo del Día del Niño y convocatoria solidaria para ayudar a los necesitados.
+      </p>
+      <div class="mt-3 flex items-center gap-2">
+        <span class="tag">Cupo: 200</span>
+        <span class="tag">Solidario</span>
+      </div>
+      <div class="mt-5">
+        <div class="text-sm opacity-80 mb-1">Comienza en</div>
+        <div id="ev-countdown" class="text-3xl md:text-4xl font-extrabold gold">—</div>
+      </div>
+      <div class="mt-5">
+        <a id="wa-event" class="btn" target="_blank" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
       </div>
     </div>
   </section>
@@ -171,7 +186,7 @@
   <!-- WhatsApp flotante -->
   <a id="wa-float" target="_blank" class="fixed-wa btn" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
 
-  <!-- Lightbox -->
+  <!-- Lightbox (galería) -->
   <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
     <div class="absolute inset-0 flex items-center justify-center p-4">
       <div class="relative w-full max-w-4xl card p-3 bg-black">
@@ -184,7 +199,7 @@
     </div>
   </div>
 
-  <!-- Calculadora -->
+  <!-- Calculadora (modal) -->
   <div id="calcbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
     <div class="absolute inset-0 flex items-center justify-center p-4">
       <div class="relative w-full max-w-3xl card p-4 md:p-6 bg-black">
@@ -197,16 +212,22 @@
           <label class="text-sm block">Entrega
             <input id="cb-entrega" type="number" class="input w-full mt-1" value="0" step="10000" min="0">
           </label>
+
           <label class="text-sm block">Meses
-            <input id="cb-meses" type="number" class="input w-full mt-1" value="12" min="1" max="72">
+            <select id="cb-meses" class="input w-full mt-1">
+              <option>12</option><option>18</option><option>24</option><option>36</option><option>48</option>
+            </select>
           </label>
+
           <label class="text-sm block">Tipo de plan
             <select id="cb-plan" class="input w-full mt-1"></select>
           </label>
+
           <div class="text-sm flex flex-col justify-end">
             <div class="text-xs opacity-70">Cuota estimada</div>
             <div id="cb-cuota" class="text-2xl font-semibold gold">-</div>
           </div>
+
           <div id="cb-atajos" class="flex items-end gap-2 flex-wrap"></div>
         </div>
 
@@ -221,344 +242,218 @@
     </div>
   </div>
 
-  <!-- Modal Test Drive -->
-  <div id="tdbox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
-    <div class="absolute inset-0 flex items-center justify-center p-4">
-      <div class="relative w-full max-w-2xl card p-4 md:p-6 bg-black">
-        <button id="td-close" class="absolute -top-3 -right-3 btn bg-black">✖</button>
-        <h3 class="text-xl md:text-2xl font-bold gold">Agendar Test Drive</h3>
-        <div id="td-model-view" class="mt-1 text-zinc-300"></div>
-
-        <div class="mt-4 rounded-xl border border-red-500/40 bg-red-500/10 p-3">
-          <div class="font-semibold text-red-400">⚠ IMPORTANTE</div>
-          <div class="text-sm mt-1">
-            Tu turno es <span class="gold font-semibold">exclusivo</span> y la moto quedará reservada para tu prueba.
-            Si no podés asistir, <span class="gold font-semibold">avisá con 24 hs de anticipación</span> para liberar el lugar.
-            Así aseguramos que todos puedan vivir la experiencia.
-          </div>
-        </div>
-
-        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-          <label class="text-sm block">Fecha y hora
-            <input id="td-dt" type="datetime-local" class="input w-full mt-1">
-          </label>
-          <label class="text-sm block">Nombre
-            <input id="td-name" class="input w-full mt-1" placeholder="Tu nombre">
-          </label>
-          <label class="text-sm block">Teléfono
-            <input id="td-phone" class="input w-full mt-1" placeholder="Tu teléfono">
-          </label>
-          <label class="text-sm block">Notas
-            <input id="td-notes" class="input w-full mt-1" placeholder="Ej: tengo casco propio">
-          </label>
-        </div>
-
-        <div class="mt-5 flex flex-wrap gap-2">
-          <a id="td-wa" target="_blank" class="btn" style="background: rgba(197,160,71,.18);">📲 Confirmar por WhatsApp</a>
-          <button id="td-ics" class="btn">➕ Agregar a mi calendario (.ics)</button>
-          <button id="td-cerrar" class="btn">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // ====== CONFIG FINANCIACIÓN ======
-    const RULE_SMALL_CC = (cc)=> cc!=null && cc < 249;
+    // ===== Texto rápido =====
+    const waBase = "https://wa.me/543512004885";
+    const waDefault = "Hola Nacho, quiero info y *Opciones disponibles*";
+    const $ = s => document.querySelector(s);
+    const currency = n => new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(n);
+
+    // ===== Productos embebidos (SIN /data/products.json) =====
+    const PRODUCTS = [
+      {
+        id:"benelli-302s",
+        title:"Benelli 302S",
+        price:10290000,
+        brand:"Benelli",
+        cc:300, year:2025, km:2925,
+        cover:"/images/APC_5929-1600x1200-2.jpg",
+        gallery:[
+          "/images/APC_5929-1600x1200-2.jpg",
+          "/images/APC_5926-1600x1200-1.jpg",
+          "/images/APC_5924-1600x1200-1.jpg",
+          "/images/APC_5928-1600x1200-1.jpg"
+        ],
+        tags:["Nueva"]
+      },
+      {
+        id:"suzuki-ax-100",
+        title:"Suzuki AX 100",
+        price:2675000,
+        brand:"Suzuki",
+        cc:100, year:2025, km:0,
+        cover:"/images/suzuki-ax-100-cover.jpg",
+        gallery:["/images/suzuki-ax-100-cover.jpg"],
+        tags:["Nueva"]
+      }
+    ];
+
+    // ===== Reglas de financiación =====
+    const RULE_SMALL_CC = (cc)=> cc!=null && cc < 249; // <249cc => solo FIJA 89%
     const DEFAULT_PLANS  = ["FIJA","UVA"];
     const DEFAULT_TNA    = { FIJA:54, UVA:20 };
     const DEFAULT_MONTHS = [12,18,24,36,48];
 
-    // ====== STATE ======
-    let PRODUCTS = [];
+    // ===== Render catálogo =====
     let STATE = { q:"", brand:"", minPrice:0, maxPrice:0, sort:"none", page:1, pageSize:10 };
 
-    // ====== UTIL ======
-    const currency = n => new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(n);
-    const waBase = "https://wa.me/543512004885";
-    const waDefault = "Hola Nacho, quiero info y *Opciones disponibles*";
-    const $ = s => document.querySelector(s);
-    const pad = n => String(n).padStart(2,"0");
-    function toICSDate(dt){ const d=new Date(dt); const y=d.getFullYear(),m=pad(d.getMonth()+1),da=pad(d.getDate()),h=pad(d.getHours()),mi=pad(d.getMinutes()); return `${y}${m}${da}T${h}${mi}00`; }
-    function downloadICS({title, desc, start, end, location, filename}){
-      const ics = [
-        "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Negocios con Ignacio//Agenda//ES",
-        "BEGIN:VEVENT",
-        "UID:"+ (crypto?.randomUUID ? crypto.randomUUID() : (Date.now()+"@negociosconignacio")),
-        "DTSTAMP:"+toICSDate(new Date()),
-        "DTSTART:"+toICSDate(start),
-        "DTEND:"+toICSDate(end),
-        "SUMMARY:"+title,
-        "DESCRIPTION:"+String(desc||"").replace(/\n/g,"\\n"),
-        "LOCATION:"+String(location||"Córdoba"),
-        "END:VEVENT","END:VCALENDAR"
-      ].join("\r\n");
-      const blob = new Blob([ics], {type:"text/calendar;charset=utf-8"});
-      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = (filename||"evento") + ".ics"; document.body.appendChild(a); a.click(); a.remove();
-    }
-
-    // ====== TARJETAS ======
-    function priceView(p){ return (p.price && p.price > 0) ? currency(p.price) : (p.priceLabel || "Consultar precio"); }
     function makeCard(p){
-      const card = document.createElement("div");
-      card.className = "card overflow-hidden";
-      card.id = p.id;
-      card.innerHTML = `
+      const el = document.createElement("div");
+      el.className = "card overflow-hidden";
+      el.id = p.id;
+      el.innerHTML = `
         <div class="aspect-video bg-cover bg-center" style="background-image:url('${p.cover}'), linear-gradient(120deg,#111,#222)"></div>
         <div class="p-4">
           <div class="flex items-start justify-between gap-3">
             <div>
               <h3 class="font-semibold leading-tight">${p.title}</h3>
-              <div class="mt-1 text-xs opacity-70">${p.brand} ${p.year>0 ? "• "+p.year : ""} ${p.km ? "• "+p.km.toLocaleString("es-AR")+" km" : ""}</div>
+              <div class="mt-1 text-xs opacity-70">${p.brand} ${p.year?("• "+p.year):""} ${p.km?("• "+p.km.toLocaleString("es-AR")+" km"):""}</div>
             </div>
-            <div class="flex gap-2">
-              <button class="iconbtn btn-share" title="Compartir">↗</button>
-            </div>
+            <button class="iconbtn btn-share" title="Compartir">↗</button>
           </div>
-          <div class="mt-1 text-xl font-bold gold">${priceView(p)}</div>
+          <div class="mt-1 text-xl font-bold gold">${currency(p.price)}</div>
           <div class="mt-2 flex flex-wrap gap-2">${(p.tags||[]).map(t=>'<span class="tag">'+t+'</span>').join('')}</div>
 
           <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2">
-            <a href="#" class="btn w-full btn-open-calc"${(p.price||0)<=0?' style="opacity:.6;pointer-events:none"':''}>🧮 Cuotas</a>
+            <a href="#" class="btn w-full btn-open-calc">🧮 Cuotas</a>
             <a target="_blank" href="${waBase}?text=${encodeURIComponent('Hola Nacho, me interesa *'+p.title+'*. ¿Opciones disponibles?')}" class="btn w-full" style="background: rgba(197,160,71,.18);">📞 WhatsApp</a>
             <a href="#" class="btn w-full md:col-span-1 col-span-2 btn-gallery">🖼️ Ver fotos</a>
-            <a href="#" class="btn w-full md:col-span-1 col-span-2 btn-testdrive">🚗 Test drive</a>
           </div>
         </div>`;
-      card.querySelector(".btn-gallery").addEventListener("click",(e)=>{ e.preventDefault(); openGallery(p); });
-      if ((p.price||0)>0) card.querySelector(".btn-open-calc").addEventListener("click",(e)=>{ e.preventDefault(); openCalc(p); });
-      card.querySelector(".btn-share").addEventListener("click", ()=>{
+      el.querySelector(".btn-gallery").onclick = (e)=>{ e.preventDefault(); openGallery(p); };
+      el.querySelector(".btn-open-calc").onclick = (e)=>{ e.preventDefault(); openCalc(p); };
+      el.querySelector(".btn-share").onclick = ()=>{
         const url = location.origin + location.pathname + "#"+p.id;
-        const text = `Mirá esta moto: ${p.title} – ${priceView(p)}\n${url}\n¿La vemos?`;
-        if (navigator.share) { navigator.share({ title: p.title, text, url }).catch(()=>{}); }
-        else { window.open(`https://wa.me/543512004885?text=${encodeURIComponent(text)}`,"_blank"); }
-      });
-      card.querySelector(".btn-testdrive").addEventListener("click",(e)=>{ e.preventDefault(); openTestDrive(p); });
-      return card;
+        const text = `Mirá esta moto: ${p.title} – ${currency(p.price)}\n${url}\n¿La vemos?`;
+        if (navigator.share) navigator.share({ title:p.title, text, url }).catch(()=>{});
+        else window.open(`${waBase}?text=${encodeURIComponent(text)}`,"_blank");
+      };
+      return el;
     }
 
     function renderGrid(paged){
-      const grid = $("#grid");
-      grid.innerHTML = "";
+      const grid = $("#grid"); grid.innerHTML = "";
       paged.items.forEach(p=> grid.appendChild(makeCard(p)));
-      document.getElementById("count").textContent = `${paged.total} resultados · página ${paged.page} de ${paged.pages}`;
+      $("#count").textContent = `${paged.total} resultados · página ${paged.page} de ${paged.pages}`;
     }
 
-    // ====== LIGHTBOX ======
+    // Galería
     let LB = { list:[], idx:0 };
-    function openGallery(p){ LB.list = (p.gallery && p.gallery.length ? p.gallery : [p.cover]); LB.idx = 0; renderLB(); document.getElementById("lightbox").classList.remove("hidden"); }
+    function openGallery(p){
+      LB.list = (p.gallery && p.gallery.length ? p.gallery : [p.cover]);
+      LB.idx = 0; renderLB(); $("#lightbox").classList.remove("hidden");
+    }
     function renderLB(){
-      const main = document.getElementById("lb-main");
-      const thumbs = document.getElementById("lb-thumbs");
-      main.src = LB.list[LB.idx];
-      thumbs.innerHTML = "";
+      $("#lb-main").src = LB.list[LB.idx];
+      const thumbs = $("#lb-thumbs"); thumbs.innerHTML = "";
       LB.list.forEach((src,i)=>{
-        const t = document.createElement("img");
-        t.src = src;
-        t.className = "h-16 w-full object-cover rounded-md border " + (i===LB.idx ? "border-[var(--gold)]" : "border-white/10");
-        t.addEventListener("click", ()=>{ LB.idx=i; renderLB(); });
+        const t=document.createElement("img");
+        t.src = src; t.className = "h-16 w-full object-cover rounded-md border "+(i===LB.idx?"border-[var(--gold)]":"border-white/10");
+        t.onclick = ()=>{ LB.idx=i; renderLB(); };
         thumbs.appendChild(t);
       });
     }
-    document.getElementById("lb-close").onclick = ()=> document.getElementById("lightbox").classList.add("hidden");
-    document.getElementById("lb-next").onclick = ()=>{ LB.idx=(LB.idx+1)%LB.list.length; renderLB(); };
-    document.getElementById("lb-prev").onclick = ()=>{ LB.idx=(LB.idx-1+LB.list.length)%LB.list.length; renderLB(); };
-    document.getElementById("lightbox").addEventListener("click",(e)=>{ if(e.target.id==="lightbox") document.getElementById("lightbox").classList.add("hidden"); });
+    $("#lb-close").onclick = ()=> $("#lightbox").classList.add("hidden");
+    $("#lb-next").onclick  = ()=>{ LB.idx=(LB.idx+1)%LB.list.length; renderLB(); };
+    $("#lb-prev").onclick  = ()=>{ LB.idx=(LB.idx-1+LB.list.length)%LB.list.length; renderLB(); };
+    $("#lightbox").addEventListener("click",(e)=>{ if(e.target.id==="lightbox") $("#lightbox").classList.add("hidden"); });
 
-    // ====== FINANCIACIÓN ======
-    function getFinanceFor(p){ return (RULE_SMALL_CC(p.cc)) ? { plans:["FIJA"], tna:{FIJA:89}, months: DEFAULT_MONTHS, defaultPlan:"FIJA" } : { plans: DEFAULT_PLANS, tna: DEFAULT_TNA, months: DEFAULT_MONTHS, defaultPlan:"FIJA" }; }
-    let CALC_PRODUCT = null;
-    function frenchInstallment(amount, months, tna){ const i=(tna/12)/100; if(months<=0||amount<=0) return 0; if(i===0) return amount/months; const f=Math.pow(1+i,months); return amount*((i*f)/(f-1)); }
-    function openCalc(p){
-      CALC_PRODUCT = p;
-      const f = getFinanceFor(p);
-      document.getElementById("cb-title").textContent = "Calculadora de cuotas – " + p.title;
-      document.getElementById("cb-price").textContent = "Precio: " + currency(p.price);
-      document.getElementById("cb-entrega").value = 0;
-      document.getElementById("cb-meses").value = f.months[0] || 12;
-      const planSel = document.getElementById("cb-plan");
-      planSel.innerHTML = "";
-      f.plans.forEach(pl=>{ const opt=document.createElement("option"); opt.value=pl; opt.textContent=pl; planSel.appendChild(opt); });
-      planSel.value = f.defaultPlan || f.plans[0];
-      const atajos = document.getElementById("cb-atajos");
-      atajos.innerHTML="";
-      f.months.forEach(m=>{ const b=document.createElement("button"); b.className="btn cb-atajo"; b.dataset.meses=m; b.textContent=m; b.addEventListener("click", ()=>{ document.getElementById("cb-meses").value=m; updateCalc(); }); atajos.appendChild(b); });
-      updateCalc(); document.getElementById("calcbox").classList.remove("hidden");
+    // Financiación
+    function getFinanceFor(p){
+      if (RULE_SMALL_CC(p.cc)) return { plans:["FIJA"], tna:{FIJA:89}, months:DEFAULT_MONTHS, defaultPlan:"FIJA" };
+      return { plans:DEFAULT_PLANS, tna:DEFAULT_TNA, months:DEFAULT_MONTHS, defaultPlan:"FIJA" };
     }
-    function closeCalc(){ document.getElementById("calcbox").classList.add("hidden"); }
+    function frenchInstallment(amount, months, tna){
+      const i=(tna/12)/100; if(months<=0||amount<=0) return 0; if(i===0) return amount/months;
+      const f=Math.pow(1+i,months); return amount*((i*f)/(f-1));
+    }
+    let CALC_PRODUCT=null;
+    function openCalc(p){
+      CALC_PRODUCT=p; const f=getFinanceFor(p);
+      $("#cb-title").textContent="Calculadora de cuotas – "+p.title;
+      $("#cb-price").textContent="Precio: "+currency(p.price);
+      $("#cb-entrega").value=0;
+      $("#cb-meses").innerHTML = DEFAULT_MONTHS.map(m=>`<option>${m}</option>`).join("");
+      $("#cb-plan").innerHTML = f.plans.map(x=>`<option>${x}</option>`).join("");
+      $("#cb-plan").value = f.defaultPlan || f.plans[0];
+      const at=$("#cb-atajos"); at.innerHTML=""; f.months.forEach(m=>{ const b=document.createElement("button"); b.className="btn cb-atajo"; b.textContent=m; b.onclick=()=>{ $("#cb-meses").value=m; updateCalc(); }; at.appendChild(b); });
+      updateCalc(); $("#calcbox").classList.remove("hidden");
+    }
+    function closeCalc(){ $("#calcbox").classList.add("hidden"); }
     function updateCalc(){
-      if(!CALC_PRODUCT) return;
-      const f = getFinanceFor(CALC_PRODUCT);
-      const entrega = Math.max(parseFloat(document.getElementById("cb-entrega").value||"0"),0);
-      const months  = Math.max(parseInt(document.getElementById("cb-meses").value||String(f.months[0]||12)),1);
-      const plan    = document.getElementById("cb-plan").value || f.defaultPlan;
-      const rate    = (f.tna && f.tna[plan] != null) ? f.tna[plan] : 54;
-      document.getElementById("cb-tna-view").textContent = rate + "%";
-      const monto   = Math.max(CALC_PRODUCT.price - entrega, 0);
-      const cuota   = Math.round(frenchInstallment(monto, months, rate));
-      document.getElementById("cb-cuota").textContent = currency(cuota);
-      document.getElementById("cb-monto").textContent = "Monto a financiar: " + currency(monto);
-      const msg = [
+      if(!CALC_PRODUCT) return; const f=getFinanceFor(CALC_PRODUCT);
+      const entrega=Math.max(parseFloat($("#cb-entrega").value||"0"),0);
+      const months=parseInt($("#cb-meses").value||"12",10);
+      const plan=$("#cb-plan").value; const rate=(f.tna && f.tna[plan]!=null)?f.tna[plan]:54;
+      $("#cb-tna-view").textContent=rate+"%";
+      const monto=Math.max(CALC_PRODUCT.price - entrega,0);
+      const cuota=Math.round(frenchInstallment(monto, months, rate));
+      $("#cb-cuota").textContent=currency(cuota);
+      $("#cb-monto").textContent="Monto a financiar: "+currency(monto);
+      const msg=[
         "Hola Nacho, me interesa *"+CALC_PRODUCT.title+"*.",
         "", "Opciones calculadas:",
         "• Precio: "+currency(CALC_PRODUCT.price),
         "• Entrega: "+currency(entrega),
         "• A financiar: "+currency(monto),
         "• Plan: "+months+" cuotas ("+plan+", TNA "+rate+"% aprox.)",
-        "• Estimación de cuota: "+currency(cuota), "", "¿La podemos ver?"
+        "• Estimación de cuota: "+currency(cuota), "", "¿La vemos?"
       ].join("\n");
-      document.getElementById("cb-wa").href = "https://wa.me/543512004885?text=" + encodeURIComponent(msg);
+      $("#cb-wa").href = waBase+"?text="+encodeURIComponent(msg);
     }
-    document.getElementById("cb-close").onclick  = closeCalc;
-    document.getElementById("cb-cerrar").onclick = closeCalc;
-    document.getElementById("calcbox").addEventListener("click",(e)=>{ if(e.target.id==="calcbox") closeCalc(); });
-    ["cb-entrega","cb-meses","cb-plan"].forEach(id=>{ document.getElementById(id).addEventListener("input", updateCalc); document.getElementById(id).addEventListener("change", updateCalc); });
+    $("#cb-close").onclick = closeCalc; $("#cb-cerrar").onclick = closeCalc;
+    ["cb-entrega","cb-meses","cb-plan"].forEach(id=>{ $("#"+id).addEventListener("input", updateCalc); $("#"+id).addEventListener("change", updateCalc); });
+    $("#calcbox").addEventListener("click",(e)=>{ if(e.target.id==="calcbox") closeCalc(); });
 
-    // ====== FILTROS + PAGER ======
-    function populateBrands(){
-      const sel = document.getElementById("brand");
-      const brands = Array.from(new Set(PRODUCTS.map(p=>p.brand).filter(Boolean))).sort((a,b)=>a.localeCompare(b));
-      brands.forEach(b=>{ const o=document.createElement("option"); o.value=b; o.textContent=b; sel.appendChild(o); });
-    }
-
+    // Filtros/paginación
     function applyFilters(){
-      STATE.q        = document.getElementById("q").value.toLowerCase();
-      STATE.brand    = document.getElementById("brand").value;
-      STATE.minPrice = parseFloat(document.getElementById("minPrice").value || "0");
-      STATE.maxPrice = parseFloat(document.getElementById("maxPrice").value || "0");
-      STATE.sort     = document.getElementById("sort").value;
-      STATE.pageSize = parseInt(document.getElementById("pageSize").value || "10",10);
+      STATE.q=$("#q").value.toLowerCase();
+      STATE.brand=$("#brand").value;
+      STATE.minPrice=parseFloat($("#minPrice").value||"0");
+      STATE.maxPrice=parseFloat($("#maxPrice").value||"0");
+      STATE.sort=$("#sort").value;
+      STATE.pageSize=parseInt($("#pageSize").value||"10",10);
 
       let list = PRODUCTS.filter(p=>{
-        const s = [p.title, p.brand, String(p.cc||""), String(p.year||"")].join(" ").toLowerCase();
+        const s=[p.title,p.brand,String(p.cc||""),String(p.year||"")].join(" ").toLowerCase();
         const okQ = STATE.q ? s.includes(STATE.q) : true;
-        const okB = STATE.brand ? p.brand === STATE.brand : true;
-        const okMin = STATE.minPrice ? (p.price||0) >= STATE.minPrice : true;
-        const okMax = STATE.maxPrice ? (p.price||0) <= STATE.maxPrice : true;
+        const okB = STATE.brand ? p.brand===STATE.brand : true;
+        const okMin = STATE.minPrice ? p.price>=STATE.minPrice : true;
+        const okMax = STATE.maxPrice ? p.price<=STATE.maxPrice : true;
         return okQ && okB && okMin && okMax;
       });
 
-      const keyers = { "price": p=> p.price||0, "cc": p=> p.cc||0, "year": p=> p.year||0 };
-      if(STATE.sort !== "none"){
-        const [k,dir] = STATE.sort.split("-");
-        const key = keyers[k] || (()=>0);
-        list = list.slice().sort((a,b)=> (key(a)-key(b)) * (dir==="asc"?1:-1));
-      }
+      const keyers={price:p=>p.price||0, cc:p=>p.cc||0, year:p=>p.year||0};
+      if(STATE.sort!=="none"){ const [k,dir]=STATE.sort.split("-"); const key=keyers[k]||(()=>0); list=list.slice().sort((a,b)=>(key(a)-key(b))*(dir==="asc"?1:-1)); }
 
-      const total = list.length;
-      const pages = Math.max(1, Math.ceil(total / STATE.pageSize));
-      if (STATE.page > pages) STATE.page = pages;
-      const start = (STATE.page-1) * STATE.pageSize;
-      const items = list.slice(start, start + STATE.pageSize);
+      const total=list.length, pages=Math.max(1, Math.ceil(total/STATE.pageSize));
+      if(STATE.page>pages) STATE.page=pages;
+      const start=(STATE.page-1)*STATE.pageSize; const items=list.slice(start,start+STATE.pageSize);
 
-      renderGrid({items, total, page:STATE.page, pages});
-      renderPager({total, page:STATE.page, pages});
+      renderGrid({items,total,page:STATE.page,pages}); renderPager({total,page:STATE.page,pages});
     }
-
-    function renderPager({total, page, pages}){
-      const mk = (where)=>{
-        const host = document.getElementById(where);
-        host.innerHTML = "";
-        const prev = document.createElement("button");
-        prev.className = "iconbtn"; prev.textContent = "◀ Anterior";
-        prev.disabled = page<=1; prev.onclick = ()=>{ STATE.page=Math.max(1,STATE.page-1); applyFilters(); };
-        const next = document.createElement("button");
-        next.className = "iconbtn"; next.textContent = "Siguiente ▶";
-        next.disabled = page>=pages; next.onclick = ()=>{ STATE.page=Math.min(pages,STATE.page+1); applyFilters(); };
-        const label = document.createElement("div");
-        label.className = "text-sm opacity-80"; label.textContent = `Página ${page} de ${pages}`;
-        host.appendChild(prev); host.appendChild(label); host.appendChild(next);
-      };
+    function renderPager({page,pages}){
+      const mk=where=>{ const host=$("#"+where); host.innerHTML=""; const prev=document.createElement("button"); prev.className="iconbtn"; prev.textContent="◀ Anterior"; prev.disabled=page<=1; prev.onclick=()=>{STATE.page=Math.max(1,STATE.page-1); applyFilters();}; const next=document.createElement("button"); next.className="iconbtn"; next.textContent="Siguiente ▶"; next.disabled=page>=pages; next.onclick=()=>{STATE.page=Math.min(pages,STATE.page+1); applyFilters();}; const label=document.createElement("div"); label.className="text-sm opacity-80"; label.textContent=`Página ${page} de ${pages}`; host.append(prev,label,next); };
       mk("pagerTop"); mk("pagerBottom");
     }
 
-    // ====== EVENTOS (hero) ======
-    const EVENTS = [
-      { id:"dia-nino-kempes-2025", title:"Día del Niño – Parque del Kempes", when:"2025-08-18T15:00",
-        durationMin:180, place:"Parque del Kempes, Córdoba",
-        description:"Festejo del Día del Niño y convocatoria solidaria para ayudar a los necesitados.",
-        capacity:200, cover:"/images/events/kempes.jpg" }
-    ];
-    function setupHero(nextEv){
-      const wrapBg = document.getElementById("nextEventBg");
-      const title = document.getElementById("heroTitle");
-      const meta  = document.getElementById("heroMeta");
-      const desc  = document.getElementById("heroDesc");
-      const cap   = document.getElementById("heroCapacity");
-      const cd    = document.getElementById("heroCountdown");
-      const btnWA = document.getElementById("heroWA");
-      const btnICS= document.getElementById("heroICS");
-
-      if(!nextEv){ title.textContent="Sin eventos próximos"; meta.textContent=""; desc.textContent=""; cd.textContent="—"; return; }
-      wrapBg.style.backgroundImage = nextEv.cover ? `url('${nextEv.cover}')` : "linear-gradient(120deg,#111,#222)";
-      title.textContent = nextEv.title;
-      meta.textContent  = `${nextEv._start.toLocaleDateString("es-AR",{weekday:"long", day:"2-digit", month:"long"})} • ${nextEv._start.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})} hs • ${nextEv.place||"Córdoba"}`;
-      desc.textContent  = nextEv.description || "";
-      if(nextEv.capacity){ cap.style.display="inline-block"; cap.textContent = `Cupo: ${nextEv.capacity}`; } else { cap.style.display="none"; }
-
-      btnWA.onclick = ()=>{
-        const msg = `Hola Nacho, quiero *anotarme*:
-• ${nextEv.title}
-• ${nextEv._start.toLocaleString("es-AR")}
-• Lugar: ${nextEv.place||"Córdoba"}`;
-        window.open(`${waBase}?text=${encodeURIComponent(msg)}`,"_blank");
-      };
-      btnICS.onclick = ()=>{
-        const end = new Date(nextEv._start.getTime() + (nextEv.durationMin||60)*60000);
-        downloadICS({ title: nextEv.title, desc: nextEv.description||"", start: nextEv._start, end, location: nextEv.place||"Córdoba", filename: nextEv.id||"evento" });
-      };
-
-      function pad2(n){ return String(n).padStart(2,"0"); }
-      let timer = setInterval(()=>{
-        const now = Date.now(), tgt = nextEv._start.getTime(), diff = tgt - now;
-        if(diff<=0){ cd.textContent="¡Es ahora!"; clearInterval(timer); return; }
-        const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
-        cd.textContent = `${pad2(d)}d ${pad2(h)}h ${pad2(m)}m ${pad2(s)}s`;
-      },1000);
-    }
-    function initEventsUI(){ const ev = {...EVENTS[0], _start: new Date(EVENTS[0].when)}; setupHero(ev); }
-
-    // ====== CARGA DE DATOS ======
-    async function loadProducts(){
-      try{
-        const res = await fetch("/data/products.json", { cache: "no-store" });
-        if(!res.ok) throw new Error("No se pudo cargar /data/products.json");
-        PRODUCTS = await res.json();
-
-        // Asegurar campos mínimos para que no rompa
-        PRODUCTS = (PRODUCTS||[]).map(p=>{
-          p.gallery = Array.isArray(p.gallery) && p.gallery.length ? p.gallery : [p.cover || `https://dummyimage.com/1200x800/111/ffffff&text=${encodeURIComponent(p.title||'MOTO')}`];
-          p.cover = p.gallery[0];
-          return p;
-        });
-
-        populateBrands();
-        applyFilters();
-      }catch(err){
-        console.error(err);
-        const grid = document.getElementById("grid");
-        grid.innerHTML = `<div class="card p-4">No se pudo cargar <code>/data/products.json</code>. Verificá la ruta y probá refrescar.</div>`;
-      }
-    }
-
-    // ====== INIT ======
-    document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("wa-hero").href  = `${waBase}?text=${encodeURIComponent(waDefault)}`;
-    document.getElementById("wa-float").href = `${waBase}?text=${encodeURIComponent(waDefault)}`;
+    // Inicialización
+    $("#year").textContent = new Date().getFullYear();
+    $("#wa-hero").href = waBase+"?text="+encodeURIComponent(waDefault);
+    $("#wa-float").href = waBase+"?text="+encodeURIComponent(waDefault);
 
     ["q","brand","minPrice","maxPrice","sort","pageSize"].forEach(id=>{
-      document.getElementById(id).addEventListener("input", ()=>{ STATE.page=1; applyFilters(); });
-      document.getElementById(id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
+      $("#"+id).addEventListener("input", ()=>{ STATE.page=1; applyFilters(); });
+      $("#"+id).addEventListener("change", ()=>{ STATE.page=1; applyFilters(); });
     });
-    document.getElementById("clear").addEventListener("click", ()=>{
-      ["q","brand","minPrice","maxPrice"].forEach(id => document.getElementById(id).value = "");
-      document.getElementById("sort").value="none";
-      STATE.page=1;
-      applyFilters();
-    });
+    $("#clear").onclick = ()=>{ ["q","brand","minPrice","maxPrice"].forEach(id=> $("#"+id).value=""); $("#sort").value="none"; STATE.page=1; applyFilters(); };
+    applyFilters();
 
-    initEventsUI();
-    loadProducts(); // <— Carga JSON externo
+    // ===== Evento: cuenta regresiva + WhatsApp =====
+    const eventDate = new Date(new Date().getFullYear(), 7, 18, 15, 0, 0); // 18 agosto 15:00
+    function tick(){
+      const now=new Date(); let t=eventDate-now;
+      if(t<0) t=0;
+      const d=Math.floor(t/86400000);
+      const h=Math.floor((t%86400000)/3600000);
+      const m=Math.floor((t%3600000)/60000);
+      const s=Math.floor((t%60000)/1000);
+      $("#ev-countdown").textContent = `${String(d).padStart(2,"0")}d ${String(h).padStart(2,"0")}h ${String(m).padStart(2,"0")}m ${String(s).padStart(2,"0")}s`;
+    }
+    setInterval(tick,1000); tick();
+    $("#wa-event").href = waBase+"?text="+encodeURIComponent(
+      "Hola Nacho, quiero anotarme al *Día del Niño – Parque del Kempes* el 18/08 a las 15:00 hs."
+    );
   </script>
 </body>
-  </html>
+</html>
