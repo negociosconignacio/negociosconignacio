@@ -15,17 +15,14 @@
     .btn:hover { box-shadow:0 8px 28px rgba(0,0,0,.35); }
     .card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius:18px; }
     .tag { font-size:12px; padding:2px 8px; border-radius:9999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
-    .input, select {
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.28);
-      color:#fff; border-radius:12px; padding:8px 12px; height:40px;
-    }
+    .input, select { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.28); color:#fff; border-radius:12px; padding:8px 12px; height:40px; }
     select, option { color:#fff; background:#111; }
     ::placeholder { color:#cfcfcf; opacity:.9; }
     .fixed-wa { position:fixed; right:16px; bottom:16px; z-index:50; }
     .grid-auto-fill { display:grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap:20px; }
     .iconbtn { border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); height:38px; padding:0 10px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; font-size:13px; }
     a { color: inherit; }
+    .chip{display:inline-block;font-size:12px;padding:2px 8px;border-radius:9999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);}
   </style>
 </head>
 <body>
@@ -47,8 +44,13 @@
   <!-- Hero -->
   <section class="mx-auto max-w-7xl px-4 py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
     <div>
-      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight"><span class="gold">Elegí tu próxima moto</span> con asesoramiento real</h1>
-      <p class="mt-3 text-zinc-300">Filtros, cuotas, galería, compartir por WhatsApp y <span class="gold font-semibold">eventos</span>. El test drive se agenda desde cada moto.</p>
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">
+        <span class="gold">Hola</span>, gracias por entrar a mi página.
+      </h1>
+      <p class="mt-3 text-zinc-300">
+        Acá vas a poder ver las motos que vendo, ver los próximos eventos y anotarte,
+        también agendar test drive del modelo que querés y cumplir el sueño de tener tu moto.
+      </p>
       <div class="mt-5 flex flex-wrap items-center gap-3">
         <a href="#catalogo" class="btn">🛒 Ver catálogo</a>
         <a href="#agenda" class="btn">🗓️ Eventos</a>
@@ -113,29 +115,10 @@
     <div class="mt-6 flex items-center justify-end gap-2" id="pagerBottom"></div>
   </section>
 
-  <!-- Eventos -->
+  <!-- Eventos (sin banner; se mantiene solo el bloque de próximo evento con cuenta regresiva) -->
   <section id="agenda" class="mx-auto max-w-7xl px-4 pb-14">
     <h3 class="text-xl font-bold gold mb-3">Eventos</h3>
 
-    <!-- Banner destacado del Día del Niño -->
-    <div class="relative overflow-hidden rounded-2xl border border-white/10 mb-5">
-      <div class="aspect-[21/9] bg-center bg-cover"
-           style="background-image:url('/images/events/dia-nino-banner.jpg'), linear-gradient(120deg,#0b0b0b,#1a1a1a)"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20"></div>
-      <div class="absolute inset-0 p-4 md:p-6 flex flex-col md:flex-row items-center md:items-end justify-between">
-        <div>
-          <div class="text-xs uppercase tracking-wide opacity-80">Solidario</div>
-          <div class="text-lg md:text-2xl font-semibold">Día del Niño – Parque del Kempes</div>
-          <div class="text-sm opacity-85">18 de agosto • 15:00 hs • Córdoba</div>
-        </div>
-        <div class="mt-3 md:mt-0 flex gap-2">
-          <button id="bnrWA" class="btn" style="background: rgba(197,160,71,.18);">📲 Agendar</button>
-          <button id="bnrICS" class="btn">➕ Calendario</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Próximo evento con cuenta regresiva (se conserva) -->
     <div id="nextEventHero" class="relative overflow-hidden rounded-2xl border border-white/10" style="min-height:180px;">
       <div class="absolute inset-0 bg-cover bg-center opacity-40" id="nextEventBg"></div>
       <div class="relative z-10 p-4 md:p-6 grid md:grid-cols-3 gap-4 items-center">
@@ -241,7 +224,7 @@
     </div>
   </div>
 
-  <!-- Modal Agenda de Evento -->
+  <!-- Modal Agenda Evento -->
   <div id="agendabox" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur">
     <div class="absolute inset-0 flex items-center justify-center p-4">
       <div class="relative w-full max-w-2xl card p-4 md:p-6 bg-black">
@@ -562,7 +545,7 @@
       const place = AGENDA_CONTEXT.event?.place || "Córdoba";
       const desc  = AGENDA_CONTEXT.event?.description || "Evento Negocios con Ignacio";
       const lines = ["Hola Nacho, quiero *agendar*:", "• "+title, "• Fecha/hora: "+ start.toLocaleString("es-AR"), "• Lugar: " + place, name? "• Nombre: "+name : "", phone? "• Tel: "+phone : "", notes? "• Notas: "+notes : ""].filter(Boolean);
-      document.getElementById("ab-wa").href = `${waBase}?text=${encodeURIComponent(lines.join("\n"))}`;
+      document.getElementById("ab-wa").href = `${"https://wa.me/543512004885"}?text=${encodeURIComponent(lines.join("\n"))}`;
       document.getElementById("ab-ics").onclick = ()=> downloadICS({ title, desc, start, end, location: place, filename: "evento" });
     }
     document.getElementById("ab-close").onclick  = closeAgenda;
@@ -608,7 +591,7 @@
         "",
         "⚠ Confirmo asistencia. Si no puedo ir, aviso con 24 hs de anticipación."
       ].filter(Boolean).join("\n");
-      document.getElementById("td-wa").href = `${waBase}?text=${encodeURIComponent(msg)}`;
+      document.getElementById("td-wa").href = `${"https://wa.me/543512004885"}?text=${encodeURIComponent(msg)}`;
       document.getElementById("td-ics").onclick = ()=> downloadICS({ title:"Test drive – " + TD_CONTEXT.model, desc:"Turno de prueba de manejo", start, end, location:"Showroom Negocios con Ignacio", filename:"test-drive-"+TD_CONTEXT.model.replace(/\s+/g,"-").toLowerCase() });
     }
     document.getElementById("td-close").onclick  = closeTestDrive;
@@ -630,7 +613,7 @@
       applyFilters();
     }
 
-    // ====== PRÓXIMO EVENTO (hero + banner botones) ======
+    // ====== PRÓXIMO EVENTO (hero) ======
     function setupHero(nextEv){
       const wrapBg = document.getElementById("nextEventBg");
       const title = document.getElementById("heroTitle");
@@ -649,7 +632,7 @@
       if(nextEv.capacity){ cap.style.display="inline-block"; cap.textContent = `Cupo: ${nextEv.capacity}`; } else { cap.style.display="none"; }
 
       btnWA.onclick = ()=>{
-        const msg = `Hola Nacho, quiero *anotarme*: 
+        const msg = `Hola Nacho, quiero *anotarme*:
 • ${nextEv.title}
 • ${nextEv._start.toLocaleString("es-AR")}
 • Lugar: ${nextEv.place||"Córdoba"}`;
@@ -660,7 +643,6 @@
         downloadICS({ title: nextEv.title, desc: nextEv.description||"", start: nextEv._start, end, location: nextEv.place||"Córdoba", filename: nextEv.id||"evento" });
       };
 
-      // cuenta regresiva
       function pad2(n){ return String(n).padStart(2,"0"); }
       let timer = setInterval(()=>{
         const now = Date.now(), tgt = nextEv._start.getTime(), diff = tgt - now;
@@ -672,19 +654,6 @@
 
     function initEventsUI(){
       const ev = {...EVENTS[0], _start: new Date(EVENTS[0].when)};
-      // Botones del banner
-      document.getElementById("bnrWA").onclick = ()=>{
-        const msg = `Hola Nacho, quiero *anotarme*:
-• ${ev.title}
-• ${ev._start.toLocaleString("es-AR")}
-• Lugar: ${ev.place}`;
-        window.open(`${waBase}?text=${encodeURIComponent(msg)}`,"_blank");
-      };
-      document.getElementById("bnrICS").onclick = ()=>{
-        const end = new Date(ev._start.getTime() + (ev.durationMin||60)*60000);
-        downloadICS({ title: ev.title, desc: ev.description, start: ev._start, end, location: ev.place, filename: ev.id });
-      };
-      // Hero
       setupHero(ev);
     }
 
@@ -698,5 +667,3 @@
   </script>
 </body>
 </html>
-```0
-
