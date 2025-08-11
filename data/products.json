@@ -1,0 +1,825 @@
+[
+  {
+    "id": "suzuki-ax-100",
+    "title": "SUZUKI AX 100",
+    "price": 2675000,
+    "priceLabel": null,
+    "brand": "SUZUKI",
+    "cc": 100,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=AX%20100",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=AX%20100"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "suzuki-gn-125",
+    "title": "SUZUKI GN 125",
+    "price": 3660000,
+    "priceLabel": null,
+    "brand": "SUZUKI",
+    "cc": 125,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=GN%20125",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=GN%20125"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "suzuki-gixxer-150",
+    "title": "SUZUKI GIXXER 150",
+    "price": 5690000,
+    "priceLabel": null,
+    "brand": "SUZUKI",
+    "cc": 150,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=GIXXER%20150",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=GIXXER%20150"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "suzuki-dr-650",
+    "title": "SUZUKI DR 650",
+    "price": 13990000,
+    "priceLabel": null,
+    "brand": "SUZUKI",
+    "cc": 650,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=DR%20650",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=DR%20650"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "suzuki-gsx-r-1000r",
+    "title": "SUZUKI GSX-R 1000R",
+    "price": 0,
+    "priceLabel": "US 38500",
+    "brand": "SUZUKI",
+    "cc": 1000,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=GSX-R%201000R",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=GSX-R%201000R"
+    ],
+    "tags": [
+      "Nueva",
+      "Consultar precio"
+    ]
+  },
+  {
+    "id": "suzuki-v-strom-650-xt",
+    "title": "SUZUKI V-STROM 650 XT",
+    "price": 23990000,
+    "priceLabel": null,
+    "brand": "SUZUKI",
+    "cc": 650,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=V-STROM%20650%20XT",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=V-STROM%20650%20XT"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "suzuki-v-strom-800-de",
+    "title": "SUZUKI V-STROM 800 DE",
+    "price": 0,
+    "priceLabel": "US 25900",
+    "brand": "SUZUKI",
+    "cc": 800,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=V-STROM%20800%20DE",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=V-STROM%20800%20DE"
+    ],
+    "tags": [
+      "Nueva",
+      "Consultar precio"
+    ]
+  },
+  {
+    "id": "suzuki-v-strom-1050-de",
+    "title": "SUZUKI V-STROM 1050 DE",
+    "price": 0,
+    "priceLabel": "US 37900",
+    "brand": "SUZUKI",
+    "cc": 1000,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=V-STROM%201050%20DE",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=V-STROM%201050%20DE"
+    ],
+    "tags": [
+      "Nueva",
+      "Consultar precio"
+    ]
+  },
+  {
+    "id": "morbidelli-/-sc-150",
+    "title": "MORBIDELLI / SC 150",
+    "price": 4650000,
+    "priceLabel": null,
+    "brand": "MORBIDELLI /",
+    "cc": 150,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=SC%20150",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=SC%20150"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "morbidelli-/-t-250-x",
+    "title": "MORBIDELLI / T 250 X",
+    "price": 0,
+    "priceLabel": "Proximamente",
+    "brand": "MORBIDELLI /",
+    "cc": 250,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=T%20250%20X",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=T%20250%20X"
+    ],
+    "tags": [
+      "Nueva",
+      "Consultar precio"
+    ]
+  },
+  {
+    "id": "morbidelli-/-n-300",
+    "title": "MORBIDELLI / N 300",
+    "price": 7650000,
+    "priceLabel": null,
+    "brand": "MORBIDELLI /",
+    "cc": 300,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=N%20300",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=N%20300"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "morbidelli-/-m-502-n",
+    "title": "MORBIDELLI / M 502 N",
+    "price": 10690000,
+    "priceLabel": null,
+    "brand": "MORBIDELLI /",
+    "cc": 502,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=M%20502%20N",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=M%20502%20N"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "morbidelli-/-t-1002-vx",
+    "title": "MORBIDELLI / T 1002 VX",
+    "price": 20900000,
+    "priceLabel": null,
+    "brand": "MORBIDELLI /",
+    "cc": 1000,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=T%201002%20VX",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=T%201002%20VX"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-tnt-15",
+    "title": "BENELLI TNT 15",
+    "price": 3859000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 150,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=TNT%2015",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=TNT%2015"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-180-s",
+    "title": "BENELLI 180 S",
+    "price": 4990000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 180,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=180%20S",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=180%20S"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-251-s",
+    "title": "BENELLI 251 S",
+    "price": 7650000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 250,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=251%20S",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=251%20S"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-302-s",
+    "title": "BENELLI 302 S",
+    "price": 10290000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 300,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=302%20S",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=302%20S"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-trk-251-abs",
+    "title": "BENELLI TRK 251 ABS",
+    "price": 7990000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 250,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20251%20ABS",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20251%20ABS"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-trk-502",
+    "title": "BENELLI TRK 502",
+    "price": 13500000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 500,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20502",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20502"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-trk-502-x",
+    "title": "BENELLI TRK 502 X",
+    "price": 14500000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 500,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20502%20X",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20502%20X"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-leoncino-250",
+    "title": "BENELLI LEONCINO 250",
+    "price": 7450000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 250,
+    "year": 2025,
+    "km": 0,
+    "cover": "/images/Leoncino12.jpg",
+    "gallery": [
+      "/images/Leoncino12.jpg",
+      "/images/Leoncino11.jpg",
+      "/images/Leoncino13.jpg",
+      "/images/Leoncino10.jpg",
+      "/images/Leoncino9.jpg",
+      "/images/Leoncino8.jpg",
+      "/images/Leoncino7.jpg",
+      "/images/Leoncino6.jpg",
+      "/images/Leoncino5.jpg",
+      "/images/Leoncino4.jpg",
+      "/images/Leoncino3.jpg",
+      "/images/Leoncino2.jpg",
+      "/images/Leoncino1.jpg",
+      "/images/Leoncino.jpg"
+    ],
+    "tags": [
+      "En Stock",
+      "Nuevas",
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-leoncino-500-t",
+    "title": "BENELLI LEONCINO 500 T",
+    "price": 14499000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 500,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=LEONCINO%20500%20T",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=LEONCINO%20500%20T"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-502-c",
+    "title": "BENELLI 502 C",
+    "price": 15150000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 500,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=502%20C",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=502%20C"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-imperiale-400",
+    "title": "BENELLI IMPERIALE 400",
+    "price": 7990000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 400,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=IMPERIALE%20400",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=IMPERIALE%20400"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-tnt-600i",
+    "title": "BENELLI TNT 600i",
+    "price": 19490000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 600,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=TNT%20600i",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=TNT%20600i"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-752-s",
+    "title": "BENELLI 752 S",
+    "price": 18290000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 752,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=752%20S",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=752%20S"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-leoncino-800-t",
+    "title": "BENELLI LEONCINO 800 T",
+    "price": 16890000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 800,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=LEONCINO%20800%20T",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=LEONCINO%20800%20T"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-trk-702",
+    "title": "BENELLI TRK 702",
+    "price": 17450000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 700,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20702",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20702"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "benelli-trk-702x",
+    "title": "BENELLI TRK 702x",
+    "price": 18999000,
+    "priceLabel": null,
+    "brand": "BENELLI",
+    "cc": 700,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20702x",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=TRK%20702x"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "keeway-v302c",
+    "title": "KEEWAY V302C",
+    "price": 10450000,
+    "priceLabel": null,
+    "brand": "KEEWAY",
+    "cc": 300,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=V302C",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=V302C"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "keeway-k-light-202",
+    "title": "KEEWAY K-LIGHT 202",
+    "price": 4619000,
+    "priceLabel": null,
+    "brand": "KEEWAY",
+    "cc": 200,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=K-LIGHT%20202",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=K-LIGHT%20202"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "keeway-rk-150",
+    "title": "KEEWAY RK 150",
+    "price": 3149000,
+    "priceLabel": null,
+    "brand": "KEEWAY",
+    "cc": 150,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=RK%20150",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=RK%20150"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "sym-orbit-ii-125",
+    "title": "SYM ORBIT II 125",
+    "price": 3050000,
+    "priceLabel": null,
+    "brand": "SYM",
+    "cc": 125,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=ORBIT%20II%20125",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=ORBIT%20II%20125"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "sym-orbit-iii-125",
+    "title": "SYM ORBIT III 125",
+    "price": 3770000,
+    "priceLabel": null,
+    "brand": "SYM",
+    "cc": 125,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=ORBIT%20III%20125",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=ORBIT%20III%20125"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "sym-jet14",
+    "title": "SYM JET14",
+    "price": 4859000,
+    "priceLabel": null,
+    "brand": "SYM",
+    "cc": 200,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=JET14",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=JET14"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "sym-citycom-300",
+    "title": "SYM CITYCOM 300",
+    "price": 8890000,
+    "priceLabel": null,
+    "brand": "SYM",
+    "cc": 300,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=CITYCOM%20300",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=CITYCOM%20300"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "sym-joyride-300",
+    "title": "SYM JOYRIDE 300",
+    "price": 9390000,
+    "priceLabel": null,
+    "brand": "SYM",
+    "cc": 300,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=JOYRIDE%20300",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=JOYRIDE%20300"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "sym-tl508",
+    "title": "SYM TL508",
+    "price": 18990000,
+    "priceLabel": null,
+    "brand": "SYM",
+    "cc": 500,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=TL508",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=TL508"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "teknial-re-volt",
+    "title": "TEKNIAL RE-VOLT",
+    "price": 2370000,
+    "priceLabel": null,
+    "brand": "TEKNIAL",
+    "cc": 0,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=RE-VOLT",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=RE-VOLT"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "teknial-re-race",
+    "title": "TEKNIAL RE-RACE",
+    "price": 2900000,
+    "priceLabel": null,
+    "brand": "TEKNIAL",
+    "cc": 0,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=RE-RACE",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=RE-RACE"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "ducati-scr-800-icon-2°gen",
+    "title": "DUCATI SCR 800 ICON 2°GEN",
+    "price": 20750000,
+    "priceLabel": null,
+    "brand": "DUCATI",
+    "cc": 800,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=SCR%20800%20ICON%202%C2%B0GEN",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=SCR%20800%20ICON%202%C2%B0GEN"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "ducati-scr800-full-throttle",
+    "title": "DUCATI SCR800 FULL THROTTLE",
+    "price": 27000000,
+    "priceLabel": null,
+    "brand": "DUCATI",
+    "cc": 800,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=SCR800%20FULL%20THROTTLE",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=SCR800%20FULL%20THROTTLE"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "ducati-scr800-night-shift",
+    "title": "DUCATI SCR800 NIGHT SHIFT",
+    "price": 27000000,
+    "priceLabel": null,
+    "brand": "DUCATI",
+    "cc": 800,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=SCR800%20NIGHT%20SHIFT",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=SCR800%20NIGHT%20SHIFT"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "ducati-multistrada-v2",
+    "title": "DUCATI MULTISTRADA V2",
+    "price": 35500000,
+    "priceLabel": null,
+    "brand": "DUCATI",
+    "cc": 1000,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=MULTISTRADA%20V2",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=MULTISTRADA%20V2"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  },
+  {
+    "id": "ducati-multistrada-v2-s",
+    "title": "DUCATI MULTISTRADA V2 S",
+    "price": 41500000,
+    "priceLabel": null,
+    "brand": "DUCATI",
+    "cc": 1000,
+    "year": 2025,
+    "km": 0,
+    "cover": "https://dummyimage.com/1200x800/111/ffffff&text=MULTISTRADA%20V2%20S",
+    "gallery": [
+      "https://dummyimage.com/1200x800/111/ffffff&text=MULTISTRADA%20V2%20S"
+    ],
+    "tags": [
+      "Nueva"
+    ]
+  }
+]
+[
+    {
+        "id": "benelli-302s",
+        "title": "Benelli 302S",
+        "price": 10290000,
+        "priceLabel": null,
+        "brand": "Benelli",
+        "cc": 300,
+        "year": 2025,
+        "km": 2925,
+        "cover": "images/benelli-302s-cover.jpg",
+        "gallery": [
+            "images/APC_5929-1600x1200-2.jpg",
+            "images/APC_5926-1600x1200-1.jpg",
+            "images/APC_5924-1600x1200-1.jpg",
+            "images/APC_5928-1600x1200-1.jpg"
+        ],
+        "tags": [
+            "Nueva"
+        ]
+    },
+    {
+        "id": "suzuki-ax-100",
+        "title": "Suzuki AX 100",
+        "price": 2675000,
+        "priceLabel": null,
+        "brand": "Suzuki",
+        "cc": 100,
+        "year": 2025,
+        "km": 0,
+        "cover": "images/suzuki-ax-100-cover.jpg",
+        "gallery": [
+            "images/suzuki-ax-100-cover.jpg"
+        ],
+        "tags": [
+            "Nueva"
+        ]
+    }
+]
